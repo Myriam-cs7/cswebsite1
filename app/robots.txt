@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://caire-solutions.com/sitemap.xml
+
+# Disallow admin paths
+Disallow: /admin/

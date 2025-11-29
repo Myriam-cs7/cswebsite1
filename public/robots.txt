@@ -1,0 +1,13 @@
+# www.robotstxt.org/
+
+# Allow crawling of all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://caire-solutions.com/sitemap.xml
+
+# Disallow admin paths
+User-agent: *
+Disallow: /admin/
+Disallow: /api/

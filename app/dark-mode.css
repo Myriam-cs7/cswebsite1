@@ -1,0 +1,83 @@
+/* Styles pour le mode sombre */
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+
+  --primary: 142 76% 36%;
+  --primary-foreground: 355 100% 97%;
+
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 142 76% 36%;
+}
+
+.dark body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Ajustements spécifiques pour le mode sombre */
+.dark .hero-gradient {
+  background: linear-gradient(to right, hsl(240 10% 3.9% / 0.9), hsl(240 10% 3.9% / 0.8)),
+    url("/images/hero-background.jpg");
+  background-size: cover;
+}
+
+.dark .testimonial-card {
+  background-color: hsl(var(--card));
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .feature-icon {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+.dark .pricing-card {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+.dark .pricing-card.popular {
+  border-color: hsl(var(--primary));
+}
+
+.dark .footer {
+  background-color: hsl(240 6% 10%);
+}
+
+.dark .nav-link:hover {
+  color: hsl(var(--primary));
+}
+
+.dark .social-icon {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .social-icon:hover {
+  color: hsl(var(--foreground));
+}
+
+/* Animations et transitions pour le mode sombre */
+.dark * {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+}

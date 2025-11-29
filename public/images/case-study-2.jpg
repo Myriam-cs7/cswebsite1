@@ -1,0 +1,5 @@
+Je vais apporter toutes les améliorations signalées en me concentrant sur les aspects les plus importants pour optimiser le site avant son déploiement.
+
+### 1. Optimisation des performances
+
+Commençons par optimiser les images et implémenter le lazy loading:
