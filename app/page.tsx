@@ -1,41 +1,75 @@
 "use client"
-import { useEffect, useState } from "react" // Ajout de hooks importants
+import { useEffect, useState } from "react"
 import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
 import AdminPanel from "@/components/admin/admin-panel"
 import BackToTop from "@/components/back-to-top"
 import { Menu, X } from "lucide-react"
-import { useSiteConfig } from "@/components/site-config" // On utilise la config existante
+import { useSiteConfig } from "@/components/site-config"
 import StructuredDataEnhanced from "@/components/structured-data-enhanced"
 import Image from "next/image"
 import Link from "next/link"
 
 export default function Home() {
-  const { config, updateSection } = useSiteConfig() // On récupère la fonction de mise à jour
+  const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // --- LE ROBOT CORRECTEUR ---
-  // Ce code s'exécute au chargement pour FORCER le nouveau texte
+  // --- LE ROBOT CORRECTEUR V2 (Blindé) ---
   useEffect(() => {
     const heroSection = config.sections.find((s) => s.id === "hero")
     
-    // Si on détecte que le titre n'est pas le bon (ou est vide), on le change de force !
-    if (heroSection && (!heroSection.content.title || !heroSection.content.title.includes("unfair advantage"))) {
-       console.log("Mise à jour automatique du titre Hero...")
-       updateSection("hero", {
-         title: "Your new unfair advantage in beauty & wellness",
-         subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-         buttonText: "See WhatsApp Automation",
-         secondaryButtonText: "Explore Solutions"
-       })
+    // On force la mise à jour si le titre n'est pas le bon
+    if (heroSection) {
+       // Le nouveau titre que l'on veut partout
+       const newTitle = "Your new unfair advantage in beauty & wellness";
+       
+       // On vérifie si la mise à jour est nécessaire pour éviter une boucle infinie
+       // On regarde si le titre actuel contient "unfair advantage"
+       const currentTitle = heroSection.content.title || "";
+       const currentHeading = heroSection.content.heading || ""; // Variable potentielle
+       
+       if (!currentTitle.includes("unfair advantage") || !currentHeading.includes("unfair advantage")) {
+           console.log("🚀 Mise à jour forcée du Hero (Titres + Liens)...")
+           
+           updateSection("hero", {
+             // 1. ON FORCE LE TITRE DANS TOUTES LES VARIABLES POSSIBLES
+             title: newTitle,
+             heading: newTitle,   // Certains composants utilisent 'heading'
+             headline: newTitle,  // D'autres utilisent 'headline'
+             
+             // 2. LE SOUS-TITRE
+             subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
+             
+             // 3. LES BOUTONS (TEXTES)
+             buttonText: "See WhatsApp Automation",
+             secondaryButtonText: "Explore Solutions",
+             
+             // 4. LES LIENS (RÉPARATION)
+             primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", // Lien YouForm
+             secondaryButtonLink: "https://calendly.com/cairesolutions/30min", // Lien Calendly
+             calendlyUrl: "https://calendly.com/cairesolutions/30min", // Sécurité supplémentaire
+             
+             // 5. ON GARDE LE CHATBOT
+             showChatbot: true 
+           })
+       }
     }
-  }, [config, updateSection]) // Se relance si la config change pour vérifier
-  // ---------------------------
+  }, [config, updateSection])
+  // ----------------------------------------
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
+  // Gestion du scroll fluide
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+      setMobileMenuOpen(false)
+    }
+  }
+
   return (
     <main className="min-h-screen bg-[#121212]">
-      {/* Header existant */}
+      {/* Header */}
       <header className="bg-[#1A1A1A] text-white py-6 sticky top-0 z-30 shadow-md">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-4 pl-5">
@@ -57,12 +91,11 @@ export default function Home() {
           </button>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-             {/* On garde tes liens de navigation */}
              {['about-us', 'features', 'benefits', 'pricing'].map((id) => {
                 const section = config.sections.find(s => s.id === id);
                 if (!section?.visible) return null;
                 return (
-                  <a key={id} href={`#${id}`} className="text-white hover:text-[#cfaa5c] transition-colors">
+                  <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer">
                     {section.title === "Section Héro" ? "Home" : section.title}
                   </a>
                 )
@@ -70,11 +103,26 @@ export default function Home() {
              <Link href="/blog" className="text-white hover:text-[#cfaa5c] transition-colors">Blog</Link>
           </nav>
         </div>
+        
+        {/* Menu Mobile */}
+        {mobileMenuOpen && (
+            <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
+              <div className="flex flex-col space-y-4 px-4">
+                {['about-us', 'features', 'benefits', 'pricing'].map((id) => {
+                    const section = config.sections.find(s => s.id === id);
+                    if (!section?.visible) return null;
+                    return (
+                      <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] text-lg block py-2">
+                        {section.title}
+                      </a>
+                    )
+                })}
+              </div>
+            </div>
+        )}
       </header>
 
-      {/* ICI : On a enlevé la section manuelle. 
-          On laisse le BlockRenderer afficher la section Hero "automatique"
-          MAIS notre robot (useEffect) aura corrigé son texte juste avant ! */}
+      {/* Le contenu du site géré dynamiquement */}
       <BlockRendererOptimized />
 
       <BackToTop />
