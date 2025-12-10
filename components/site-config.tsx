@@ -55,20 +55,24 @@ const defaultConfig: SiteConfig = {
       order: 1,
       template: "hero",
       content: {
+        // --- C'EST ICI QUE J'AI AJOUTÉ LES TEXTES MANQUANTS ---
+        title: "Your new unfair advantage in beauty & wellness",
+        subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
+        // -----------------------------------------------------
         showChatbot: true,
-        buttonText: "Start Free Trial",
-        secondaryButtonText: "Get a Demo",
-        primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", // Votre ID Youform
+        buttonText: "See WhatsApp Automation", // Mis à jour selon ta demande
+        secondaryButtonText: "Explore Solutions", // Mis à jour selon ta demande
+        primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", 
         // Ajoutez ces propriétés
-        youformId: "gxc7dqht", // Votre ID Youform
-        calendlyUrl: "https://calendly.com/cairesolutions/30min", // Votre URL Calendly
+        youformId: "gxc7dqht",
+        calendlyUrl: "https://calendly.com/cairesolutions/30min",
       },
     },
     {
       id: "about-us",
       title: "Notre Équipe",
       visible: true,
-      order: 1.5, // Nouvelle valeur pour placer cette section juste après Hero
+      order: 1.5,
       template: "about-us",
       content: {
         title: "About Us",
@@ -120,7 +124,7 @@ const defaultConfig: SiteConfig = {
       id: "value-proposition",
       title: "Value Proposition",
       visible: true,
-      order: 2.5, // Pour l'insérer entre brand (2) et about (3)
+      order: 2.5,
       template: "value-proposition",
       content: {
         propositions: [
@@ -243,7 +247,7 @@ const defaultConfig: SiteConfig = {
       id: "benefits-new",
       title: "Avantages",
       visible: true,
-      order: 6, // Mise à jour de l'ordre pour remplacer l'ancienne section benefits
+      order: 6,
       template: "benefits-new",
       content: {
         title: "Elevate Your Brand with Proven Benefits",
@@ -308,7 +312,7 @@ const defaultConfig: SiteConfig = {
     {
       id: "testimonials-section",
       title: "Témoignages",
-      visible: true, // Changé de false à true pour rendre la section visible
+      visible: true,
       order: 6.5,
       template: "testimonials-section",
       content: {
@@ -415,7 +419,7 @@ const defaultConfig: SiteConfig = {
           "Join leading luxury skincare brands already using cAIre Solutions to enhance their digital presence.",
         primaryButton: "Request a Demo",
         secondaryButton: "Contact Sales",
-        primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", // Votre ID Youform
+        primaryButtonLink: "https://app.youform.com/forms/gxc7dqht",
         secondaryButtonLink: "mailto:contact@caire-solutions.com",
       },
     },
@@ -492,12 +496,26 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
+        // IMPORTANT : J'ajoute un petit hack pour forcer le rafraîchissement si la config locale est vieille
+        // On vérifie si la config stockée a les nouveaux titres, sinon on l'écrase
         const savedConfig = localStorage.getItem("siteConfig")
         if (savedConfig) {
-          setConfig(JSON.parse(savedConfig))
+          const parsed = JSON.parse(savedConfig)
+          const hero = parsed.sections.find(s => s.id === 'hero')
+          
+          // Si le titre stocké n'est pas le nouveau, on force la nouvelle config par défaut
+          if (!hero.content.title || hero.content.title.includes("Your clients deserve")) {
+             setConfig(defaultConfig) // On écrase avec la nouvelle config
+             localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
+          } else {
+             setConfig(parsed)
+          }
+        } else {
+           setConfig(defaultConfig)
         }
       } catch (e) {
         console.error("Erreur lors du chargement de la configuration:", e)
+        setConfig(defaultConfig)
       }
     }
   }, [])
