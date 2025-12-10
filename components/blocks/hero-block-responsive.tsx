@@ -13,8 +13,8 @@ export default function HeroBlockResponsive({ id, content }) {
 
   // Utiliser une destructuration avec des valeurs par défaut
   const {
-    title = "Transform customer experience and build loyal relationships",
-    subtitle = "AI-powered skincare consultations that combine French luxury expertise with cutting-edge technology",
+    title = "Your new unfair advantage in beauty & wellness",
+    subtitle = "Your smartest way to grow bookings, loyalty, and product sales — without extra staff",
     description = "",
     buttonText = "Start Free Trial",
     secondaryButtonText = "Get a Demo",
