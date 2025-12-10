@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://caire-solutions.com"),
   title: {
-    default: "cAIre Solutions | Where amazing customer experiences are built",
+    default: "cAIre Solutions | Your new unfair advantage in beauty & wellness",
     template: "%s | cAIre Solutions",
   },
   description: "Sell, convert & support on chat with an AI powered Omnichannel conversation suite",
@@ -40,20 +40,20 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://caire-solutions.com",
     siteName: "cAIre Solutions",
-    title: "cAIre Solutions | Where amazing customer experiences are built",
-    description: "Sell, convert & support on chat with an AI powered Omnichannel conversation suite",
+    title: "cAIre Solutions | Your new unfair advantage in beauty & wellness",
+    description: "Your smartest way to grow bookings, loyalty, and product sales - without extra staff ,
     images: [
       {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "cAIre Solutions - Where amazing customer experiences are built",
+        alt: "cAIre Solutions - Your new unfair advantage in beauty & wellness",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "cAIre Solutions | Where amazing customer experiences are built",
+    title: "cAIre Solutions | Your new unfair advantage in beauty & wellness",
     description: "Sell, convert & support on chat with an AI powered Omnichannel conversation suite",
     images: ["/images/og-image.jpg"],
     creator: "@caire_solutions",
