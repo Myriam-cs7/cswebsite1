@@ -1,23 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
+    // Ignore les erreurs TypeScript bloquantes
     ignoreBuildErrors: true,
   },
   images: {
+    // Évite les erreurs d'optimisation d'images
     unoptimized: true,
-    domains: ['hebbkx1anhila5yf.public.blob.vercel-storage.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
   },
-  env: {
-    NEXT_PUBLIC_USE_MOCK_TRANSLATIONS: process.env.NODE_ENV === 'development' ? 'true' : 'false',
-  },
-  webpack: (config) => {
-    config.resolve.fallback = { ...config.resolve.fallback, net: false, tls: false };
-    return config;
-  },
-}
+  // Aucune option 'eslint' ici car elle ferait planter Next.js 16
+};
 
-export default nextConfig
+export default nextConfig;
