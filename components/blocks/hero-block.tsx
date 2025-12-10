@@ -259,11 +259,11 @@ export default function HeroBlock({ id, content }) {
   // Déterminer les classes CSS
   const sectionClasses = `relative py-20 px-6 ${backgroundColor} ${textColor} ${customClass}`
 
-  // Textes en anglais
   const staticTranslations = {
-    clientsDeserve: "Your clients deserve",
-    exceptionalExperience: "an exceptional skincare experience",
-    solutionApart: "and you, a solution that sets you apart.",
+    clientsDeserve: "Your new unfair advantage in",
+    exceptionalExperience: "beauty & wellness",
+    solutionApart: "", // On laisse vide car ton nouveau titre est plus court !
+  }
     tryFree: "Start Free Trial",
     watchDemo: "Get a Demo",
     online: "Online",
