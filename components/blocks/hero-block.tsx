@@ -13,9 +13,9 @@ export default function HeroBlock({ id, content }) {
 
   // Utiliser une destructuration avec des valeurs par défaut
   const {
-    title = "Your new unfair advantage in beauty & wellness"
-    subtitle = "Your smartest way to increase bookings, loyalty, and product sales — without extra staff"
-    description = "",
+  title = "Your new unfair advantage in beauty & wellness", // <--- J'ai ajouté la virgule
+  subtitle = "Your smartest way to increase bookings, loyalty, and product sales — without extra staff", // Ajoute aussi une virgule ici par sécurité
+  description = "",
     buttonText = "Start Free Trial",
     secondaryButtonText = "Get a Demo",
     showChatbot = true,
