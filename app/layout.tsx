@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     url: "https://caire-solutions.com",
     siteName: "cAIre Solutions",
     title: "cAIre Solutions | Your new unfair advantage in beauty & wellness",
-    description: "Your smartest way to grow bookings, loyalty, and product sales - without extra staff ,
+    description: "Your smartest way to grow bookings, loyalty, and product sales - without extra staff", // Ensure description string is properly terminated
     images: [
       {
         url: "/images/og-image.jpg",
