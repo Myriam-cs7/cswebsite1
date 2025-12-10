@@ -1,4 +1,4 @@
-{{
+{
   "scripts": {
     "build": "next build --no-lint",
     "dev": "next dev",
