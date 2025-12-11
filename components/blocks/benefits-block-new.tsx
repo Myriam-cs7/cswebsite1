@@ -2,45 +2,43 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useSiteConfig } from "../site-config"
-import { Award, TrendingUp, Users, DollarSign, Globe, Moon, Repeat, CheckCircle } from "lucide-react"
 import Image from "next/image"
 
 export default function BenefitsBlockNew({ id, content }) {
   const [activeCard, setActiveCard] = useState(0)
   const observerRefs = useRef([])
 
-  // Configuration par défaut si le contenu ne vient pas de la config
+  // Configuration CORRIGÉE avec tes noms de fichiers exacts
   const defaultBenefits = [
     {
       title: "The Midnight Booking Effect",
       description: "For Luxury Spas: 60% of relaxation seekers browse services after 8 PM. Our AI captures these bookings instantly on WhatsApp, securing revenue while your staff rests.",
       stats: [{ value: "+40%", label: "Night Bookings" }],
-      // Utilise l'image que tu as nommée spa-booking.png
+      // Image Spa (format PNG)
       image: "/images/spa-booking.png", 
-      icon: "Moon"
+      id: "01"
     },
     {
       title: "Global Medical Hub Mastery",
       description: "Dubai & Paris attract the world. Don't let time zones or language barriers cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
       stats: [{ value: "30+", label: "Languages" }],
-      // Utilise l'image que tu as nommée clinic-consultation.png
-      image: "/images/clinic-consultation.png",
-      icon: "Globe"
+      // Image Clinique (ATTENTION : C'est un JPG !)
+      image: "/images/clinic-booking.jpg",
+      id: "02"
     },
     {
       title: "Automated Loyalty & Sales",
       description: "For Retail & Salons: Don't just wait for appointments. The AI proactively re-engages clients for product refills and follow-up treatments.",
       stats: [{ value: "35%", label: "Repeat Sales" }],
-      // Utilise l'image que tu as nommée retail-loyalty.png
+      // Image Retail (format PNG)
       image: "/images/retail-loyalty.png",
-      icon: "Repeat"
+      id: "03"
     }
   ]
 
-  // On utilise soit le contenu de la config, soit nos défauts si la structure change
   const benefitsData = content?.benefits && content.benefits.length > 0 ? content.benefits : defaultBenefits
 
-  // Détection du Scroll pour changer l'image active
+  // Détection du Scroll
   useEffect(() => {
     const observers = []
     
@@ -53,7 +51,7 @@ export default function BenefitsBlockNew({ id, content }) {
             }
           })
         },
-        { threshold: 0.5, rootMargin: "-20% 0px -20% 0px" } // Déclenche quand l'élément est au milieu de l'écran
+        { threshold: 0.5, rootMargin: "-10% 0px -10% 0px" }
       )
       
       if (observerRefs.current[index]) {
@@ -68,93 +66,111 @@ export default function BenefitsBlockNew({ id, content }) {
   }, [benefitsData])
 
   return (
-    <section id={id} className="relative bg-[#121212] py-24 overflow-hidden">
+    <section id={id} className="relative bg-[#0a0a0a] py-32 overflow-hidden">
       
-      {/* Background Glow Premium */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-[#cfaa5c]/5 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-[#cfaa5c]/5 rounded-full blur-[100px]"></div>
+      {/* Fond d'ambiance plus lumineux pour l'effet "Waouh" */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#cfaa5c]/10 rounded-full blur-[120px] mix-blend-screen opacity-60"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#cfaa5c]/5 rounded-full blur-[100px] mix-blend-screen opacity-40"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         
         {/* Titre Section */}
-        <div className="text-center mb-24 max-w-3xl mx-auto">
-          <span className="text-[#cfaa5c] font-medium tracking-[0.2em] uppercase text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">
-            Real World Impact
-          </span>
-          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-white mb-6 leading-tight animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
-            From Spas to Clinics,<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] to-[#f0e6d2]">
-              Automation means Growth.
+        <div className="text-center mb-32 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#cfaa5c]/30 bg-[#cfaa5c]/10 mb-6 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#cfaa5c] animate-pulse"></span>
+            <span className="text-[#cfaa5c] text-xs font-semibold tracking-widest uppercase">
+              Proven Results
+            </span>
+          </div>
+          
+          <h2 className="font-playfair text-5xl md:text-7xl font-bold text-white mb-8 leading-[1.1]">
+            Designed for <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] via-[#e6d5b0] to-[#cfaa5c]">
+              High-End Experiences.
             </span>
           </h2>
         </div>
 
         {/* Layout : Sticky Scroll */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-32">
           
-          {/* Colonne GAUCHE : Texte (Scrollable) */}
-          <div className="lg:w-1/2 flex flex-col gap-[30vh] pb-[20vh]">
-            {benefitsData.map((benefit, index) => (
-              <div 
-                key={index}
-                ref={el => observerRefs.current[index] = el}
-                className={`transition-all duration-500 ${activeCard === index ? 'opacity-100 scale-100' : 'opacity-30 scale-95 blur-[2px]'}`}
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full border border-[#cfaa5c]/30 flex items-center justify-center bg-[#cfaa5c]/10 text-[#cfaa5c]">
+          {/* Colonne GAUCHE : Texte Défilant */}
+          <div className="lg:w-5/12 flex flex-col relative">
+            <div className="absolute left-[27px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#cfaa5c]/30 to-transparent hidden lg:block"></div>
+
+            <div className="flex flex-col gap-[40vh] pb-[20vh] pt-[10vh]">
+              {benefitsData.map((benefit, index) => (
+                <div 
+                  key={index}
+                  ref={el => observerRefs.current[index] = el}
+                  className={`relative pl-20 transition-all duration-700 ease-out ${
+                    activeCard === index ? 'opacity-100 translate-x-0' : 'opacity-20 translate-x-4 blur-[1px]'
+                  }`}
+                >
+                  <div className={`absolute left-0 top-1 w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all duration-500 z-10 bg-[#0a0a0a] ${
+                    activeCard === index 
+                      ? 'border-[#cfaa5c] text-[#cfaa5c] scale-110 shadow-[0_0_30px_rgba(207,170,92,0.4)]' 
+                      : 'border-[#333] text-[#333] scale-100'
+                  }`}>
                     <span className="font-playfair font-bold text-xl">{index + 1}</span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-playfair font-bold text-white">
+
+                  <h3 className={`text-3xl md:text-4xl font-playfair font-bold mb-6 transition-colors duration-500 ${
+                    activeCard === index ? 'text-white' : 'text-gray-600'
+                  }`}>
                     {benefit.title}
                   </h3>
-                </div>
-                
-                <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 pl-16 border-l border-[#cfaa5c]/20">
-                  {benefit.description}
-                </p>
+                  
+                  <p className="text-gray-400 text-lg leading-relaxed mb-8 font-light">
+                    {benefit.description}
+                  </p>
 
-                <div className="pl-16 flex gap-8">
-                  {benefit.stats.map((stat, i) => (
-                    <div key={i}>
-                      <div className="text-3xl font-bold text-[#cfaa5c]">{stat.value}</div>
-                      <div className="text-sm text-gray-500 uppercase tracking-wider">{stat.label}</div>
-                    </div>
-                  ))}
+                  <div className={`flex gap-8 transition-all duration-500 ${activeCard === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    {benefit.stats.map((stat, i) => (
+                      <div key={i} className="border-l-2 border-[#cfaa5c] pl-4">
+                        <div className="text-4xl font-bold text-[#cfaa5c] mb-1">{stat.value}</div>
+                        <div className="text-xs text-gray-500 uppercase tracking-widest">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* Colonne DROITE : Image (Sticky / Fixe) */}
-          <div className="hidden lg:block lg:w-1/2 relative">
-            <div className="sticky top-[20vh] h-[600px] w-full">
-              {/* Cadre style iPhone / Premium */}
-              <div className="relative w-full h-full rounded-[2.5rem] border-8 border-[#2a2a2a] bg-[#1a1a1a] shadow-2xl overflow-hidden">
-                {/* Dynamic Image */}
+          {/* Colonne DROITE : Image Sticky */}
+          <div className="hidden lg:block lg:w-7/12 relative">
+            <div className="sticky top-[15vh] h-[650px] w-full flex items-center justify-center">
+              
+              <div className="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border border-[#ffffff]/10 bg-[#151515]">
+                
                 {benefitsData.map((benefit, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                      activeCard === index ? "opacity-100 z-10" : "opacity-0 z-0"
+                    className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                      activeCard === index 
+                        ? "opacity-100 scale-100 z-10" 
+                        : "opacity-0 scale-110 z-0"
                     }`}
                   >
-                    {/* On utilise une image HTML standard pour éviter les soucis de config Next.js Image si les domaines ne sont pas whitelistés */}
+                    {/* UTILISATION DE LA BALISE IMG STANDARD POUR FIABILITÉ MAXIMALE */}
+                    {/* Le style object-contain permet de voir l'image ENTIÈRE sans la rogner */}
                     <img 
-                      src={benefit.image || "/images/placeholder.jpg"} 
+                      src={benefit.image} 
                       alt={benefit.title} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain bg-[#0a0a0a]"
                     />
                     
-                    {/* Overlay gradient pour que le texte ressorte si besoin */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    {/* Overlay léger */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
                   </div>
                 ))}
               </div>
 
-              {/* Elément décoratif flottant */}
-              <div className="absolute -right-12 -bottom-12 w-48 h-48 bg-[#cfaa5c]/10 rounded-full blur-3xl"></div>
+              {/* Halo arrière pour la profondeur */}
+              <div className="absolute -inset-4 bg-[#cfaa5c]/10 rounded-[2.5rem] blur-2xl -z-10 animate-pulse"></div>
             </div>
           </div>
 
