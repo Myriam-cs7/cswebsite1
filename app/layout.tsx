@@ -1,7 +1,10 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
+import Script from "next/script" // Import essentiel !
 import "./globals.css"
-import "./responsive.css" // Import des styles responsive
+import "./responsive.css"
+
+import ClientLayout from "./ClientLayout"
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -83,22 +86,22 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code", // Remplacer par votre code de vérification
+    google: "google-site-verification-code",
   },
-    generator: 'v0.app'
+  generator: 'v0.app'
 }
-
-import ClientLayout from "./ClientLayout"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <script src="https://app.youform.io/api/v1/embed.js" async></script>
-      </head>
       <body>
         <ClientLayout>{children}</ClientLayout>
+        
+        {/* Scripts chargés correctement avec Next.js */}
+        {/* strategy="lazyOnload" permet de ne charger le script que quand la page est prête */}
+        {/* Cela évite de bloquer le chargement initial ou le scroll */}
+        <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
+        <Script src="https://app.youform.io/api/v1/embed.js" strategy="lazyOnload" />
       </body>
     </html>
   )
