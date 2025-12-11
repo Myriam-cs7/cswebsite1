@@ -11,7 +11,6 @@ export interface SiteSection {
   order: number
   template?: string
   content: any
-  // Ajoutez ces propriétés pour les intégrations
   calendlyUrl?: string
   youformId?: string
 }
@@ -55,15 +54,12 @@ const defaultConfig: SiteConfig = {
       order: 1,
       template: "hero",
       content: {
-        // --- C'EST ICI QUE J'AI AJOUTÉ LES TEXTES MANQUANTS ---
         title: "Your new unfair advantage in beauty & wellness",
         subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-        // -----------------------------------------------------
         showChatbot: true,
-        buttonText: "See WhatsApp Automation", // Mis à jour selon ta demande
-        secondaryButtonText: "Explore Solutions", // Mis à jour selon ta demande
+        buttonText: "Free Trial", 
+        secondaryButtonText: "Book a Private Demo", 
         primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", 
-        // Ajoutez ces propriétés
         youformId: "gxc7dqht",
         calendlyUrl: "https://calendly.com/cairesolutions/30min",
       },
@@ -76,7 +72,7 @@ const defaultConfig: SiteConfig = {
       template: "about-us",
       content: {
         title: "About Us",
-        subtitle: "",
+        subtitle: "Expertise meets Innovation",
         description: "",
         ceo: {
           name: "Myriam Rezgui",
@@ -106,6 +102,62 @@ const defaultConfig: SiteConfig = {
         ],
       },
     },
+    // --- SECTION CASE STUDIES / USE CASES ---
+    {
+      id: "case-studies",
+      title: "Success Stories",
+      visible: true,
+      order: 1.7, 
+      template: "benefits-new", 
+      content: {
+        title: "Real World Impact: From Spas to Clinics",
+        description: "See how cAIre Solutions transforms operations for diverse beauty & wellness businesses through WhatsApp automation.",
+        benefits: [
+          {
+            title: "The Midnight Booking Effect",
+            description:
+              "For Luxury Spas: 60% of relaxation seekers browse services after 8 PM. Our AI captures these bookings instantly on WhatsApp, securing revenue while your staff rests.",
+            icon: "Moon",
+            stats: [
+              { value: "+40%", label: "Night Bookings" },
+              { value: "0", label: "Missed Clients" },
+            ],
+            image:
+              "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1000&auto=format&fit=crop", 
+          },
+          {
+            title: "Global Medical Hub Mastery",
+            description:
+              "Dubai & Paris attract the world. Don't let time zones or language barriers cost you patients. Our AI manages international inquiries 24/7 in 30+ languages, turning global interest into confirmed appointments.",
+            icon: "Globe",
+            stats: [
+              { value: "30+", label: "Languages" },
+              { value: "0", label: "Time Zone Friction" },
+            ],
+            image:
+              "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop",
+          },
+          {
+            title: "Automated Loyalty & Sales",
+            description:
+              "For Retail & Salons: Don't just wait for appointments. The AI proactively re-engages clients for product refills and follow-up treatments, turning one-time visits into lifetime value.",
+            icon: "Repeat",
+            stats: [
+              { value: "35%", label: "Repeat Sales" },
+              { value: "24/7", label: "Availability" },
+            ],
+            image:
+              "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop",
+          },
+        ],
+        results: [
+          { label: "Bookings Increase", value: "+40%" },
+          { label: "Staff Time Saved", value: "15h/wk" },
+          { label: "Client Satisfaction", value: "99%" },
+          { label: "Response Time", value: "< 2s" },
+        ],
+      },
+    },
     {
       id: "brand",
       title: "Section Marque",
@@ -114,9 +166,9 @@ const defaultConfig: SiteConfig = {
       template: "brand",
       content: {
         title: "cAIre Solutions",
-        subtitle: "AI-Powered Skincare",
+        subtitle: "AI-Powered Excellence",
         description:
-          "Imagine an AI that captures your clients' attention from the very first interaction, offering intelligent recommendations and a tone perfectly aligned with your brand's values. Available 24/7, our skincare assistant leverages cutting-edge dermatological research to provide a seamless, personalized experience. The result? Higher engagement rates, improved customer satisfaction, and soaring sales—up to a 35% increase for our partners.",
+          "Imagine an AI that captures your clients' attention from the very first interaction, offering intelligent recommendations and a tone perfectly aligned with your brand's values. Available 24/7, our assistant leverages cutting-edge technology to provide a seamless, personalized experience.",
         image: "/images/beauty-cs.png",
       },
     },
@@ -148,21 +200,21 @@ const defaultConfig: SiteConfig = {
     },
     {
       id: "about",
-      title: "À Propos",
+      title: "À Propos (Tech)",
       visible: true,
       order: 4.5,
       template: "about",
       content: {
-        title: "Combining French Skincare Expertise with AI Innovation",
+        title: "Combining French Expertise with AI Innovation",
         paragraphs: [
-          "Founded in Paris in 2022, cAIre Solutions was born to revolutionize how luxury skincare brands approach customer relationships with consultations available 24/7.",
-          "Our team combines 15 years of expertise in French luxury beauty with advanced AI mastery to deliver the same quality of personalized advice online as in-store, any time of day or night.",
+          "Founded in Paris in 2022, cAIre Solutions was born to revolutionize how luxury beauty brands approach customer relationships.",
+          "Our team combines 15 years of expertise in French luxury beauty with advanced AI mastery to deliver the same quality of personalized advice online as in-store.",
         ],
         stats: [
           { label: "Luxury Brands", value: "25+" },
-          { label: "Customer Interactions", value: "15M+" },
-          { label: "Customer Satisfaction", value: "98%" },
-          { label: "Sales Increase", value: "35%" },
+          { label: "Interactions", value: "15M+" },
+          { label: "Satisfaction", value: "98%" },
+          { label: "Growth", value: "35%" },
         ],
       },
     },
@@ -173,28 +225,28 @@ const defaultConfig: SiteConfig = {
       order: 4,
       template: "features",
       content: {
-        title: "Features Designed for Luxury Brands",
-        description: "Our AI solutions are tailored specifically for premium skincare and beauty brands.",
+        title: "Features Designed for Luxury",
+        description: "Our AI solutions are tailored specifically for premium skincare, spas, and clinics.",
         items: [
           {
-            title: "Personalized Recommendations",
-            description: "AI-powered product suggestions based on individual skin concerns and goals.",
-            icon: "Star",
+            title: "Smart Booking System",
+            description: "Automated appointment scheduling directly through WhatsApp, synced with your calendar.",
+            icon: "Calendar",
           },
           {
-            title: "Brand Protection",
-            description: "Ensure your AI assistant maintains your brand voice and luxury positioning.",
+            title: "Brand Guardrails",
+            description: "Ensure your AI assistant maintains your brand voice and luxury positioning at all times.",
             icon: "Shield",
           },
           {
-            title: "Loyalty Integration",
-            description: "Seamlessly connect with your existing loyalty and CRM systems.",
-            icon: "Heart",
+            title: "CRM Integration",
+            description: "Seamlessly connect with your existing loyalty and CRM systems (Salesforce, HubSpot, etc.).",
+            icon: "Link",
           },
           {
-            title: "Easy Integration",
-            description: "Simple implementation with your existing e-commerce platform.",
-            icon: "Code",
+            title: "Omnichannel",
+            description: "Deploy on WhatsApp, Instagram, and Webchat simultaneously.",
+            icon: "MessageCircle",
           },
         ],
       },
@@ -211,7 +263,7 @@ const defaultConfig: SiteConfig = {
         reasons: [
           {
             title: "Premium Market Expertise",
-            description: "Built specifically for luxury skincare brands with deep understanding of your unique needs.",
+            description: "Built specifically for luxury brands with deep understanding of your unique needs.",
             icon: "Award",
           },
           {
@@ -244,69 +296,16 @@ const defaultConfig: SiteConfig = {
       },
     },
     {
-      id: "benefits-new",
-      title: "Avantages",
-      visible: true,
+      id: "benefits-original",
+      title: "Avantages (Legacy)",
+      visible: false,
       order: 6,
       template: "benefits-new",
       content: {
-        title: "Elevate Your Brand with Proven Benefits",
-        description: "Discover how our AI solutions deliver measurable results for luxury skincare brands.",
-        benefits: [
-          {
-            title: "Enhance customer satisfaction",
-            description:
-              "Provide personalized skincare consultations 24/7, creating memorable interactions that build brand loyalty.",
-            icon: "Users",
-            stats: [
-              { value: "98", label: "Customer Satisfaction" },
-              { value: "24/7", label: "Availability" },
-            ],
-            image:
-              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/How%20may%20I%20assist%20you.jpg-i9HpxEl4AxlbBnpNcXhZhMyL5pS5Wo.jpeg",
-          },
-          {
-            title: "Increased Conversion Rates",
-            description:
-              "Guide customers to the perfect products for their unique needs, significantly boosting purchase likelihood.",
-            icon: "TrendingUp",
-            stats: [
-              { value: "35", label: "Conversion Increase" },
-              { value: "28", label: "Higher AOV" },
-            ],
-            image:
-              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LP%20GlowBot.jpg-3ZP9FymQm7qgSv01VH7dpzXqSTZ0nd.jpeg",
-          },
-          {
-            title: "Reduce Support Costs",
-            description: "Automate routine inquiries while maintaining the luxury experience your customers expect.",
-            icon: "ShieldCheck",
-            stats: [
-              { value: "100", label: "Brand Alignment" },
-              { value: "0", label: "Off-Brand Responses" },
-            ],
-            image:
-              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/reduce%20cost.22.jpg-0Hlb3dGRpjJ4vEjuwpCSmCtuROrh56.jpeg",
-          },
-          {
-            title: "Actionable Customer Insights",
-            description:
-              "Gain valuable data from every interaction to better understand your customers' needs and preferences.",
-            icon: "Award",
-            stats: [
-              { value: "45", label: "Retention Increase" },
-              { value: "3x", label: "Customer Data" },
-            ],
-            image:
-              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gain%20Valuable%20Customer%20Insights.jpg-sd0cXaxbHXDo9OOO9iD7yCepExvmfz.jpeg",
-          },
-        ],
-        results: [
-          { label: "Conversion Rate", value: "+35%" },
-          { label: "Customer Satisfaction", value: "+98%" },
-          { label: "Average Order Value", value: "+28%" },
-          { label: "Customer Retention", value: "+45%" },
-        ],
+        title: "Elevate Your Brand",
+        description: "Discover how our AI solutions deliver measurable results.",
+        benefits: [],
+        results: [],
       },
     },
     {
@@ -316,8 +315,8 @@ const defaultConfig: SiteConfig = {
       order: 6.5,
       template: "testimonials-section",
       content: {
-        title: "What our partners are saying—your success starts here.",
-        description: "Real results from real skincare brands.",
+        title: "What our partners are saying",
+        description: "Real results from real brands.",
         testimonials: [
           {
             company: "Phynacare",
@@ -335,78 +334,24 @@ const defaultConfig: SiteConfig = {
             logo: "/placeholder.svg?height=60&width=120",
           },
         ],
-        ctaButtonLink: "https://form.typeform.com/to/example3",
+        ctaButtonLink: "https://calendly.com/cairesolutions/30min",
       },
     },
+    // --- SECTION PRICING MASQUÉE (visible: false) ---
     {
       id: "pricing",
       title: "Tarifs",
-      visible: true,
+      visible: false, // <--- C'est ici que ça se passe !
       order: 7,
       template: "pricing",
       content: {
-        title: "Find the plan that grows your brand—simple and tailored to you.",
+        title: "Find the plan that grows your brand",
         description:
-          "We have a plan for every stage of your journey—explore the options below. All plans include multilingual support to connect with your global audience seamlessly.",
-        plans: [
-          {
-            name: "LysIA",
-            price: "$10,724",
-            period: "",
-            description: "Designed for industry leaders",
-            features: [
-              "Unlimited users",
-              "Dedicated dermatological knowledge base",
-              "Complex case management",
-              "Enterprise-grade CRM Integration",
-              "Salesforce, HubSpot & Microsoft Dynamics support",
-              "Unified customer profiles & automated data sync",
-              "Multilingual support",
-              "Custom AI training",
-              "24/7 support with dedicated account manager",
-              "Plus a performance based fee tailored to your results",
-            ],
-            buttonText: "Contact Sales",
-            highlighted: false,
-            footnote: "* Setup fees may vary based on your customization needs—let's discuss what works for you",
-          },
-          {
-            name: "AVA Skin",
-            price: "$1,057",
-            period: "/month",
-            description: "Perfect for growing brands",
-            features: [
-              "Up to 2,000 users/month",
-              "CRM integration",
-              "Advanced analytics & insights",
-              "Product recommendation engine",
-              "Multilingual support",
-              "Priority support",
-              "One-time setup fee of $3,177",
-            ],
-            buttonText: "Start Free Trial",
-            highlighted: false,
-          },
-          {
-            name: "Glowbot",
-            price: "$517",
-            period: "/month",
-            description: "Ideal for smaller brands starting out",
-            features: [
-              "Up to 500 users/month",
-              "Basic skincare knowledge base",
-              "Standard analytics dashboard",
-              "Email support",
-              "Basic recommendation system",
-              "Multilingual support",
-              "One-time setup fee of $1,587",
-            ],
-            buttonText: "Get Started",
-            highlighted: false,
-          },
-        ],
+          "We have a plan for every stage of your journey. All plans include multilingual support.",
+        plans: [], // Je laisse vide car c'est masqué
       },
     },
+    // ------------------------------------------------
     {
       id: "cta",
       title: "Appel à l'Action",
@@ -416,8 +361,8 @@ const defaultConfig: SiteConfig = {
       content: {
         title: "Ready to Transform Your Customer Experience?",
         description:
-          "Join leading luxury skincare brands already using cAIre Solutions to enhance their digital presence.",
-        primaryButton: "Request a Demo",
+          "Join leading luxury brands already using cAIre Solutions to enhance their digital presence.",
+        primaryButton: "Free Trial",
         secondaryButton: "Contact Sales",
         primaryButtonLink: "https://app.youform.com/forms/gxc7dqht",
         secondaryButtonLink: "mailto:contact@caire-solutions.com",
@@ -431,7 +376,7 @@ const defaultConfig: SiteConfig = {
       template: "footer",
       content: {
         description:
-          "AI-powered skincare consultations combining French luxury expertise with cutting-edge technology.",
+          "AI-powered consultations combining French luxury expertise with cutting-edge technology.",
         copyright: "© 2023 cAIre Solutions. All rights reserved.",
         links: {
           company: ["About", "Careers", "Blog", "Press"],
@@ -492,20 +437,19 @@ const SiteConfigContext = createContext<SiteConfigContextType>({
 export function SiteConfigProvider({ children }: { children: ReactNode }) {
   const [config, setConfig] = useState<SiteConfig>(defaultConfig)
 
-  // Charger la configuration depuis le stockage local au démarrage
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
-        // IMPORTANT : J'ajoute un petit hack pour forcer le rafraîchissement si la config locale est vieille
-        // On vérifie si la config stockée a les nouveaux titres, sinon on l'écrase
         const savedConfig = localStorage.getItem("siteConfig")
         if (savedConfig) {
           const parsed = JSON.parse(savedConfig)
-          const hero = parsed.sections.find(s => s.id === 'hero')
+          // Vérification rapide pour voir si la nouvelle section existe ET si le pricing est bien masqué
+          const hasCaseStudies = parsed.sections.some(s => s.id === "case-studies")
+          const pricingHidden = parsed.sections.find(s => s.id === "pricing")?.visible === false
           
-          // Si le titre stocké n'est pas le nouveau, on force la nouvelle config par défaut
-          if (!hero.content.title || hero.content.title.includes("Your clients deserve")) {
-             setConfig(defaultConfig) // On écrase avec la nouvelle config
+          if (!hasCaseStudies || !pricingHidden) {
+             // Si la config en mémoire ne correspond pas à la stratégie, on force la nouvelle
+             setConfig(defaultConfig)
              localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
           } else {
              setConfig(parsed)
@@ -514,29 +458,24 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
            setConfig(defaultConfig)
         }
       } catch (e) {
-        console.error("Erreur lors du chargement de la configuration:", e)
+        console.error("Erreur config:", e)
         setConfig(defaultConfig)
       }
     }
   }, [])
 
-  // Mettre à jour la configuration complète
   const updateConfig = (newConfig) => {
     setConfig(newConfig)
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem("siteConfig", JSON.stringify(newConfig))
-      } catch (e) {
-        console.error("Erreur lors de la sauvegarde de la configuration:", e)
-      }
+      } catch (e) { console.error(e) }
     }
   }
 
-  // Mettre à jour une section spécifique
   const updateSection = (sectionId, newContent) => {
     const newConfig = { ...config }
     const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
-
     if (sectionIndex !== -1) {
       newConfig.sections[sectionIndex].content = {
         ...newConfig.sections[sectionIndex].content,
@@ -546,34 +485,24 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Réorganiser les sections
   const reorderSections = (sectionId, newOrder) => {
     const newConfig = { ...config }
     const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
-
     if (sectionIndex !== -1) {
       const section = newConfig.sections[sectionIndex]
       const oldOrder = section.order
-
-      // Mettre à jour l'ordre de toutes les sections affectées
       newConfig.sections.forEach((s) => {
-        if (oldOrder < newOrder && s.order > oldOrder && s.order <= newOrder) {
-          s.order--
-        } else if (oldOrder > newOrder && s.order < oldOrder && s.order >= newOrder) {
-          s.order++
-        }
+        if (oldOrder < newOrder && s.order > oldOrder && s.order <= newOrder) s.order--
+        else if (oldOrder > newOrder && s.order < oldOrder && s.order >= newOrder) s.order++
       })
-
       section.order = newOrder
       updateConfig(newConfig)
     }
   }
 
-  // Activer/désactiver la visibilité d'une section
   const toggleSectionVisibility = (sectionId) => {
     const newConfig = { ...config }
     const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
-
     if (sectionIndex !== -1) {
       newConfig.sections[sectionIndex].visible = !newConfig.sections[sectionIndex].visible
       updateConfig(newConfig)
@@ -581,21 +510,12 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <SiteConfigContext.Provider
-      value={{
-        config,
-        updateConfig,
-        updateSection,
-        reorderSections,
-        toggleSectionVisibility,
-      }}
-    >
+    <SiteConfigContext.Provider value={{ config, updateConfig, updateSection, reorderSections, toggleSectionVisibility }}>
       {children}
     </SiteConfigContext.Provider>
   )
 }
 
-// Créer le hook
 export function useSiteConfig() {
   const context = useContext(SiteConfigContext)
   if (context === undefined) {
