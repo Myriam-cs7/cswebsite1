@@ -82,9 +82,10 @@ export default function HeroBlockResponsive({ id, content }) {
 
   // Fonction pour ouvrir Youform dans un popup
   const openYouform = () => {
+    const url = `https://app.youform.com/forms/gxc7dqht`
     // @ts-ignore - Youform est défini globalement par le script
     if (typeof window !== "undefined" && window.Youform) {
-      window.Youform.openPopup("https://app.youform.com/forms/gxc7dqht", {
+      window.Youform.openPopup(url, {
         mode: "popup",
         hideHeader: true,
         hideFooter: true,
@@ -93,19 +94,18 @@ export default function HeroBlockResponsive({ id, content }) {
           console.log("Formulaire soumis!")
         },
       })
-      return false
+    } else {
+      // Fallback si le script n'est pas chargé
+      window.open(url)
     }
+    return false
   }
 
   // Fonction pour ouvrir Calendly dans un popup
   const openCalendly = () => {
-    // @ts-ignore - Calendly est défini globalement par le script
-    if (typeof window !== "undefined" && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: calendlyUrl, // Utilise le lien défini plus haut
-      })
-      return false
-    }
+    // Force l'ouverture dans un nouvel onglet pour éviter les problèmes de popup
+    window.open(calendlyUrl, "_blank")
+    return false
   }
 
   // Précharger les traductions nécessaires
@@ -156,7 +156,7 @@ export default function HeroBlockResponsive({ id, content }) {
     setMessages(baseMessages)
     setIsLoading(false)
     hasLoadedRef.current = true
-  }, [language])
+  }, [language, calendlyUrl])
 
   // Démarrer la conversation automatiquement
   useEffect(() => {
