@@ -10,21 +10,19 @@ export default function BenefitsBlockNew({ id }) {
       id: 1,
       category: "LUXURY SPAS",
       title: "The Midnight Booking Effect",
-      description: "60% des clients cherchent de la détente après 20h. Notre IA capture ces réservations instantanément sur WhatsApp pendant que votre staff se repose.",
+      description: "60% of relaxation seekers browse services after 8 PM. Our AI captures these bookings instantly on WhatsApp, securing revenue while your staff rests.",
       stat: "+40%",
-      statLabel: "Revenus Nocturnes",
-      icon: <MessageCircle className="w-6 h-6 text-[#cfaa5c]" />,
-      image: "/images/img1.png", // Assure-toi que cette image existe
-      color: "from-purple-900/20 to-blue-900/20" // Ambiance couleur subtile
+      statLabel: "Night Bookings",
+      image: "/images/img1.png", // Assure-toi que c'est bien la photo du Burj Khalifa
+      color: "from-purple-900/20 to-blue-900/20" 
     },
     {
       id: 2,
       category: "AESTHETIC CLINICS",
       title: "Global Medical Hub",
-      description: "Dubaï attire le monde entier. Ne laissez pas la barrière de la langue vous coûter des patients. Notre IA gère les demandes internationales 24/7 en plus de 30 langues.",
+      description: "Dubai attracts the world. Don't let language barriers or time zone differences cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
-      statLabel: "Langues Parlées",
-      icon: <Globe className="w-6 h-6 text-[#cfaa5c]" />,
+      statLabel: "Languages Spoken",
       image: "/images/img2.jpg",
       color: "from-emerald-900/20 to-teal-900/20"
     },
@@ -32,10 +30,9 @@ export default function BenefitsBlockNew({ id }) {
       id: 3,
       category: "RETAIL & SALONS",
       title: "Automated Loyalty",
-      description: "Ne vous contentez pas d'attendre les RDV. L'IA réengage proactivement vos clients pour le renouvellement de produits et les suivis, transformant une visite unique en revenu récurrent.",
+      description: "Don't just wait for appointments. The AI proactively re-engages clients for product refills and follow-up treatments, turning one-time visits into lifetime value.",
       stat: "x2.5",
-      statLabel: "Taux de Rétention",
-      icon: <TrendingUp className="w-6 h-6 text-[#cfaa5c]" />,
+      statLabel: "Retention Rate",
       image: "/images/img3.png",
       color: "from-orange-900/20 to-red-900/20"
     }
@@ -50,13 +47,13 @@ export default function BenefitsBlockNew({ id }) {
           Case Studies
         </span>
         <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight mb-6">
-          Intelligence Artificielle. <br />
+          Artificial Intelligence. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] to-[#f0e6d2]">
-            Résultats Réels.
+            Real World Results.
           </span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
-          Découvrez comment nos agents IA transforment l'expérience client des établissements les plus prestigieux.
+          Discover how our AI agents transform the client experience for prestigious establishments.
         </p>
       </div>
 
@@ -65,43 +62,25 @@ export default function BenefitsBlockNew({ id }) {
           const isEven = index % 2 === 0;
           
           return (
-            <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+            <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE (Cadre Tech) */}
+              {/* PARTIE IMAGE (Format Portrait pour le Burj Khalifa) */}
               <div className="w-full lg:w-1/2 relative group">
                 {/* Effet de lueur derrière l'image */}
                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition duration-1000`}></div>
                 
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
+                {/* CHANGEMENT ICI : aspect-[3/4] au lieu de aspect-[4/3] pour la verticalité */}
+                <div className="relative aspect-[3/4] w-full max-w-md mx-auto lg:max-w-none rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   
-                  {/* Overlay subtil pour unifier */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-
-                  {/* Élément UI Flottant (Preuve Tech) */}
-                  <div className="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl flex items-center gap-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                     <div className="bg-white/10 p-2 rounded-lg text-[#cfaa5c]">
-                        {item.icon}
-                     </div>
-                     <div>
-                        <div className="text-white text-sm font-medium">AI Agent Active</div>
-                        <div className="text-green-400 text-xs flex items-center gap-1">
-                          <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                          </span>
-                          Processing live
-                        </div>
-                     </div>
-                     <div className="ml-auto text-white font-mono text-xl tracking-tight">
-                        {item.stat}
-                     </div>
-                  </div>
+                  {/* Overlay très léger */}
+                  <div className="absolute inset-0 bg-black/10"></div>
                 </div>
               </div>
 
