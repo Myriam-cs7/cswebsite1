@@ -14,7 +14,9 @@ export default function BenefitsBlockNew({ id }) {
       stat: "+40%",
       statLabel: "Night Bookings",
       image: "/images/img1.png", 
-      color: "from-purple-900/20 to-blue-900/20" 
+      color: "from-purple-900/20 to-blue-900/20",
+      // Alignement par défaut (Centre)
+      position: "object-center"
     },
     {
       id: 2,
@@ -24,7 +26,8 @@ export default function BenefitsBlockNew({ id }) {
       stat: "30+",
       statLabel: "Languages Spoken",
       image: "/images/ai-concierge.png", 
-      color: "from-emerald-900/20 to-teal-900/20"
+      color: "from-emerald-900/20 to-teal-900/20",
+      position: "object-center"
     },
     {
       id: 3,
@@ -34,14 +37,16 @@ export default function BenefitsBlockNew({ id }) {
       stat: "x2.5",
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
-      color: "from-orange-900/20 to-red-900/20"
+      color: "from-orange-900/20 to-red-900/20",
+      // MODIFICATION ICI : On force l'image à se caler en HAUT pour voir le haut des téléphones
+      position: "object-top"
     }
   ]
 
   return (
     <section id={id} className="bg-black py-16 md:py-24 overflow-hidden">
       
-      {/* En-tête de section plus compacte */}
+      {/* En-tête de section */}
       <div className="container mx-auto px-4 mb-16 text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-6 backdrop-blur-md">
           Case Studies
@@ -75,7 +80,6 @@ export default function BenefitsBlockNew({ id }) {
         </p>
       </div>
 
-      {/* Espacement réduit entre les blocs (gap-16 au lieu de gap-24) */}
       <div className="container mx-auto px-4 flex flex-col gap-16 md:gap-20">
         {cases.map((item, index) => {
           const isEven = index % 2 === 0;
@@ -83,17 +87,17 @@ export default function BenefitsBlockNew({ id }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE : Format CINÉMA (Horizontal) */}
+              {/* PARTIE IMAGE */}
               <div className="w-full lg:w-1/2 relative group">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000`}></div>
                 
-                {/* CHANGEMENT MAJEUR ICI : aspect-video (16/9) pour réduire la hauteur */}
                 <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    // ICI : J'utilise item.position pour appliquer "object-top" spécifiquement aux téléphones
+                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${item.position}`}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-black/10"></div>
