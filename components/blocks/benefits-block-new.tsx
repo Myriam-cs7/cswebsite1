@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { CheckCircle2, TrendingUp, Globe, MessageCircle } from "lucide-react"
+import { CheckCircle2, TrendingUp, Globe, MessageCircle, Trophy, MapPin } from "lucide-react"
 
 export default function BenefitsBlockNew({ id }) {
   
@@ -23,10 +23,7 @@ export default function BenefitsBlockNew({ id }) {
       description: "Dubai attracts the world. Don't let language barriers or time zone differences cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      
-      // --- CHEMIN STANDARDISÉ (Dossier images avec un 's') ---
-      image: "/images/ai-concierge.png", 
-      
+      image: "/images/ai-concierge.png", // Image sans texte
       color: "from-emerald-900/20 to-teal-900/20"
     },
     {
@@ -45,18 +42,38 @@ export default function BenefitsBlockNew({ id }) {
     <section id={id} className="bg-black py-24 md:py-32 overflow-hidden">
       
       {/* En-tête de section */}
-      <div className="container mx-auto px-4 mb-24 text-center">
+      <div className="container mx-auto px-4 mb-20 text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-6 backdrop-blur-md">
           Case Studies
         </span>
-        <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight mb-6">
+        <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight mb-8">
           Artificial Intelligence. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] to-[#f0e6d2]">
             Real World Results.
           </span>
         </h2>
+        
+        {/* NOUVEAU BLOC : AWARDS & EVENT */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+            {/* Badge 1: Award */}
+            <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-[#cfaa5c]/30 bg-[#cfaa5c]/5 backdrop-blur-sm">
+                <Trophy className="w-5 h-5 text-[#cfaa5c]" />
+                <span className="text-gray-200 text-sm font-medium tracking-wide">
+                    Winner: <span className="text-[#cfaa5c]">Beauty AI Innovation Award</span>
+                </span>
+            </div>
+
+            {/* Badge 2: Beautyworld */}
+            <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+                <MapPin className="w-5 h-5 text-gray-400" />
+                <span className="text-gray-200 text-sm font-medium tracking-wide">
+                    Featured at <span className="text-white">Beautyworld Middle East</span>
+                </span>
+            </div>
+        </div>
+
         <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
-          Discover how our AI agents transform the client experience for prestigious establishments.
+          Discover how our award-winning agents transform the client experience for prestigious establishments in Dubai.
         </p>
       </div>
 
