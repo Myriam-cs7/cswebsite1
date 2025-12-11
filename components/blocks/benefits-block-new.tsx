@@ -20,11 +20,13 @@ export default function BenefitsBlockNew({ id }) {
       id: 2,
       category: "AESTHETIC CLINICS",
       title: "Global Medical Hub",
-      // Ajout de la mention "Time Zone" dans la description
       description: "Dubai attracts the world. Don't let language barriers or time zone differences cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      image: "/image/ai-concierge.png", // NOUVELLE IMAGE : Version propre sans texte
+      
+      // --- CHEMIN STANDARDISÉ (Dossier images avec un 's') ---
+      image: "/images/ai-concierge.png", 
+      
       color: "from-emerald-900/20 to-teal-900/20"
     },
     {
@@ -65,12 +67,10 @@ export default function BenefitsBlockNew({ id }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE (Format Portrait optimisé pour Mobile & Burj Khalifa) */}
+              {/* PARTIE IMAGE */}
               <div className="w-full lg:w-1/2 relative group">
-                {/* Effet de lueur derrière l'image */}
                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition duration-1000`}></div>
                 
-                {/* Ratio 3/4 parfait pour le téléphone (ai-concierge) et la tour (img1) */}
                 <div className="relative aspect-[3/4] w-full max-w-md mx-auto lg:max-w-none rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
                   <Image
                     src={item.image}
@@ -79,8 +79,6 @@ export default function BenefitsBlockNew({ id }) {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  
-                  {/* Overlay subtil */}
                   <div className="absolute inset-0 bg-black/10"></div>
                 </div>
               </div>
@@ -102,7 +100,6 @@ export default function BenefitsBlockNew({ id }) {
                   </p>
                 </div>
 
-                {/* Métrique Clé */}
                 <div className="border-t border-white/10 pt-8">
                   <div className="flex items-start gap-4">
                     <div className="flex flex-col">
@@ -113,7 +110,6 @@ export default function BenefitsBlockNew({ id }) {
                         {item.statLabel}
                       </span>
                     </div>
-                    {/* Liste de features rapide */}
                     <div className="ml-auto space-y-2 hidden md:block">
                         <div className="flex items-center gap-2 text-sm text-gray-400">
                             <CheckCircle2 className="w-4 h-4 text-[#cfaa5c]" />
