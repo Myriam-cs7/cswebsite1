@@ -1,4 +1,4 @@
-"use client"
+ "use client"
 
 import { useState, useRef, useEffect } from "react"
 // Importer depuis notre nouveau fichier de traductions factices
@@ -24,7 +24,9 @@ export default function HeroBlock({ id, content }) {
     textColor = "text-white",
     backgroundImage = "",
     customClass = "",
+    // Lien YouForm (inchangé)
     primaryButtonLink = "https://app.youform.com/forms/gxc7dqht",
+    // Lien Calendly (mis à jour)
     calendlyUrl = "https://calendly.com/cairesolutions/30min",
   } = safeContent
 
@@ -48,16 +50,18 @@ export default function HeroBlock({ id, content }) {
   const hasLoadedRef = useRef(false)
   const languageRef = useRef(language)
 
-  // -- TEXTES EN DUR (CORRIGÉS ET SANS ERREUR DE SYNTAXE) --
+  // -- TEXTES EN DUR (CORRIGÉS) --
   const staticTranslations = {
-    clientsDeserve: "Your new unfair advantage in",
-    exceptionalExperience: "beauty & wellness",
-    solutionApart: "", 
+    // Titre corrigé pour éviter le saut de ligne
+    titlePart1: "Your new unfair advantage in",
+    titlePart2: "beauty & wellness",
     subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
     
-    // Boutons & Chatbot
-    tryFree: "See WhatsApp Automation",
-    watchDemo: "Explore Solutions",
+    // Nouveaux textes des boutons
+    tryFree: "Free Trial",
+    watchDemo: "Book a Private Demo",
+    
+    // Chatbot & autres
     online: "Online",
     askAbout: "Ask about skincare...",
     uploadPhoto: "Upload a Photo",
@@ -97,7 +101,7 @@ export default function HeroBlock({ id, content }) {
     // @ts-ignore - Calendly est défini globalement par le script
     if (typeof window !== "undefined" && window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: calendlyUrl, // URL Calendly provenant des props
+        url: calendlyUrl, // Utilise le lien défini plus haut
       })
     } else {
       // Fallback si le script n'est pas chargé
@@ -276,27 +280,26 @@ export default function HeroBlock({ id, content }) {
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
         <div className="md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-8 text-center md:text-left">
           
-          {/* TAG DUBAÏ - PARIS AJOUTÉ */}
+          {/* TAG DUBAÏ - PARIS */}
           <p className="text-sm md:text-base font-medium uppercase tracking-[0.3em] text-gray-400 mb-4 animate-in fade-in slide-in-from-top-2 duration-700">
             Dubaï — Paris
           </p>
 
-          <h1 className="font-playfair text-4xl md:text-5xl font-bold leading-tight mb-4">
+          {/* TITRE CORRIGÉ POUR L'AGENCEMENT */}
+          <h1 className="font-playfair text-4xl md:text-5xl font-bold leading-tight mb-4 text-white">
+            {staticTranslations.titlePart1}{" "}
             <span className="bg-gradient-to-r from-[#cfaa5c] via-[#e0c070] to-[#cfaa5c] bg-clip-text text-transparent inline-block relative">
-              {staticTranslations.clientsDeserve}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/60 to-transparent animate-shimmer-luxury"></span>
-            </span>
-            <span className="text-white"> {staticTranslations.exceptionalExperience} </span>
-            <span className="bg-gradient-to-r from-[#cfaa5c] via-[#e0c070] to-[#cfaa5c] bg-clip-text text-transparent inline-block relative">
-              {staticTranslations.solutionApart}
+              {staticTranslations.titlePart2}
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/60 to-transparent animate-shimmer-luxury"></span>
             </span>
           </h1>
 
+          {/* SOUS-TITRE */}
           <h2 className="font-montserrat text-xl md:text-2xl font-medium mb-8 text-white">
             {staticTranslations.subtitle}
           </h2>
 
+          {/* BOUTONS CORRIGÉS */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
             <Button
               className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-lg px-8 py-3 rounded-full"
