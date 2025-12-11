@@ -13,17 +13,18 @@ export default function BenefitsBlockNew({ id }) {
       description: "60% of relaxation seekers browse services after 8 PM. Our AI captures these bookings instantly on WhatsApp, securing revenue while your staff rests.",
       stat: "+40%",
       statLabel: "Night Bookings",
-      image: "/images/img1.png", // Assure-toi que c'est bien la photo du Burj Khalifa
+      image: "/images/img1.png", // Image Burj Khalifa
       color: "from-purple-900/20 to-blue-900/20" 
     },
     {
       id: 2,
       category: "AESTHETIC CLINICS",
       title: "Global Medical Hub",
+      // Ajout de la mention "Time Zone" dans la description
       description: "Dubai attracts the world. Don't let language barriers or time zone differences cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      image: "/images/img2.jpg",
+      image: "/image/ai-concierge.png", // NOUVELLE IMAGE : Version propre sans texte
       color: "from-emerald-900/20 to-teal-900/20"
     },
     {
@@ -33,7 +34,7 @@ export default function BenefitsBlockNew({ id }) {
       description: "Don't just wait for appointments. The AI proactively re-engages clients for product refills and follow-up treatments, turning one-time visits into lifetime value.",
       stat: "x2.5",
       statLabel: "Retention Rate",
-      image: "/images/img3.png",
+      image: "/images/img3.png", 
       color: "from-orange-900/20 to-red-900/20"
     }
   ]
@@ -64,12 +65,12 @@ export default function BenefitsBlockNew({ id }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE (Format Portrait pour le Burj Khalifa) */}
+              {/* PARTIE IMAGE (Format Portrait optimisé pour Mobile & Burj Khalifa) */}
               <div className="w-full lg:w-1/2 relative group">
                 {/* Effet de lueur derrière l'image */}
                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition duration-1000`}></div>
                 
-                {/* CHANGEMENT ICI : aspect-[3/4] au lieu de aspect-[4/3] pour la verticalité */}
+                {/* Ratio 3/4 parfait pour le téléphone (ai-concierge) et la tour (img1) */}
                 <div className="relative aspect-[3/4] w-full max-w-md mx-auto lg:max-w-none rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
                   <Image
                     src={item.image}
@@ -79,7 +80,7 @@ export default function BenefitsBlockNew({ id }) {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   
-                  {/* Overlay très léger */}
+                  {/* Overlay subtil */}
                   <div className="absolute inset-0 bg-black/10"></div>
                 </div>
               </div>
