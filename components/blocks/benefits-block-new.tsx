@@ -1,141 +1,161 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useSiteConfig } from "../site-config"
-import { Award, TrendingUp, Users, DollarSign, Globe, Moon, Repeat } from "lucide-react"
+import { Award, TrendingUp, Users, DollarSign, Globe, Moon, Repeat, CheckCircle } from "lucide-react"
+import Image from "next/image"
 
 export default function BenefitsBlockNew({ id, content }) {
-  const { config } = useSiteConfig()
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeCard, setActiveCard] = useState(0)
+  const observerRefs = useRef([])
 
-  // Utiliser les valeurs du contenu ou les valeurs par défaut
-  const {
-    title = "Elevate Your Brand with Proven Benefits",
-    description = "Discover how our AI solutions deliver measurable results for luxury skincare brands.",
-    benefits = [],
-    results = [],
-    backgroundColor = "bg-[#1A1A1A]", // Force le fond sombre par défaut
-    textColor = "text-white",
-    backgroundImage = "",
-    customClass = "",
-  } = content
-
-  // Fonction pour obtenir l'icône appropriée
-  const getIcon = (iconName) => {
-    const iconClass = "w-8 h-8 text-[#cfaa5c]"
-    switch (iconName) {
-      case "Users": return <Users className={iconClass} />
-      case "TrendingUp": return <TrendingUp className={iconClass} />
-      case "DollarSign": return <DollarSign className={iconClass} />
-      case "Award": return <Award className={iconClass} />
-      case "Globe": return <Globe className={iconClass} />
-      case "Moon": return <Moon className={iconClass} />
-      case "Repeat": return <Repeat className={iconClass} />
-      default: return <Award className={iconClass} />
+  // Configuration par défaut si le contenu ne vient pas de la config
+  const defaultBenefits = [
+    {
+      title: "The Midnight Booking Effect",
+      description: "For Luxury Spas: 60% of relaxation seekers browse services after 8 PM. Our AI captures these bookings instantly on WhatsApp, securing revenue while your staff rests.",
+      stats: [{ value: "+40%", label: "Night Bookings" }],
+      // Utilise l'image que tu as nommée spa-booking.png
+      image: "/images/spa-booking.png", 
+      icon: "Moon"
+    },
+    {
+      title: "Global Medical Hub Mastery",
+      description: "Dubai & Paris attract the world. Don't let time zones or language barriers cost you patients. Our AI manages international inquiries 24/7 in 30+ languages.",
+      stats: [{ value: "30+", label: "Languages" }],
+      // Utilise l'image que tu as nommée clinic-consultation.png
+      image: "/images/clinic-consultation.png",
+      icon: "Globe"
+    },
+    {
+      title: "Automated Loyalty & Sales",
+      description: "For Retail & Salons: Don't just wait for appointments. The AI proactively re-engages clients for product refills and follow-up treatments.",
+      stats: [{ value: "35%", label: "Repeat Sales" }],
+      // Utilise l'image que tu as nommée retail-loyalty.png
+      image: "/images/retail-loyalty.png",
+      icon: "Repeat"
     }
-  }
+  ]
 
-  const sectionStyle = {
-    backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }
+  // On utilise soit le contenu de la config, soit nos défauts si la structure change
+  const benefitsData = content?.benefits && content.benefits.length > 0 ? content.benefits : defaultBenefits
+
+  // Détection du Scroll pour changer l'image active
+  useEffect(() => {
+    const observers = []
+    
+    benefitsData.forEach((_, index) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveCard(index)
+            }
+          })
+        },
+        { threshold: 0.5, rootMargin: "-20% 0px -20% 0px" } // Déclenche quand l'élément est au milieu de l'écran
+      )
+      
+      if (observerRefs.current[index]) {
+        observer.observe(observerRefs.current[index])
+      }
+      observers.push(observer)
+    })
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect())
+    }
+  }, [benefitsData])
 
   return (
-    <section
-      id={id}
-      className={`py-24 relative overflow-hidden bg-[#1A1A1A] text-white ${customClass}`}
-      style={sectionStyle}
-    >
-      {/* Fond décoratif subtil (Glow) */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#cfaa5c]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#cfaa5c]/5 rounded-full blur-[120px] pointer-events-none" />
+    <section id={id} className="relative bg-[#121212] py-24 overflow-hidden">
+      
+      {/* Background Glow Premium */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-[#cfaa5c]/5 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-[#cfaa5c]/5 rounded-full blur-[100px]"></div>
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         
-        {/* En-tête de section */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-1.5 bg-[#cfaa5c]/10 border border-[#cfaa5c]/20 rounded-full backdrop-blur-sm">
-            <span className="text-sm font-medium text-[#cfaa5c] tracking-widest uppercase">Proven Results</span>
-          </div>
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-            {title}
+        {/* Titre Section */}
+        <div className="text-center mb-24 max-w-3xl mx-auto">
+          <span className="text-[#cfaa5c] font-medium tracking-[0.2em] uppercase text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">
+            Real World Impact
+          </span>
+          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-white mb-6 leading-tight animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
+            From Spas to Clinics,<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] to-[#f0e6d2]">
+              Automation means Growth.
+            </span>
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
-            {description}
-          </p>
         </div>
 
-        {/* Navigation des onglets (Style Glassmorphism) */}
-        <div className="flex flex-wrap justify-center mb-16 gap-3">
-          {benefits.map((benefit, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveTab(index)}
-              className={`px-6 py-3 rounded-full transition-all duration-300 text-sm md:text-base font-medium border ${
-                activeTab === index
-                  ? "bg-[#cfaa5c] text-black border-[#cfaa5c] shadow-[0_0_20px_rgba(207,170,92,0.3)]"
-                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-[#cfaa5c]/50"
-              }`}
-            >
-              {benefit.title}
-            </button>
-          ))}
-        </div>
-
-        {/* Contenu Principal */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Layout : Sticky Scroll */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           
-          {/* Colonne Gauche : Texte & Stats */}
-          <div className="order-2 lg:order-1 animate-in fade-in slide-in-from-left-4 duration-700">
-            <div className="flex items-center mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#cfaa5c]/10 border border-[#cfaa5c]/20 flex items-center justify-center mr-5 shadow-lg shadow-[#cfaa5c]/5">
-                {getIcon(benefits[activeTab]?.icon)}
-              </div>
-              <h3 className="font-playfair text-3xl font-bold text-white">
-                {benefits[activeTab]?.title}
-              </h3>
-            </div>
-            
-            <p className="text-gray-300 mb-10 text-lg leading-relaxed border-l-2 border-[#cfaa5c]/30 pl-6">
-              {benefits[activeTab]?.description}
-            </p>
-
-            {/* Statistiques (Cartes Dark) */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              {benefits[activeTab]?.stats.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/5 backdrop-blur-md rounded-xl p-5 border border-white/10 hover:border-[#cfaa5c]/30 transition-colors group"
-                >
-                  <div className="text-[#cfaa5c] text-3xl md:text-4xl font-bold mb-1 group-hover:scale-105 transition-transform origin-left">
-                    {stat.value}
+          {/* Colonne GAUCHE : Texte (Scrollable) */}
+          <div className="lg:w-1/2 flex flex-col gap-[30vh] pb-[20vh]">
+            {benefitsData.map((benefit, index) => (
+              <div 
+                key={index}
+                ref={el => observerRefs.current[index] = el}
+                className={`transition-all duration-500 ${activeCard === index ? 'opacity-100 scale-100' : 'opacity-30 scale-95 blur-[2px]'}`}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-full border border-[#cfaa5c]/30 flex items-center justify-center bg-[#cfaa5c]/10 text-[#cfaa5c]">
+                    <span className="font-playfair font-bold text-xl">{index + 1}</span>
                   </div>
-                  <div className="text-gray-400 text-sm font-medium uppercase tracking-wide">
-                    {stat.label}
-                  </div>
+                  <h3 className="text-3xl md:text-4xl font-playfair font-bold text-white">
+                    {benefit.title}
+                  </h3>
                 </div>
-              ))}
-            </div>
+                
+                <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 pl-16 border-l border-[#cfaa5c]/20">
+                  {benefit.description}
+                </p>
+
+                <div className="pl-16 flex gap-8">
+                  {benefit.stats.map((stat, i) => (
+                    <div key={i}>
+                      <div className="text-3xl font-bold text-[#cfaa5c]">{stat.value}</div>
+                      <div className="text-sm text-gray-500 uppercase tracking-wider">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Colonne Droite : Image (Cadre Premium) */}
-          <div 
-            className="order-1 lg:order-2 relative h-[400px] lg:h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group animate-in fade-in zoom-in duration-700"
-          >
-            {/* Image de fond */}
-            <div className="absolute inset-0">
-               <img
-                src={benefits[activeTab]?.image || "/placeholder.svg"}
-                alt={benefits[activeTab]?.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              {/* Overlay sombre pour l'élégance */}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+          {/* Colonne DROITE : Image (Sticky / Fixe) */}
+          <div className="hidden lg:block lg:w-1/2 relative">
+            <div className="sticky top-[20vh] h-[600px] w-full">
+              {/* Cadre style iPhone / Premium */}
+              <div className="relative w-full h-full rounded-[2.5rem] border-8 border-[#2a2a2a] bg-[#1a1a1a] shadow-2xl overflow-hidden">
+                {/* Dynamic Image */}
+                {benefitsData.map((benefit, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                      activeCard === index ? "opacity-100 z-10" : "opacity-0 z-0"
+                    }`}
+                  >
+                    {/* On utilise une image HTML standard pour éviter les soucis de config Next.js Image si les domaines ne sont pas whitelistés */}
+                    <img 
+                      src={benefit.image || "/images/placeholder.jpg"} 
+                      alt={benefit.title} 
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Overlay gradient pour que le texte ressorte si besoin */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                ))}
+              </div>
 
-            {/* Effet de reflet (Glass Shine) */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              {/* Elément décoratif flottant */}
+              <div className="absolute -right-12 -bottom-12 w-48 h-48 bg-[#cfaa5c]/10 rounded-full blur-3xl"></div>
+            </div>
           </div>
 
         </div>
