@@ -158,7 +158,7 @@ const defaultConfig: SiteConfig = {
         ],
       },
     },
-    // --- SECTION BRAND / WHY CHOOSE US (CORRIGÉE) ---
+    // --- SECTION BRAND / WHY CHOOSE US (CORRIGÉE AVEC BACKTICKS) ---
     {
       id: "brand",
       title: "Why Choose Us",
@@ -168,7 +168,7 @@ const defaultConfig: SiteConfig = {
       content: {
         title: "Why choose cAIre?",
         subtitle: "Technology & Acquisition",
-        // Utilisation des backticks (`) pour sécuriser le texte multi-lignes
+        // Utilisation des backticks (`) pour le texte multi-lignes
         description: `cAIre finally brings together two essential growth levers: technology and acquisition.
 
 On one hand, you get a beauty- and wellness-specialized virtual assistant that can answer questions, advise, sell, and even book appointments for your team.
@@ -444,32 +444,25 @@ const SiteConfigContext = createContext<SiteConfigContextType>({
 
 // Créer le provider
 export function SiteConfigProvider({ children }: { children: ReactNode }) {
+  // MODIFICATION ICI : On initialise directement avec la configuration par défaut pour forcer la mise à jour
   const [config, setConfig] = useState<SiteConfig>(defaultConfig)
 
   useEffect(() => {
+    // POUR FORCER L'AFFICHAGE DU NOUVEAU TEXTE :
+    // On commente la partie qui lit la vieille mémoire du navigateur.
+    /*
     if (typeof window !== "undefined") {
       try {
         const savedConfig = localStorage.getItem("siteConfig")
         if (savedConfig) {
-          const parsed = JSON.parse(savedConfig)
-          // Vérification rapide pour voir si la nouvelle section existe ET si le pricing est bien masqué
-          const hasCaseStudies = parsed.sections.some(s => s.id === "case-studies")
-          const pricingHidden = parsed.sections.find(s => s.id === "pricing")?.visible === false
-          
-          if (!hasCaseStudies || !pricingHidden) {
-             // Si la config en mémoire ne correspond pas à la stratégie, on force la nouvelle
-             setConfig(defaultConfig)
-             localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
-          } else {
-             setConfig(parsed)
-          }
-        } else {
-           setConfig(defaultConfig)
+           // ... on ignore la mémoire pour l'instant
         }
-      } catch (e) {
-        console.error("Erreur config:", e)
-        setConfig(defaultConfig)
-      }
+      } catch (e) { console.error(e) }
+    }
+    */
+    // On force la sauvegarde de la nouvelle config
+    if (typeof window !== "undefined") {
+        localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
     }
   }, [])
 
