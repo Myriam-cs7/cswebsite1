@@ -158,18 +158,21 @@ const defaultConfig: SiteConfig = {
         ],
       },
     },
+    // --- NOUVELLE SECTION BRAND / WHY CHOOSE US ---
     {
       id: "brand",
-      title: "Brand",
+      title: "Why Choose Us",
       visible: true,
       order: 2,
       template: "brand",
       content: {
-        title: "cAIre Solutions",
-        subtitle: "AI-Powered Excellence",
+        title: "Why choose cAIre?",
+        subtitle: "Technology & Acquisition",
+        // J'ai inséré les sauts de lignes pour aérer tes paragraphes
         description:
-          "Imagine an AI that captures your clients' attention from the very first interaction, offering intelligent recommendations and a tone perfectly aligned with your brand's values. Available 24/7, our assistant leverages cutting-edge technology to provide a seamless, personalized experience.",
-        image: "/images/beauty-cs.png",
+          "cAIre finally brings together two essential growth levers: technology and acquisition.\n\nOn one hand, you get a beauty- and wellness-specialized virtual assistant that can answer questions, advise, sell, and even book appointments for your team.\n\nOn the other hand, you gain direct access to creators and influencers who drive qualified traffic to your services, treatments, and products.\n\nYour clients discover your brand through authentic content and posts, and are instantly guided by a virtual advisor who turns that attention into bookings, sales, and long-term loyalty.\n\nClear, simple, effective: you attract more clients and convert more without increasing your team size.",
+        // Attention : Renomme ton image en influencer-partner.png
+        image: "/images/influencer-partner.png",
       },
     },
     {
