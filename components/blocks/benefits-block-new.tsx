@@ -15,7 +15,8 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Night Bookings",
       image: "/images/img1.png", 
       color: "from-purple-900/20 to-blue-900/20",
-      // Alignement par défaut (Centre)
+      // Image panoramique (Bureau) : On veut voir large
+      aspect: "aspect-video", 
       position: "object-center"
     },
     {
@@ -27,7 +28,9 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Languages Spoken",
       image: "/images/ai-concierge.png", 
       color: "from-emerald-900/20 to-teal-900/20",
-      position: "object-center"
+      // Image Chat (Carrée) : On veut voir le haut du téléphone absolument
+      aspect: "aspect-square max-w-[400px]", 
+      position: "object-top"
     },
     {
       id: 3,
@@ -38,74 +41,72 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
       color: "from-orange-900/20 to-red-900/20",
-      // MODIFICATION ICI : On force l'image à se caler en HAUT pour voir le haut des téléphones
-      position: "object-top"
+      // Image 3 téléphones : Très large
+      aspect: "aspect-video",
+      position: "object-center"
     }
   ]
 
   return (
-    <section id={id} className="bg-black py-16 md:py-24 overflow-hidden">
+    <section id={id} className="bg-black py-16 md:py-20 overflow-hidden">
       
-      {/* En-tête de section */}
-      <div className="container mx-auto px-4 mb-16 text-center">
-        <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-6 backdrop-blur-md">
+      {/* En-tête plus compact */}
+      <div className="container mx-auto px-4 mb-12 text-center">
+        <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-4 backdrop-blur-md">
           Case Studies
         </span>
-        <h2 className="text-3xl md:text-5xl font-serif text-white leading-tight mb-8">
+        <h2 className="text-3xl md:text-5xl font-serif text-white leading-tight mb-6">
           Artificial Intelligence. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfaa5c] to-[#f0e6d2]">
             Real World Results.
           </span>
         </h2>
         
-        {/* BLOC AWARDS & EVENT */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
-            <div className="flex items-center gap-3 px-5 py-2 rounded-full border border-[#cfaa5c]/30 bg-[#cfaa5c]/5 backdrop-blur-sm">
+        {/* Badges centrés */}
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#cfaa5c]/30 bg-[#cfaa5c]/5 backdrop-blur-sm">
                 <Trophy className="w-4 h-4 text-[#cfaa5c]" />
-                <span className="text-gray-200 text-xs md:text-sm font-medium tracking-wide">
+                <span className="text-gray-200 text-xs font-medium tracking-wide">
                     Winner: <span className="text-[#cfaa5c]">Beauty AI Innovation Award</span>
                 </span>
             </div>
 
-            <div className="flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
                 <Sparkles className="w-4 h-4 text-pink-500" />
-                <span className="text-gray-200 text-xs md:text-sm font-medium tracking-wide">
+                <span className="text-gray-200 text-xs font-medium tracking-wide">
                     Featured at <span className="text-white">Beautyworld Middle East</span>
                 </span>
             </div>
         </div>
-
-        <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-light">
-          Discover how our award-winning agents transform the client experience for prestigious establishments in Dubai.
-        </p>
       </div>
 
-      <div className="container mx-auto px-4 flex flex-col gap-16 md:gap-20">
+      <div className="container mx-auto px-4 flex flex-col gap-16">
         {cases.map((item, index) => {
           const isEven = index % 2 === 0;
           
           return (
+            // Layout ajusté : Image plus petite (5/12) et Texte plus grand (7/12) pour éviter le vide
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE */}
-              <div className="w-full lg:w-1/2 relative group">
+              {/* PARTIE IMAGE : Taille maîtrisée */}
+              <div className="w-full lg:w-5/12 relative group flex justify-center">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000`}></div>
                 
-                <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900">
+                {/* Application du ratio spécifique à chaque image */}
+                <div className={`relative w-full ${item.aspect} rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900`}>
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    // ICI : J'utilise item.position pour appliquer "object-top" spécifiquement aux téléphones
                     className={`object-cover transition-transform duration-700 group-hover:scale-105 ${item.position}`}
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, 40vw"
                   />
-                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute inset-0 bg-black/5"></div>
                 </div>
               </div>
 
-              {/* PARTIE TEXTE */}
-              <div className="w-full lg:w-1/2 space-y-6 text-left">
+              {/* PARTIE TEXTE : Plus large pour combler le vide */}
+              <div className="w-full lg:w-7/12 space-y-6 text-left">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="h-px w-8 bg-[#cfaa5c]"></span>
@@ -131,7 +132,6 @@ export default function BenefitsBlockNew({ id }) {
                         {item.statLabel}
                       </span>
                     </div>
-                    {/* Features compactes */}
                     <div className="ml-auto flex flex-col gap-2">
                         <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
                             <CheckCircle2 className="w-4 h-4 text-[#cfaa5c]" />
