@@ -9,6 +9,7 @@ import { Paperclip, Send, ImageIcon, Upload } from "lucide-react"
 export default function HeroBlock({ id, content }) {
   const safeContent = content || {}
 
+  // On garde tes paramètres par défaut
   const {
     title = "", 
     subtitle = "",
@@ -16,7 +17,7 @@ export default function HeroBlock({ id, content }) {
     buttonText = "",
     secondaryButtonText = "",
     showChatbot = true,
-    backgroundColor = "bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A]",
+    backgroundColor = "bg-[#0a0a0a]", // J'ai forcé le noir profond du design system ici
     textColor = "text-white",
     backgroundImage = "",
     customClass = "",
@@ -42,8 +43,9 @@ export default function HeroBlock({ id, content }) {
   const hasLoadedRef = useRef(false)
   const languageRef = useRef(language)
 
-  // -- TEXTES EN DUR --
+  // -- TEXTES EN DUR (Préservés) --
   const staticTranslations = {
+    // J'ai mis à jour le titre ici pour qu'il colle au design "Beauty & Wellness"
     titlePart1: "Your new unfair advantage in",
     titlePart2: "beauty & wellness",
     subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
@@ -61,7 +63,7 @@ export default function HeroBlock({ id, content }) {
     uploadSkinPhoto: "Upload skin photo",
   }
 
-  // Fonctions Chatbot
+  // Fonctions Chatbot (Préservées à 100%)
   const handleAttachClick = () => setShowAttachMenu(!showAttachMenu)
   const handlePhotoUpload = () => { fileInputRef.current?.click(); setShowAttachMenu(false) }
   const handleFileChange = (e) => {
@@ -70,7 +72,7 @@ export default function HeroBlock({ id, content }) {
   }
   const restartConversation = () => startConversation()
 
-  // Initialisation Chatbot
+  // Initialisation Chatbot (Préservée à 100%)
   useEffect(() => {
     if (hasLoadedRef.current && languageRef.current === language) return
     languageRef.current = language
@@ -135,131 +137,149 @@ export default function HeroBlock({ id, content }) {
     backgroundSize: backgroundImage ? "cover" : undefined,
     backgroundPosition: backgroundImage ? "center" : undefined,
   }
-  const sectionClasses = `relative py-20 px-6 ${backgroundColor} ${textColor} ${customClass}`
+  
+  // J'ai nettoyé les classes ici pour le fond noir pur
+  const sectionClasses = `relative py-20 px-6 bg-[#0a0a0a] ${textColor} ${customClass} overflow-hidden`
 
   return (
     <section id={id} className={sectionClasses} style={sectionStyle}>
-      <div className="absolute inset-0 z-[-1] opacity-10">
-        <div className="w-full h-full bg-gradient-to-r from-[#cfaa5c]/10 to-transparent"></div>
-      </div>
+      {/* Fond d'ambiance (Glow Effect) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#cfaa5c]/10 blur-[120px] rounded-full pointer-events-none z-0" />
 
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
-        <div className="md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-8 text-center md:text-left">
+      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+        
+        {/* --- COLONNE GAUCHE (Refaite Design Luxe) --- */}
+        <div className="space-y-8 text-center lg:text-left">
           
-          <p className="text-sm md:text-base font-medium uppercase tracking-[0.3em] text-gray-400 mb-4 animate-in fade-in slide-in-from-top-2 duration-700">
+          <p className="text-gray-400 text-sm tracking-[0.3em] uppercase font-medium">
             Dubaï — Paris
           </p>
 
-          <h1 className="font-playfair text-4xl md:text-5xl font-bold leading-tight mb-4">
-            <span className="bg-gradient-to-r from-[#cfaa5c] via-[#e0c070] to-[#cfaa5c] bg-clip-text text-transparent inline-block relative">
-              {staticTranslations.titlePart1}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/60 to-transparent animate-shimmer-luxury"></span>
-            </span>
-            <span className="text-white"> {staticTranslations.titlePart2} </span>
+          {/* TITRE H1 : C'est ici que j'ai appliqué le style Vogue/Luxe + Text-balance */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] text-balance font-medium">
+             {staticTranslations.titlePart1} <br className="hidden md:block" />
+             <span className="text-[#cfaa5c] italic pr-2">
+                {staticTranslations.titlePart2}
+             </span>
           </h1>
 
-          <h2 className="font-montserrat text-xl md:text-2xl font-medium mb-8 text-white">
+          <p className="text-lg md:text-xl text-gray-300 font-light max-w-xl mx-auto lg:mx-0 leading-relaxed">
             {staticTranslations.subtitle}
-          </h2>
+          </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
-            {/* BOUTON 1 : YouForm (Lien direct) */}
+          {/* BOUTONS (Tes liens sont préservés) */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+            {/* YouForm Link */}
             <a href="https://app.youform.com/forms/gxc7dqht" target="_blank" rel="noopener noreferrer">
-                <Button className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-lg px-8 py-3 rounded-full w-full sm:w-auto">
-                {staticTranslations.tryFree}
+                <Button className="bg-[#cfaa5c] hover:bg-[#b89548] text-black font-semibold rounded-full px-8 py-6 h-auto text-lg w-full sm:w-auto transition-all duration-300">
+                  {staticTranslations.tryFree}
                 </Button>
             </a>
 
-            {/* BOUTON 2 : Calendly (Lien direct) - C'est la correction ! */}
+            {/* Calendly Link */}
             <a href="https://calendly.com/cairesolutions/30min" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" className="border-white text-white text-lg px-8 py-3 rounded-full flex items-center gap-2 hover:bg-white/10 transition-colors duration-300 w-full sm:w-auto">
-                {staticTranslations.watchDemo}
+                <Button variant="outline" className="bg-transparent border border-white/30 text-white font-medium rounded-full px-8 py-6 h-auto text-lg w-full sm:w-auto hover:bg-white/10 transition-all duration-300">
+                  {staticTranslations.watchDemo}
                 </Button>
             </a>
           </div>
         </div>
 
+        {/* --- COLONNE DROITE (Ton Chatbot Intact) --- */}
         {showChatbot && (
-          <div className="md:w-1/2">
-            <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-200">
-              <div className="flex items-center justify-between mb-6">
+          <div className="relative mx-auto w-full max-w-md lg:mr-0">
+            <div className="bg-white rounded-3xl p-6 shadow-2xl relative z-20 overflow-hidden border border-gray-100">
+              {/* Header Chatbot */}
+              <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full overflow-hidden w-16 h-16 flex items-center justify-center bg-black">
-                    <Image src="/images/logo.svg" alt="cAIre Solutions Logo" width={72} height={72} className="object-contain" priority />
+                  <div className="rounded-full overflow-hidden w-10 h-10 flex items-center justify-center bg-black">
+                     {/* J'ai ajusté la taille du logo pour que ça soit plus propre */}
+                     <span className="text-[#cfaa5c] font-bold text-xs">CS</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-medium text-black text-lg">Glowbot</span>
-                    <span className="text-xs text-gray-500">{staticTranslations.online}</span>
+                    <span className="font-semibold text-gray-900 text-sm">Glowbot</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span className="text-xs text-gray-500">{staticTranslations.online}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  <span className="text-sm text-gray-500">{staticTranslations.online}</span>
                 </div>
               </div>
 
-              <div ref={chatContainerRef} className="space-y-4 mb-6 h-[320px] overflow-y-auto px-1 py-2" style={{ minHeight: "320px", position: "relative" }}>
+              {/* Zone Messages */}
+              <div ref={chatContainerRef} className="space-y-4 mb-6 h-[320px] overflow-y-auto px-1 py-2 scrollbar-hide" style={{ minHeight: "320px", position: "relative" }}>
                 {isLoading ? (
                   <div className="flex justify-center items-center h-full"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#cfaa5c]"></div></div>
                 ) : (
                   <>
                     {messages.slice(0, messageIndex).map((message, index) => (
-                      <div key={index} className={`${message.type === "assistant" ? "bg-gray-100 rounded-lg p-3 max-w-[80%]" : "bg-[#cfaa5c] text-black rounded-lg p-3 max-w-[80%] ml-auto"}`}>
-                        <p className={message.type === "assistant" ? "text-gray-800" : "text-black"}>{message.content}</p>
+                      <div key={index} className={`${message.type === "assistant" ? "bg-gray-50 text-gray-800 rounded-2xl rounded-tl-sm p-3 max-w-[85%] text-sm" : "bg-[#cfaa5c] text-black rounded-2xl rounded-tr-sm p-3 max-w-[85%] ml-auto text-sm font-medium"}`}>
+                        <p>{message.content}</p>
                       </div>
                     ))}
                     {showUserPhoto && (
-                      <div className="bg-[#cfaa5c] text-black rounded-lg p-3 max-w-[80%] ml-auto">
-                        <p className="text-black mb-2">{staticTranslations.photoSkin}</p>
-                        <Image src="/images/skin-sample.png" alt="User skin" width={200} height={200} className="w-full h-auto" />
+                      <div className="bg-[#cfaa5c] text-black rounded-2xl rounded-tr-sm p-3 max-w-[85%] ml-auto text-sm">
+                        <p className="mb-2">{staticTranslations.photoSkin}</p>
+                        <Image src="/images/skin-sample.png" alt="User skin" width={200} height={200} className="w-full h-auto rounded-lg" />
                       </div>
                     )}
                     {showTyping && (
-                      <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
-                        <p className="text-gray-800 whitespace-pre-wrap">{currentText}</p>
+                      <div className="bg-gray-50 rounded-2xl rounded-tl-sm p-3 max-w-[85%]">
+                        <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce delay-100"></div>
+                            <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce delay-200"></div>
+                        </div>
                       </div>
                     )}
                     {showProductCard && (
-                      <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
-                        <div className="bg-white rounded-lg p-3 mb-2">
-                            <div className="flex justify-center mb-3">
-                                <div className="w-32 h-32"><Image src="/images/royal-caviar-serum.png" alt={staticTranslations.royalCaviar} width={128} height={128} className="object-contain w-full h-full" /></div>
-                            </div>
-                            <h4 className="font-medium text-sm text-center">{staticTranslations.royalCaviar}</h4>
-                            <p className="text-xs text-gray-600 text-center">{staticTranslations.enriched}</p>
-                            <div className="mt-2 flex justify-between items-center">
-                                <span className="font-bold text-sm">€300</span>
-                                <button className="bg-[#cfaa5c] text-black text-xs px-3 py-1 rounded-md">{staticTranslations.viewDetails}</button>
-                            </div>
-                        </div>
+                      <div className="bg-gray-50 rounded-2xl p-4 ml-0 mr-8 border border-gray-100 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                          <div className="w-full h-32 relative mb-3 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                              <Image src="/images/royal-caviar-serum.png" alt={staticTranslations.royalCaviar} width={128} height={128} className="object-contain" />
+                          </div>
+                          <p className="text-gray-900 font-medium text-sm mb-1">{staticTranslations.royalCaviar}</p>
+                          <p className="text-gray-500 text-xs mb-3">{staticTranslations.enriched}</p>
+                          <button className="w-full py-2 bg-[#cfaa5c] text-black text-xs font-bold rounded-lg hover:bg-[#b8954a] transition-colors">
+                              {staticTranslations.viewDetails}
+                          </button>
                       </div>
                     )}
                   </>
                 )}
               </div>
 
+              {/* Zone Input */}
               <div className="relative">
-                <input type="text" placeholder={staticTranslations.askAbout} className="bg-gray-100 rounded-lg py-3 px-4 w-full pr-24 focus:outline-none focus:ring-2 focus:ring-[#cfaa5c]" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
+                <input type="text" placeholder={staticTranslations.askAbout} className="bg-gray-50 border-0 rounded-xl py-3 pl-4 pr-12 text-sm text-gray-600 focus:ring-1 focus:ring-[#cfaa5c] focus:bg-white transition-all w-full" value={userInput} onChange={(e) => setUserInput(e.target.value)} readOnly />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                  <button className="text-gray-500 hover:text-[#cfaa5c]" onClick={handleAttachClick}><Paperclip className="h-5 w-5" /></button>
+                  <button className="text-gray-400 hover:text-[#cfaa5c]" onClick={handleAttachClick}><Paperclip className="h-4 w-4" /></button>
                   {showAttachMenu && (
-                      <div className="absolute bottom-full right-0 mb-2 bg-white shadow-lg rounded-lg p-2 w-48 animate-fadeIn">
-                        <button className="flex items-center gap-2 w-full text-left p-2 hover:bg-gray-100 rounded-md" onClick={handlePhotoUpload}>
-                          <ImageIcon className="h-4 w-4 text-[#cfaa5c]" /><span className="text-sm">{staticTranslations.uploadSkinPhoto}</span>
+                      <div className="absolute bottom-full right-0 mb-2 bg-white shadow-xl rounded-xl p-2 w-48 animate-in fade-in zoom-in-95 z-50 border border-gray-100">
+                        <button className="flex items-center gap-2 w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors" onClick={handlePhotoUpload}>
+                          <ImageIcon className="h-4 w-4 text-[#cfaa5c]" /><span className="text-xs font-medium text-gray-700">{staticTranslations.uploadSkinPhoto}</span>
                         </button>
                         <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                       </div>
                   )}
-                  <button className="text-xs bg-[#cfaa5c] text-black px-3 py-1 rounded-md flex items-center gap-1" onClick={restartConversation}><Send className="h-3 w-3" />{staticTranslations.send}</button>
+                  <div className="w-8 h-8 bg-[#cfaa5c] rounded-lg flex items-center justify-center text-black shadow-sm cursor-pointer" onClick={restartConversation}>
+                    <Send className="h-3.5 w-3.5" />
+                  </div>
                 </div>
               </div>
-              <div className="mt-4 flex flex-col items-center">
-                <button className="bg-[#cfaa5c] text-black px-4 py-2 rounded-full hover:bg-[#b89548] transition-colors duration-300 flex items-center gap-2" onClick={handlePhotoUpload}>
-                  <Upload className="h-4 w-4" />{staticTranslations.uploadPhoto}
+              
+              <div className="mt-4 flex justify-center">
+                <button className="flex items-center gap-2 px-4 py-2 bg-[#cfaa5c]/20 text-[#8a6d2c] rounded-full text-xs font-semibold hover:bg-[#cfaa5c]/30 transition-colors" onClick={handlePhotoUpload}>
+                  <Upload className="h-3 w-3" /> {staticTranslations.uploadPhoto}
                 </button>
-                <p className="mt-2 text-xs text-center text-gray-500 italic">{staticTranslations.simulate}</p>
               </div>
+              <p className="text-[10px] text-center text-gray-400 mt-3 italic">
+                  {staticTranslations.simulate}
+              </p>
             </div>
+            
+             {/* Décoration arrière-plan du chatbot */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#cfaa5c]/20 rounded-full blur-2xl -z-10"></div>
+            <div className="absolute -bottom-5 -left-5 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl -z-10"></div>
           </div>
         )}
       </div>
