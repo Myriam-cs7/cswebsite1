@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { CheckCircle2, TrendingUp, Globe, Trophy, Sparkles } from "lucide-react"
+import Image from "next/image";
+import { CheckCircle2, Trophy, Sparkles } from "lucide-react";
 
 export default function BenefitsBlockNew({ id }) {
   
@@ -16,8 +16,9 @@ export default function BenefitsBlockNew({ id }) {
       image: "/images/img1.png", 
       color: "from-purple-900/20 to-blue-900/20",
       aspect: "aspect-video", 
-      fit: "object-cover", // Celui-ci reste en remplissage (paysage)
-      position: "object-center"
+      fit: "object-cover",
+      position: "object-center",
+      noFrame: false // Cadre standard
     },
     {
       id: 2,
@@ -29,8 +30,9 @@ export default function BenefitsBlockNew({ id }) {
       image: "/images/ai-concierge.png", 
       color: "from-emerald-900/20 to-teal-900/20",
       aspect: "aspect-[4/5] md:aspect-square", 
-      fit: "object-contain", // Celui-ci est PARFAIT (ne pas toucher)
-      position: "object-center"
+      fit: "object-contain",
+      position: "object-center",
+      noFrame: false // Cadre standard
     },
     {
       id: 3,
@@ -41,18 +43,22 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
       color: "from-orange-900/20 to-red-900/20",
-      aspect: "aspect-video",
       
-      // --- CORRECTION ICI POUR RETAIL ---
-      // Je passe en "contain" pour voir les 3 téléphones en entier sans coupure
+      // --- MODIFICATIONS MAJEURES ICI ---
+      // 1. On change le ratio pour du vertical/carré (plus haut)
+      aspect: "aspect-square md:aspect-[10/11]", 
+      // 2. On garde 'contain' pour voir les téléphones en entier
       fit: "object-contain", 
-      position: "object-center" 
+      position: "object-center",
+      // 3. Nouvelle propriété pour retirer les bordures grises
+      noFrame: true 
     }
-  ]
+  ];
 
   return (
     <section id={id} className="bg-black py-16 md:py-24 overflow-hidden">
       
+      {/* HEADER SECTION */}
       <div className="container mx-auto px-4 mb-12 text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-4 backdrop-blur-md">
           Case Studies
@@ -81,34 +87,42 @@ export default function BenefitsBlockNew({ id }) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 flex flex-col gap-16">
+      {/* CASES LOOP */}
+      <div className="container mx-auto px-4 flex flex-col gap-24"> {/* Gap augmenté à 24 pour aérer */}
         {cases.map((item, index) => {
           const isEven = index % 2 === 0;
           
           return (
-            <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+            <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
               {/* PARTIE IMAGE */}
-              <div className="w-full lg:w-5/12 relative group flex justify-center">
+              <div className="w-full lg:w-6/12 relative group flex justify-center">
                 
-                {/* Optimisation Performance (INP) maintenue */}
-                <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700`}></div>
+                {/* Background Glow (Lueur) */}
+                <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-700`}></div>
                 
-                <div className={`relative w-full ${item.aspect} rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900`}>
+                {/* CONTAINER IMAGE */}
+                {/* Logique conditionnelle : Si noFrame est true, on enlève bordures et background */}
+                <div className={`
+                    relative w-full ${item.aspect} 
+                    ${item.noFrame ? '' : 'rounded-xl border border-white/10 shadow-2xl bg-neutral-900 overflow-hidden'}
+                    transition-transform duration-700
+                `}>
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
                     className={`transition-transform duration-700 group-hover:scale-105 ${item.fit} ${item.position} will-change-transform`}
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    priority={index === 0}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                  
+                  {/* Overlay subtil uniquement si on a un cadre */}
+                  {!item.noFrame && <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>}
                 </div>
               </div>
 
               {/* PARTIE TEXTE */}
-              <div className="w-full lg:w-7/12 space-y-6 text-left">
+              <div className="w-full lg:w-6/12 space-y-8 text-left">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="h-px w-8 bg-[#cfaa5c]"></span>
@@ -116,31 +130,31 @@ export default function BenefitsBlockNew({ id }) {
                       {item.category}
                     </span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-serif text-white mb-4">
+                  <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
                     {item.title}
                   </h3>
-                  <p className="text-gray-400 text-base md:text-lg leading-relaxed font-light">
+                  <p className="text-gray-400 text-lg leading-relaxed font-light">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="border-t border-white/10 pt-6">
-                  <div className="flex items-center gap-8">
+                <div className="border-t border-white/10 pt-8">
+                  <div className="flex items-center gap-12">
                     <div className="flex flex-col">
-                      <span className="text-4xl font-light text-white tracking-tight">
+                      <span className="text-5xl font-light text-white tracking-tight">
                         {item.stat}
                       </span>
-                      <span className="text-xs text-gray-500 uppercase tracking-widest mt-1">
+                      <span className="text-xs text-gray-500 uppercase tracking-widest mt-2">
                         {item.statLabel}
                       </span>
                     </div>
-                    <div className="ml-auto flex flex-col gap-2">
-                        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
-                            <CheckCircle2 className="w-4 h-4 text-[#cfaa5c]" />
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3 text-sm text-gray-300">
+                            <CheckCircle2 className="w-5 h-5 text-[#cfaa5c]" />
                             <span>24/7 Availability</span>
                         </div>
-                        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
-                            <CheckCircle2 className="w-4 h-4 text-[#cfaa5c]" />
+                        <div className="flex items-center gap-3 text-sm text-gray-300">
+                            <CheckCircle2 className="w-5 h-5 text-[#cfaa5c]" />
                             <span>Instant Sync</span>
                         </div>
                     </div>
