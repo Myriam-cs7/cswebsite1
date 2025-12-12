@@ -103,7 +103,7 @@ const defaultConfig: SiteConfig = {
         results: [],
       },
     },
-    // --- C'EST ICI QUE JE FORCE LE TEXTE ---
+    // --- SECTION CORRIGÉE (TEXTE SUR UNE LIGNE POUR ÉVITER LES BUGS) ---
     {
       id: "brand",
       title: "Why Choose Us",
@@ -113,19 +113,11 @@ const defaultConfig: SiteConfig = {
       content: {
         title: "Why choose cAIre?",
         subtitle: "Technology & Acquisition",
-        // J'utilise des backticks ` ` pour éviter l'erreur de syntaxe sur le texte long
-        description: `cAIre finally brings together two essential growth levers: technology and acquisition.
-
-On one hand, you get a beauty- and wellness-specialized virtual assistant that can answer questions, advise, sell, and even book appointments for your team.
-
-On the other hand, you gain direct access to creators and influencers who drive qualified traffic to your services, treatments, and products.
-
-Your clients discover your brand through authentic content and posts, and are instantly guided by a virtual advisor who turns that attention into bookings, sales, and long-term loyalty.
-
-Clear, simple, effective: you attract more clients and convert more without increasing your team size.`,
+        description: "cAIre finally brings together two essential growth levers: technology and acquisition.\n\nOn one hand, you get a beauty- and wellness-specialized virtual assistant that can answer questions, advise, sell, and even book appointments for your team.\n\nOn the other hand, you gain direct access to creators and influencers who drive qualified traffic to your services, treatments, and products.\n\nYour clients discover your brand through authentic content and posts, and are instantly guided by a virtual advisor who turns that attention into bookings, sales, and long-term loyalty.\n\nClear, simple, effective: you attract more clients and convert more without increasing your team size.",
         image: "/images/influencer-partner.png",
       },
     },
+    // ------------------------------------------------------------------
     { id: "value-proposition", title: "Value Proposition", visible: true, order: 2.5, template: "value-proposition", content: { propositions: [] } },
     { id: "about", title: "About (Tech)", visible: true, order: 4.5, template: "about", content: { title: "Combining French Expertise", paragraphs: [], stats: [] } },
     { id: "features", title: "Features", visible: true, order: 4, template: "features", content: { title: "Features Designed for Luxury", description: "", items: [] } },
@@ -144,11 +136,10 @@ Clear, simple, effective: you attract more clients and convert more without incr
 const SiteConfigContext = createContext<any>(null)
 
 export function SiteConfigProvider({ children }: { children: ReactNode }) {
-  // JE FORCE LA CONFIG ICI. Pas de lecture de localStorage qui garde les vieilles versions.
   const [config, setConfig] = useState<SiteConfig>(defaultConfig)
 
-  // On force la sauvegarde de la nouvelle version dans le navigateur
   useEffect(() => {
+    // FORCE LA MISE A JOUR DU CONTENU
     if (typeof window !== "undefined") {
         localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
     }
