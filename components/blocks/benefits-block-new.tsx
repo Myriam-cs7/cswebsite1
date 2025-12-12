@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { CheckCircle2, TrendingUp, Globe, MessageCircle, Trophy, Sparkles } from "lucide-react"
+import { CheckCircle2, TrendingUp, Globe, Trophy, Sparkles } from "lucide-react"
 
 export default function BenefitsBlockNew({ id }) {
   
@@ -15,8 +15,8 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Night Bookings",
       image: "/images/img1.png", 
       color: "from-purple-900/20 to-blue-900/20",
-      // Image panoramique (Bureau) : On veut voir large
       aspect: "aspect-video", 
+      fit: "object-cover", // Celui-ci reste en remplissage (paysage)
       position: "object-center"
     },
     {
@@ -28,9 +28,9 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Languages Spoken",
       image: "/images/ai-concierge.png", 
       color: "from-emerald-900/20 to-teal-900/20",
-      // Image Chat (Carrée) : On veut voir le haut du téléphone absolument
-      aspect: "aspect-square max-w-[400px]", 
-      position: "object-top"
+      aspect: "aspect-[4/5] md:aspect-square", 
+      fit: "object-contain", // Celui-ci est PARFAIT (ne pas toucher)
+      position: "object-center"
     },
     {
       id: 3,
@@ -41,16 +41,18 @@ export default function BenefitsBlockNew({ id }) {
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
       color: "from-orange-900/20 to-red-900/20",
-      // Image 3 téléphones : Très large
       aspect: "aspect-video",
-      position: "object-center"
+      
+      // --- CORRECTION ICI POUR RETAIL ---
+      // Je passe en "contain" pour voir les 3 téléphones en entier sans coupure
+      fit: "object-contain", 
+      position: "object-center" 
     }
   ]
 
   return (
-    <section id={id} className="bg-black py-16 md:py-20 overflow-hidden">
+    <section id={id} className="bg-black py-16 md:py-24 overflow-hidden">
       
-      {/* En-tête plus compact */}
       <div className="container mx-auto px-4 mb-12 text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-4 backdrop-blur-md">
           Case Studies
@@ -62,7 +64,6 @@ export default function BenefitsBlockNew({ id }) {
           </span>
         </h2>
         
-        {/* Badges centrés */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#cfaa5c]/30 bg-[#cfaa5c]/5 backdrop-blur-sm">
                 <Trophy className="w-4 h-4 text-[#cfaa5c]" />
@@ -85,27 +86,28 @@ export default function BenefitsBlockNew({ id }) {
           const isEven = index % 2 === 0;
           
           return (
-            // Layout ajusté : Image plus petite (5/12) et Texte plus grand (7/12) pour éviter le vide
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* PARTIE IMAGE : Taille maîtrisée */}
+              {/* PARTIE IMAGE */}
               <div className="w-full lg:w-5/12 relative group flex justify-center">
-                <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000`}></div>
                 
-                {/* Application du ratio spécifique à chaque image */}
+                {/* Optimisation Performance (INP) maintenue */}
+                <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700`}></div>
+                
                 <div className={`relative w-full ${item.aspect} rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900`}>
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${item.position}`}
+                    className={`transition-transform duration-700 group-hover:scale-105 ${item.fit} ${item.position} will-change-transform`}
                     sizes="(max-width: 768px) 100vw, 40vw"
+                    priority={index === 0}
                   />
-                  <div className="absolute inset-0 bg-black/5"></div>
+                  <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                 </div>
               </div>
 
-              {/* PARTIE TEXTE : Plus large pour combler le vide */}
+              {/* PARTIE TEXTE */}
               <div className="w-full lg:w-7/12 space-y-6 text-left">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
