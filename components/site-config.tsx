@@ -158,7 +158,7 @@ const defaultConfig: SiteConfig = {
         ],
       },
     },
-    // --- SECTION BRAND / WHY CHOOSE US (CORRIGÉE AVEC LE BON TEXTE) ---
+    // --- SECTION BRAND / WHY CHOOSE US (CORRIGÉE) ---
     {
       id: "brand",
       title: "Why Choose Us",
@@ -168,6 +168,367 @@ const defaultConfig: SiteConfig = {
       content: {
         title: "Why choose cAIre?",
         subtitle: "Technology & Acquisition",
-        // LE NOUVEAU TEXTE EST ICI :
+        // Utilisation des backticks (`) pour sécuriser le texte multi-lignes
+        description: `cAIre finally brings together two essential growth levers: technology and acquisition.
+
+On one hand, you get a beauty- and wellness-specialized virtual assistant that can answer questions, advise, sell, and even book appointments for your team.
+
+On the other hand, you gain direct access to creators and influencers who drive qualified traffic to your services, treatments, and products.
+
+Your clients discover your brand through authentic content and posts, and are instantly guided by a virtual advisor who turns that attention into bookings, sales, and long-term loyalty.
+
+Clear, simple, effective: you attract more clients and convert more without increasing your team size.`,
+        image: "/images/influencer-partner.png",
+      },
+    },
+    {
+      id: "value-proposition",
+      title: "Value Proposition",
+      visible: true,
+      order: 2.5,
+      template: "value-proposition",
+      content: {
+        propositions: [
+          {
+            title: "Exclusive Personalization",
+            description: "An AI that reflects your identity and enhances your products.",
+            icon: "Crown",
+          },
+          {
+            title: "Premium Experience",
+            description: "Offer virtual consultations worthy of luxury.",
+            icon: "Diamond",
+          },
+          {
+            title: "Competitive Differentiation",
+            description: "Stand out with a unique innovation.",
+            icon: "Award",
+          },
+        ],
+      },
+    },
+    {
+      id: "about",
+      title: "About (Tech)",
+      visible: true,
+      order: 4.5,
+      template: "about",
+      content: {
+        title: "Combining French Expertise with AI Innovation",
+        paragraphs: [
+          "Founded in Paris in 2022, cAIre Solutions was born to revolutionize how luxury beauty brands approach customer relationships.",
+          "Our team combines 15 years of expertise in French luxury beauty with advanced AI mastery to deliver the same quality of personalized advice online as in-store.",
+        ],
+        stats: [
+          { label: "Luxury Brands", value: "25+" },
+          { label: "Interactions", value: "15M+" },
+          { label: "Satisfaction", value: "98%" },
+          { label: "Growth", value: "35%" },
+        ],
+      },
+    },
+    {
+      id: "features",
+      title: "Features",
+      visible: true,
+      order: 4,
+      template: "features",
+      content: {
+        title: "Features Designed for Luxury",
+        description: "Our AI solutions are tailored specifically for premium skincare, spas, and clinics.",
+        items: [
+          {
+            title: "Smart Booking System",
+            description: "Automated appointment scheduling directly through WhatsApp, synced with your calendar.",
+            icon: "Calendar",
+          },
+          {
+            title: "Brand Guardrails",
+            description: "Ensure your AI assistant maintains your brand voice and luxury positioning at all times.",
+            icon: "Shield",
+          },
+          {
+            title: "CRM Integration",
+            description: "Seamlessly connect with your existing loyalty and CRM systems (Salesforce, HubSpot, etc.).",
+            icon: "Link",
+          },
+          {
+            title: "Omnichannel",
+            description: "Deploy on WhatsApp, Instagram, and Webchat simultaneously.",
+            icon: "MessageCircle",
+          },
+        ],
+      },
+    },
+    {
+      id: "why-choose",
+      title: "Why Choose Us",
+      visible: true,
+      order: 5.5,
+      template: "why-choose",
+      content: {
+        title: "Why luxury brands choose cAIre",
+        description: "Discover what sets us apart from the competition",
+        reasons: [
+          {
+            title: "Premium Market Expertise",
+            description: "Built specifically for luxury brands with deep understanding of your unique needs.",
+            icon: "Award",
+          },
+          {
+            title: "Brand Voice Protection",
+            description: "Our AI maintains your brand voice and positioning, ensuring consistent luxury experience.",
+            icon: "Shield",
+          },
+          {
+            title: "Quick Implementation",
+            description: "Get up and running in weeks, not months, with our streamlined onboarding process.",
+            icon: "Clock",
+          },
+          {
+            title: "Dedicated Support",
+            description: "Our team of experts is always available to ensure your success with our platform.",
+            icon: "Users",
+          },
+          {
+            title: "Seamless Integration",
+            description: "Connects with your existing CRM and e-commerce systems for a unified customer experience.",
+            icon: "Link",
+          },
+          {
+            title: "Data-Driven Results",
+            description: "Track performance with detailed analytics and see measurable improvements in key metrics.",
+            icon: "BarChart",
+          },
+        ],
+        backgroundColor: "bg-gray-50",
+      },
+    },
+    {
+      id: "benefits-original",
+      title: "Benefits (Legacy)",
+      visible: false,
+      order: 6,
+      template: "benefits-new",
+      content: {
+        title: "Elevate Your Brand",
+        description: "Discover how our AI solutions deliver measurable results.",
+        benefits: [],
+        results: [],
+      },
+    },
+    {
+      id: "testimonials-section",
+      title: "Testimonials",
+      visible: true,
+      order: 6.5,
+      template: "testimonials-section",
+      content: {
+        title: "What our partners are saying",
+        description: "Real results from real brands.",
+        testimonials: [
+          {
+            company: "Phynacare",
+            quote: "Phynacare saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
+            logo: "/placeholder.svg?height=60&width=120",
+          },
+          {
+            company: "Doze",
+            quote: "Doze: Customer loyalty has never been stronger—our clients feel the difference.",
+            logo: "/placeholder.svg?height=60&width=120",
+          },
+          {
+            company: "Institut Esthederm",
+            quote: "Institut Esthederm: Our AI reflects elegance and innovation—sales up, satisfaction up.",
+            logo: "/placeholder.svg?height=60&width=120",
+          },
+        ],
+        ctaButtonLink: "https://calendly.com/cairesolutions/30min",
+      },
+    },
+    // --- SECTION PRICING MASQUÉE (visible: false) ---
+    {
+      id: "pricing",
+      title: "Pricing",
+      visible: false, 
+      order: 7,
+      template: "pricing",
+      content: {
+        title: "Find the plan that grows your brand",
         description:
-          "cAIre finally brings together two essential growth levers: technology and acquisition.\n\nOn one hand
+          "We have a plan for every stage of your journey. All plans include multilingual support.",
+        plans: [],
+      },
+    },
+    // ------------------------------------------------
+    {
+      id: "cta",
+      title: "Call to Action",
+      visible: true,
+      order: 8,
+      template: "cta",
+      content: {
+        title: "Ready to Transform Your Customer Experience?",
+        description:
+          "Join leading luxury brands already using cAIre Solutions to enhance their digital presence.",
+        primaryButton: "Free Trial",
+        secondaryButton: "Contact Sales",
+        primaryButtonLink: "https://app.youform.com/forms/gxc7dqht",
+        secondaryButtonLink: "mailto:contact@caire-solutions.com",
+      },
+    },
+    {
+      id: "footer",
+      title: "Footer",
+      visible: true,
+      order: 9,
+      template: "footer",
+      content: {
+        description:
+          "AI-powered consultations combining French luxury expertise with cutting-edge technology.",
+        copyright: "© 2023 cAIre Solutions. All rights reserved.",
+        links: {
+          company: ["About", "Careers", "Blog", "Press"],
+          resources: ["Documentation", "Case Studies", "Webinars", "Help Center"],
+          legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+        },
+        contact: {
+          location: "Paris, France",
+          email: "contact@caire-solutions.com",
+          phone: "+971 58 564 2906",
+        },
+      },
+    },
+  ],
+  logo: "/images/logo.png",
+  primaryColor: "#cfaa5c",
+  secondaryColor: "#000000",
+  siteName: "cAIre Solutions",
+  siteDescription: "AI-powered skincare consultations",
+  contactEmail: "contact@caire-solutions.com",
+  contactPhone: "+971 58 564 2906",
+  contactAddress: "Paris, France",
+  socialLinks: {
+    linkedin: "https://linkedin.com/company/caire-solutions",
+    instagram: "https://instagram.com/caire_solutions",
+  },
+  seo: {
+    title: "cAIre Solutions | AI-powered Skincare Consultations",
+    description: "AI-powered skincare consultations combining French luxury expertise with cutting-edge technology",
+    keywords: "AI, skincare, luxury, consultations, beauty tech",
+    ogImage: "/images/og-image.jpg",
+  },
+  analytics: {
+    googleAnalyticsId: "",
+    facebookPixelId: "",
+    enabledAnalytics: false,
+  },
+}
+
+// Créer le contexte
+type SiteConfigContextType = {
+  config: SiteConfig
+  updateConfig: (newConfig: SiteConfig) => void
+  updateSection: (sectionId: string, newContent: any) => void
+  reorderSections: (sectionId: string, newOrder: number) => void
+  toggleSectionVisibility: (sectionId: string) => void
+}
+
+const SiteConfigContext = createContext<SiteConfigContextType>({
+  config: defaultConfig,
+  updateConfig: () => {},
+  updateSection: () => {},
+  reorderSections: () => {},
+  toggleSectionVisibility: () => {},
+})
+
+// Créer le provider
+export function SiteConfigProvider({ children }: { children: ReactNode }) {
+  const [config, setConfig] = useState<SiteConfig>(defaultConfig)
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedConfig = localStorage.getItem("siteConfig")
+        if (savedConfig) {
+          const parsed = JSON.parse(savedConfig)
+          // Vérification rapide pour voir si la nouvelle section existe ET si le pricing est bien masqué
+          const hasCaseStudies = parsed.sections.some(s => s.id === "case-studies")
+          const pricingHidden = parsed.sections.find(s => s.id === "pricing")?.visible === false
+          
+          if (!hasCaseStudies || !pricingHidden) {
+             // Si la config en mémoire ne correspond pas à la stratégie, on force la nouvelle
+             setConfig(defaultConfig)
+             localStorage.setItem("siteConfig", JSON.stringify(defaultConfig))
+          } else {
+             setConfig(parsed)
+          }
+        } else {
+           setConfig(defaultConfig)
+        }
+      } catch (e) {
+        console.error("Erreur config:", e)
+        setConfig(defaultConfig)
+      }
+    }
+  }, [])
+
+  const updateConfig = (newConfig: SiteConfig) => {
+    setConfig(newConfig)
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("siteConfig", JSON.stringify(newConfig))
+      } catch (e) { console.error(e) }
+    }
+  }
+
+  const updateSection = (sectionId: string, newContent: any) => {
+    const newConfig = { ...config }
+    const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
+    if (sectionIndex !== -1) {
+      newConfig.sections[sectionIndex].content = {
+        ...newConfig.sections[sectionIndex].content,
+        ...newContent,
+      }
+      updateConfig(newConfig)
+    }
+  }
+
+  const reorderSections = (sectionId: string, newOrder: number) => {
+    const newConfig = { ...config }
+    const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
+    if (sectionIndex !== -1) {
+      const section = newConfig.sections[sectionIndex]
+      const oldOrder = section.order
+      newConfig.sections.forEach((s) => {
+        if (oldOrder < newOrder && s.order > oldOrder && s.order <= newOrder) s.order--
+        else if (oldOrder > newOrder && s.order < oldOrder && s.order >= newOrder) s.order++
+      })
+      section.order = newOrder
+      updateConfig(newConfig)
+    }
+  }
+
+  const toggleSectionVisibility = (sectionId: string) => {
+    const newConfig = { ...config }
+    const sectionIndex = newConfig.sections.findIndex((s) => s.id === sectionId)
+    if (sectionIndex !== -1) {
+      newConfig.sections[sectionIndex].visible = !newConfig.sections[sectionIndex].visible
+      updateConfig(newConfig)
+    }
+  }
+
+  return (
+    <SiteConfigContext.Provider value={{ config, updateConfig, updateSection, reorderSections, toggleSectionVisibility }}>
+      {children}
+    </SiteConfigContext.Provider>
+  )
+}
+
+export function useSiteConfig() {
+  const context = useContext(SiteConfigContext)
+  if (context === undefined) {
+    throw new Error("useSiteConfig doit être utilisé à l'intérieur d'un SiteConfigProvider")
+  }
+  return context
+}
