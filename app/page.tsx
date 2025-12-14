@@ -5,8 +5,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
-// IMPORTS
-import HeroBlockResponsive from "@/components/hero-block-responsive"
+// --- CORRECTION : LE CHEMIN DOIT INCLURE "blocks" ---
+import HeroBlockResponsive from "@/components/blocks/hero-block-responsive"
 import BrandBlock from "@/components/blocks/brand-block"
 import BenefitsBlockNew from "@/components/blocks/benefits-block-new"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
