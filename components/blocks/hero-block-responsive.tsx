@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-// J'ai remplacé l'import Button par des boutons HTML natifs pour éviter les erreurs de build
+// J'utilise des boutons HTML standard pour éviter tout bug d'import
 import { Paperclip, Send, ImageIcon, Upload, ArrowRight } from "lucide-react"
 import Image from "next/image"
-import { useIsMobile, useIsTablet, useIsDesktop } from "@/hooks/use-media-query"
+import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 import { useTranslation } from "@/utils/dummy-translations"
 
 export default function HeroBlockResponsive({ id, content }: { id?: string, content?: any }) {
@@ -25,13 +25,12 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
     calendlyUrl = "https://calendly.com/cairesolutions/30min",
   } = safeContent
 
-  const { language, t } = useTranslation()
+  const { language } = useTranslation()
   const [messages, setMessages] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [messageIndex, setMessageIndex] = useState(0)
   const [showTyping, setShowTyping] = useState(false)
   const [currentText, setCurrentText] = useState("")
-  const [isComplete, setIsComplete] = useState(false)
   const [showProductCard, setShowProductCard] = useState(false)
   const [showUserPhoto, setShowUserPhoto] = useState(false)
   const [userInput, setUserInput] = useState("")
@@ -45,14 +44,13 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
 
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
-  const isDesktop = useIsDesktop()
 
   const staticTranslations = {
     titlePart1: "Your new unfair advantage in",
     titlePart2: "beauty & wellness",
     subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-    tryFree: "Start Free Trial", // Remis le texte original
-    watchDemo: "Get a Demo", // Remis le texte original
+    tryFree: "Start Free Trial",
+    watchDemo: "Get a Demo",
     online: "Online",
     askAbout: "Ask about skincare...",
     uploadPhoto: "Upload a Photo",
@@ -98,7 +96,7 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
   }
 
   const processNextMessage = (index: number) => {
-    if (index >= messages.length) { setIsComplete(true); return; }
+    if (index >= messages.length) return
     const message = messages[index]
 
     if (message.type === "assistant") {
@@ -167,14 +165,12 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
           </h2>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
-            {/* BOUTON 1 : YouForm (Lien direct) */}
             <a href={primaryButtonLink} target="_blank" rel="noopener noreferrer">
                 <button className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full min-h-[44px] min-w-[44px] font-semibold">
                 {staticTranslations.tryFree}
                 </button>
             </a>
 
-            {/* BOUTON 2 : Calendly (Lien direct) */}
             <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
                 <button className="border border-white/20 bg-transparent text-white text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full flex items-center justify-center gap-2 hover:bg-white/10 transition-colors duration-300 min-h-[44px] min-w-[44px]">
                 {staticTranslations.watchDemo}
@@ -188,7 +184,6 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
         {showChatbot && (
           <div className="w-full md:w-1/2">
             <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-gray-200">
-              {/* Contenu Chatbot */}
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="rounded-full overflow-hidden w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-black">
