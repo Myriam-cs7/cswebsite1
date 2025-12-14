@@ -6,12 +6,13 @@ import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
 // --- IMPORTS DES BLOCS DE CONTENU ---
-// On garde uniquement l'essentiel pour l'affichage
 import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
 import { SiteFooter } from "@/components/site-footer"
 import BackToTop from "@/components/back-to-top"
-import AdminPanel from "@/components/admin/admin-panel"
+
+// J'ai retiré StructuredDataEnhanced et AdminPanel pour stopper les erreurs de Build
+// J'ai retiré le useEffect (Robot) pour éviter tout conflit
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -26,7 +27,7 @@ export default function Home() {
     }
   }
 
-  // --- MENU 100% MANUEL (Aucun risque d'erreur) ---
+  // --- MENU 100% MANUEL (Indestructible) ---
   const MENU_LINKS = [
     { name: "Home", id: "hero" },
     { name: "About", id: "about-us" },
@@ -99,7 +100,7 @@ export default function Home() {
 
       {/* --- CONTENU --- */}
       
-      {/* 1. Le corps de page (Hero, Brand, etc.) */}
+      {/* 1. Le corps de page */}
       <BlockRendererOptimized />
 
       {/* 2. Les Témoignages */}
@@ -108,11 +109,9 @@ export default function Home() {
       {/* 3. Le Footer */}
       <SiteFooter />
 
-      {/* Outils Utilitaires */}
+      {/* Outils Utilitaires simples */}
       <BackToTop />
-      <AdminPanel />
       
-      {/* J'ai supprimé StructuredDataEnhanced car il causait des erreurs aussi */}
     </main>
   )
 }
