@@ -10,7 +10,7 @@ import StructuredDataEnhanced from "@/components/structured-data-enhanced"
 import Image from "next/image"
 import Link from "next/link"
 
-// --- IMPORTS ---
+// --- IMPORTS DES COMPOSANTS ---
 import { SiteFooter } from "@/components/site-footer"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
 
@@ -18,20 +18,17 @@ export default function Home() {
   const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // --- LE ROBOT CORRECTEUR (SÉCURISÉ) ---
+  // --- LE ROBOT CORRECTEUR (Reste actif pour le contenu) ---
   useEffect(() => {
-    // Sécurité 1 : On vérifie que config et sections existent
-    if (!config || !config.sections || !Array.isArray(config.sections)) return;
+    if (!config || !config.sections) return;
 
     const heroSection = config.sections.find((s) => s.id === "hero")
     
     if (heroSection && heroSection.content) {
        const newTitle = "Your new unfair advantage in beauty & wellness";
        const currentTitle = heroSection.content.title || "";
-       const currentHeading = heroSection.content.heading || "";
        
-       if (!currentTitle.includes("unfair advantage") && !currentHeading.includes("unfair advantage")) {
-           // On ne loggue plus pour éviter de polluer la console
+       if (!currentTitle.includes("unfair advantage")) {
            updateSection("hero", {
              title: newTitle,
              heading: newTitle,   
@@ -58,8 +55,15 @@ export default function Home() {
     }
   }
 
-  // Liste des sections du menu
-  const menuIds = ['about-us', 'features', 'benefits', 'pricing'];
+  // --- MENU STATIQUE (Pour éviter le crash du Build) ---
+  // On définit les liens ici manuellement. C'est 100% sûr.
+  const NAV_ITEMS = [
+    { label: "Home", href: "#hero" },
+    { label: "Features", href: "#features" },
+    { label: "Case Studies", href: "#benefits" }, // Correspond à ta section Benefits
+    { label: "Pricing", href: "#pricing" },
+    { label: "Blog", href: "/blog" }
+  ];
 
   return (
     <main className="min-h-screen bg-[#121212]">
@@ -84,51 +88,45 @@ export default function Home() {
             {mobileMenuOpen ? <X className="text-[#cfaa5c]" /> : <Menu className="text-[#cfaa5c]" />}
           </button>
 
-          {/* NAVIGATION DESKTOP SÉCURISÉE */}
+          {/* NAVIGATION DESKTOP (Utilise la liste statique) */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-             {menuIds.map((id) => {
-                // SÉCURITÉ : On utilise ?. (Optional Chaining) partout
-                const sections = config?.sections || [];
-                const section = sections.find((s: any) => s.id === id);
-                
-                // Si la section n'existe pas, on arrête là pour cet élément
-                if (!section) return null;
-                
-                // Si la section est masquée, on arrête là
-                if (section.visible === false) return null;
-
-                // Récupération sécurisée du titre
-                const title = section.title || "Section";
-
-                return (
-                  <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer">
-                    {title === "Section Héro" ? "Home" : title}
-                  </a>
-                )
-             })}
-             <Link href="/blog" className="text-white hover:text-[#cfaa5c] transition-colors">Blog</Link>
+             {NAV_ITEMS.map((item) => (
+               <Link 
+                 key={item.label} 
+                 href={item.href}
+                 onClick={(e) => {
+                   if (item.href.startsWith("#")) {
+                     e.preventDefault(); 
+                     scrollToSection(item.href.substring(1));
+                   }
+                 }}
+                 className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer"
+               >
+                 {item.label}
+               </Link>
+             ))}
           </nav>
         </div>
         
-        {/* NAVIGATION MOBILE SÉCURISÉE */}
+        {/* NAVIGATION MOBILE (Utilise la liste statique) */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
-                {menuIds.map((id) => {
-                    const sections = config?.sections || [];
-                    const section = sections.find((s: any) => s.id === id);
-                    
-                    if (!section) return null;
-                    if (section.visible === false) return null;
-
-                    const title = section.title || "Section";
-
-                    return (
-                      <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] text-lg block py-2">
-                        {title}
-                      </a>
-                    )
-                })}
+                {NAV_ITEMS.map((item) => (
+                   <Link 
+                     key={item.label} 
+                     href={item.href}
+                     onClick={(e) => {
+                       if (item.href.startsWith("#")) {
+                         e.preventDefault(); 
+                         scrollToSection(item.href.substring(1));
+                       }
+                     }}
+                     className="text-white hover:text-[#cfaa5c] text-lg block py-2"
+                   >
+                     {item.label}
+                   </Link>
+                ))}
               </div>
             </div>
         )}
