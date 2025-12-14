@@ -10,30 +10,28 @@ import StructuredDataEnhanced from "@/components/structured-data-enhanced"
 import Image from "next/image"
 import Link from "next/link"
 
-// --- IMPORTS DES COMPOSANTS ---
+// --- IMPORTS ---
 import { SiteFooter } from "@/components/site-footer"
-// Import sécurisé pour les témoignages
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
 
 export default function Home() {
   const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // --- LE ROBOT CORRECTEUR (Version Sécurisée) ---
+  // --- LE ROBOT CORRECTEUR (SÉCURISÉ) ---
   useEffect(() => {
-    // Sécurité : On vérifie que la config est chargée
-    if (!config || !config.sections) return;
+    // Sécurité 1 : On vérifie que config et sections existent
+    if (!config || !config.sections || !Array.isArray(config.sections)) return;
 
     const heroSection = config.sections.find((s) => s.id === "hero")
     
-    // On ne rentre dans la logique que si heroSection existe ET a du contenu
     if (heroSection && heroSection.content) {
        const newTitle = "Your new unfair advantage in beauty & wellness";
        const currentTitle = heroSection.content.title || "";
        const currentHeading = heroSection.content.heading || "";
        
        if (!currentTitle.includes("unfair advantage") && !currentHeading.includes("unfair advantage")) {
-           console.log("🚀 Mise à jour auto du Hero...")
+           // On ne loggue plus pour éviter de polluer la console
            updateSection("hero", {
              title: newTitle,
              heading: newTitle,   
@@ -60,7 +58,7 @@ export default function Home() {
     }
   }
 
-  // Sécurité : Liste des IDs de menu
+  // Liste des sections du menu
   const menuIds = ['about-us', 'features', 'benefits', 'pricing'];
 
   return (
@@ -86,18 +84,25 @@ export default function Home() {
             {mobileMenuOpen ? <X className="text-[#cfaa5c]" /> : <Menu className="text-[#cfaa5c]" />}
           </button>
 
+          {/* NAVIGATION DESKTOP SÉCURISÉE */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
              {menuIds.map((id) => {
-                // SÉCURITÉ MAXIMALE ICI
-                if (!config || !config.sections) return null;
-                const section = config.sections.find(s => s.id === id);
+                // SÉCURITÉ : On utilise ?. (Optional Chaining) partout
+                const sections = config?.sections || [];
+                const section = sections.find((s: any) => s.id === id);
                 
-                // Si la section n'existe pas ou n'est pas visible, on n'affiche rien (return null)
-                if (!section || !section.visible) return null;
+                // Si la section n'existe pas, on arrête là pour cet élément
+                if (!section) return null;
+                
+                // Si la section est masquée, on arrête là
+                if (section.visible === false) return null;
+
+                // Récupération sécurisée du titre
+                const title = section.title || "Section";
 
                 return (
                   <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer">
-                    {section.title === "Section Héro" ? "Home" : section.title}
+                    {title === "Section Héro" ? "Home" : title}
                   </a>
                 )
              })}
@@ -105,19 +110,22 @@ export default function Home() {
           </nav>
         </div>
         
+        {/* NAVIGATION MOBILE SÉCURISÉE */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
                 {menuIds.map((id) => {
-                    if (!config || !config.sections) return null;
-                    const section = config.sections.find(s => s.id === id);
+                    const sections = config?.sections || [];
+                    const section = sections.find((s: any) => s.id === id);
                     
-                    // SÉCURITÉ MAXIMALE ICI AUSSI
-                    if (!section || !section.visible) return null;
+                    if (!section) return null;
+                    if (section.visible === false) return null;
+
+                    const title = section.title || "Section";
 
                     return (
                       <a key={id} href={`#${id}`} onClick={(e) => {e.preventDefault(); scrollToSection(id)}} className="text-white hover:text-[#cfaa5c] text-lg block py-2">
-                        {section.title}
+                        {title}
                       </a>
                     )
                 })}
