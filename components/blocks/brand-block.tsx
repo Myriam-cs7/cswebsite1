@@ -12,7 +12,6 @@ export default function BrandBlock({ id, content }) {
   // Utiliser des valeurs par défaut lors de la destructuration
   const {
     title = "cAIre Solutions",
-    // J'ai mis à jour le sous-titre par défaut ici
     subtitle = "Why choose cAIre?",
     description = "Combining French luxury expertise with cutting-edge technology for personalized skincare consultations",
     image = "/images/beauty-cs.png",
@@ -35,7 +34,9 @@ export default function BrandBlock({ id, content }) {
   return (
     <section id={id} className={sectionClasses} style={sectionStyle}>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between md:gap-2">
+        
+        {/* MODIFICATION ICI : J'ai passé le gap de md:gap-2 à md:gap-16 pour écarter l'image du texte */}
+        <div className="flex flex-col md:flex-row items-center justify-between md:gap-16">
           
           {/* COLONNE TEXTE */}
           <div className="md:w-5/12 mb-10 md:mb-0 md:pr-0">
@@ -45,7 +46,6 @@ export default function BrandBlock({ id, content }) {
                 <span className="text-white">AI</span>
                 <span className="text-[#cfaa5c]">re</span>
               </h1>
-              {/* Le sous-titre affiche désormais "Why choose cAIre?" */}
               <h2 className="text-2xl md:text-3xl font-montserrat font-light text-white">{subtitle}</h2>
             </div>
 
@@ -84,7 +84,8 @@ export default function BrandBlock({ id, content }) {
                 alt="Beauty Skincare"
                 width={800}
                 height={800}
-                className="object-contain"
+                // MODIFICATION ICI : Ajout de "rounded-[2rem]" pour l'effet Apple (coins très arrondis)
+                className="object-contain rounded-[2rem]"
                 priority
                 quality={90}
                 sizes="(max-width: 768px) 100vw, 800px"
