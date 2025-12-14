@@ -1,28 +1,27 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-// J'utilise des boutons HTML standard pour éviter tout bug d'import
 import { Paperclip, Send, ImageIcon, Upload, ArrowRight } from "lucide-react"
 import Image from "next/image"
+// Assurez-vous que ces fichiers existent dans hooks/ et utils/ comme confirmé précédemment
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 import { useTranslation } from "@/utils/dummy-translations"
 
 export default function HeroBlockResponsive({ id, content }: { id?: string, content?: any }) {
   const safeContent = content || {}
-
+  
+  // VALEURS PAR DÉFAUT (Pour éviter que ça plante si vide)
   const {
     title = "",
     subtitle = "",
-    description = "",
-    buttonText = "",
-    secondaryButtonText = "",
+    buttonText = "Start Free Trial",
+    secondaryButtonText = "Get a Demo",
     showChatbot = true,
-    backgroundColor = "bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A]",
+    backgroundColor = "bg-black", 
     textColor = "text-white",
-    backgroundImage = "",
     customClass = "",
-    primaryButtonLink = "https://app.youform.com/forms/gxc7dqht",
-    calendlyUrl = "https://calendly.com/cairesolutions/30min",
+    primaryButtonLink = "#",
+    calendlyUrl = "#",
   } = safeContent
 
   const { language } = useTranslation()
@@ -34,7 +33,6 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
   const [showProductCard, setShowProductCard] = useState(false)
   const [showUserPhoto, setShowUserPhoto] = useState(false)
   const [userInput, setUserInput] = useState("")
-  const [userPhoto, setUserPhoto] = useState<string | null>(null)
   const [showAttachMenu, setShowAttachMenu] = useState(false)
   
   const chatContainerRef = useRef<HTMLDivElement>(null)
@@ -45,6 +43,7 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
 
+  // Traductions statiques
   const staticTranslations = {
     titlePart1: "Your new unfair advantage in",
     titlePart2: "beauty & wellness",
@@ -53,46 +52,43 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
     watchDemo: "Get a Demo",
     online: "Online",
     askAbout: "Ask about skincare...",
-    uploadPhoto: "Upload a Photo",
+    uploadSkinPhoto: "Upload skin photo",
     simulate: "Simulate a skin analysis and get a luxury product recommendation.",
     send: "Send",
     photoSkin: "Here's a photo of my skin.",
     royalCaviar: "Royal Caviar Serum",
     enriched: "Enriched with rare marine extracts",
     viewDetails: "View Details",
-    uploadSkinPhoto: "Upload skin photo",
+    uploadPhoto: "Upload Photo"
   }
 
   const handleAttachClick = () => setShowAttachMenu(!showAttachMenu)
   const handlePhotoUpload = () => { fileInputRef.current?.click(); setShowAttachMenu(false) }
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0]
-    if (file) setUserPhoto(URL.createObjectURL(file))
-  }
-  const restartConversation = () => startConversation()
-
+  
+  // Initialisation du Chatbot
   useEffect(() => {
-    if (hasLoadedRef.current && languageRef.current === language) return
-    languageRef.current = language
-
+    if (hasLoadedRef.current) return
+    
     const baseMessages = [
       { type: "assistant", content: "Hello, I'm Glowbot, your personal luxury skincare assistant. How can I help you today?", typingSpeed: 30, delay: 500 },
-      { type: "user", content: "I'm looking for an effective anti-aging product for fine lines and hydration. I have combination skin with dry areas on my cheeks.", typingSpeed: 0, delay: 1000 },
-      { type: "assistant", content: "I'd be happy to help! Would you like to share a photo of your skin so I can better assess your needs?", typingSpeed: 30, delay: 1200 },
-      { type: "user-photo", content: "Here's a photo of my skin.", typingSpeed: 0, delay: 1000 },
-      { type: "assistant", content: "Thank you for sharing this photo. Based on what I can see and your concerns about fine lines and hydration, I recommend a product with caviar extract and peptides.", typingSpeed: 30, delay: 1200 },
+      { type: "user", content: "I'm looking for an effective anti-aging product for fine lines. I have combination skin.", typingSpeed: 0, delay: 1000 },
+      { type: "assistant", content: "I'd be happy to help! Based on your needs, I recommend a product with caviar extract and peptides.", typingSpeed: 30, delay: 1200 },
       { type: "assistant", content: "Here's a product that would be perfect for you:", typingSpeed: 30, delay: 800, withProduct: true },
     ]
     setMessages(baseMessages)
     setIsLoading(false)
     hasLoadedRef.current = true
-  }, [language])
+  }, [])
 
   useEffect(() => { if (!isLoading) startConversation() }, [isLoading])
-  useEffect(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight }, [messageIndex, currentText, showProductCard, showUserPhoto])
+  
+  // Auto-scroll
+  useEffect(() => { 
+    if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight 
+  }, [messageIndex, currentText, showProductCard, showUserPhoto])
 
   const startConversation = () => {
-    setMessageIndex(0); setCurrentText(""); setIsComplete(false); setShowProductCard(false); setShowUserPhoto(false); processNextMessage(0);
+    setMessageIndex(0); setCurrentText(""); setShowProductCard(false); setShowUserPhoto(false); processNextMessage(0);
   }
 
   const processNextMessage = (index: number) => {
@@ -123,152 +119,108 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
         }, message.typingSpeed)
         return () => clearInterval(typingInterval)
       }, message.delay)
-    } else if (message.type === "user-photo") {
-      setTimeout(() => { setShowUserPhoto(true); setMessageIndex(index + 1); processNextMessage(index + 1); }, message.delay)
     } else {
       setTimeout(() => { setMessageIndex(index + 1); processNextMessage(index + 1); }, message.delay)
     }
   }
 
-  const sectionStyle = {
-    backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-    backgroundSize: backgroundImage ? "cover" : undefined,
-    backgroundPosition: backgroundImage ? "center" : undefined,
-  }
-  const sectionClasses = `relative py-12 md:py-20 px-4 md:px-6 ${backgroundColor} ${textColor} ${customClass}`
+  // Styles Responsive
   const titleClasses = isMobile ? "text-3xl leading-tight" : isTablet ? "text-4xl leading-tight" : "text-5xl leading-tight"
   const subtitleClasses = isMobile ? "text-lg" : isTablet ? "text-xl" : "text-2xl"
 
   return (
-    <section id={id} className={sectionClasses} style={sectionStyle}>
-      <div className="absolute inset-0 z-[-1] opacity-10">
-        <div className="w-full h-full bg-gradient-to-r from-[#cfaa5c]/10 to-transparent"></div>
-      </div>
+    <section id={id} className={`relative py-20 px-4 md:px-6 ${backgroundColor} ${textColor} ${customClass} overflow-hidden min-h-screen flex items-center`}>
+       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1a1a1a] via-black to-black z-0 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
-        <div className="w-full md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-8 text-center md:text-left">
-          
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-gray-400 mb-4 animate-in fade-in slide-in-from-top-2 duration-700">
-            Dubaï — Paris
-          </p>
+        
+        {/* TEXTE GAUCHE */}
+        <div className="w-full md:w-1/2 mb-16 md:mb-0 pr-0 md:pr-12 text-center md:text-left pt-20 md:pt-0">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 mx-auto md:mx-0">
+            <span className="w-2 h-2 rounded-full bg-[#cfaa5c] animate-pulse"></span>
+            <span className="text-xs font-medium text-gray-300 tracking-widest uppercase">Meet Glowbot AI</span>
+          </div>
 
-          <h1 className={`font-playfair font-bold mb-4 ${titleClasses} text-white`}>
-            {staticTranslations.titlePart1}{" "}
-            <span className="bg-gradient-to-r from-[#cfaa5c] via-[#e0c070] to-[#cfaa5c] bg-clip-text text-transparent inline-block relative">
-              {staticTranslations.titlePart2}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/60 to-transparent animate-shimmer-luxury"></span>
+          <h1 className={`font-serif font-bold mb-6 ${titleClasses}`}>
+            <span className="bg-gradient-to-r from-[#cfaa5c] via-[#e0c070] to-[#cfaa5c] bg-clip-text text-transparent">
+              {staticTranslations.titlePart1}
             </span>
+            <span className="text-white"> {staticTranslations.titlePart2} </span>
           </h1>
 
-          <h2 className={`font-montserrat font-medium mb-8 text-white ${subtitleClasses}`}>
-            {staticTranslations.subtitle}
-          </h2>
+          <h2 className={`font-light mb-10 text-gray-300 ${subtitleClasses}`}>{staticTranslations.subtitle}</h2>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
             <a href={primaryButtonLink} target="_blank" rel="noopener noreferrer">
-                <button className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full min-h-[44px] min-w-[44px] font-semibold">
-                {staticTranslations.tryFree}
+                <button className="bg-[#cfaa5c] hover:bg-[#b89548] text-black text-lg px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
+                {buttonText || staticTranslations.tryFree}
                 </button>
             </a>
-
             <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-                <button className="border border-white/20 bg-transparent text-white text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full flex items-center justify-center gap-2 hover:bg-white/10 transition-colors duration-300 min-h-[44px] min-w-[44px]">
-                {staticTranslations.watchDemo}
-                <ArrowRight className="w-4 h-4" />
+                <button className="border border-white/20 bg-transparent text-white text-lg px-8 py-4 rounded-full hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                {secondaryButtonText || staticTranslations.watchDemo}
+                <ArrowRight className="w-5 h-5" />
                 </button>
             </a>
           </div>
         </div>
 
-        {/* CHATBOT */}
+        {/* CHATBOT DROITE */}
         {showChatbot && (
-          <div className="w-full md:w-1/2">
-            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-gray-200">
-              <div className="flex items-center justify-between mb-4 md:mb-6">
-                <div className="flex items-center gap-2 md:gap-3">
-                  <div className="rounded-full overflow-hidden w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-black">
-                    <Image src="/images/logo.svg" alt="Glowbot" width={72} height={72} className="object-contain" />
+          <div className="w-full md:w-1/2 flex justify-center">
+            <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full max-w-md border border-gray-200 relative transform transition-transform duration-700 hover:scale-[1.02]">
+              <div className="bg-[#f8f9fa] p-4 flex items-center justify-between border-b border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full w-12 h-12 flex items-center justify-center bg-black shadow-md border border-[#cfaa5c]/30">
+                    <span className="text-[#cfaa5c] font-bold text-xs">CS</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-medium text-black text-base md:text-lg">Glowbot</span>
-                    <span className="text-xs text-gray-500">{staticTranslations.online}</span>
+                    <span className="font-bold text-gray-900">Glowbot</span>
+                    <span className="text-xs text-green-600 flex items-center gap-1">Online</span>
                   </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  <span className="text-sm text-gray-500">{staticTranslations.online}</span>
                 </div>
               </div>
 
-              <div ref={chatContainerRef} className="space-y-4 mb-4 md:mb-6 h-[250px] md:h-[320px] overflow-y-auto px-1 py-2" style={{ minHeight: isMobile ? "250px" : "320px", position: "relative" }}>
-                {isLoading ? (
-                  <div className="flex justify-center items-center h-full"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#cfaa5c]"></div></div>
-                ) : (
-                  <>
-                    {messages.slice(0, messageIndex).map((message, index) => (
-                      <div key={index} className={`flex w-full ${message.type === "assistant" ? "justify-start" : "justify-end"}`}>
-                        <div className={`${message.type === "assistant" ? "bg-gray-100 text-gray-800 rounded-tl-none" : "bg-[#cfaa5c] text-black rounded-tr-none"} rounded-2xl p-3 max-w-[85%] text-sm md:text-base`}>
-                            {message.content}
+              <div ref={chatContainerRef} className="bg-[#fff] h-[400px] overflow-y-auto p-4 space-y-4">
+                {messages.slice(0, messageIndex).map((message, index) => (
+                  <div key={index} className={`flex w-full ${message.type === "assistant" ? "justify-start" : "justify-end"}`}>
+                    <div className={`${message.type === "assistant" ? "bg-gray-100 text-gray-800 rounded-tl-none" : "bg-[#cfaa5c] text-black rounded-tr-none"} rounded-2xl p-4 max-w-[85%] text-sm leading-relaxed`}>
+                        {message.content}
+                    </div>
+                  </div>
+                ))}
+                {showTyping && (
+                  <div className="flex w-full justify-start">
+                      <div className="bg-gray-100 rounded-2xl rounded-tl-none p-4 max-w-[85%]">
+                        <p className="text-gray-800 text-sm">{currentText}</p>
+                      </div>
+                  </div>
+                )}
+                {showProductCard && (
+                  <div className="flex w-full justify-start animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden max-w-[240px]">
+                      <div className="p-6 bg-[#f8f8f8] flex justify-center">
+                         <Image src="/images/royal-caviar-serum.png" alt="Serum" width={100} height={100} className="object-contain" />
+                      </div>
+                      <div className="p-4">
+                        <h4 className="font-bold text-sm text-gray-900 mb-1">{staticTranslations.royalCaviar}</h4>
+                        <div className="flex justify-between items-center border-t border-gray-100 pt-3 mt-2">
+                            <span className="font-bold text-[#cfaa5c]">€300</span>
+                            <span className="bg-black text-white text-[10px] px-3 py-1.5 rounded-full">View</span>
                         </div>
                       </div>
-                    ))}
-                    {showUserPhoto && (
-                      <div className="flex w-full justify-end">
-                          <div className="bg-[#cfaa5c] text-black rounded-2xl rounded-tr-none p-2 md:p-3 max-w-[80%]">
-                            <p className="text-black mb-2 text-sm md:text-base">{staticTranslations.photoSkin}</p>
-                            <Image src="/images/skin-sample.png" alt="User skin" width={200} height={200} className="w-full h-auto rounded-lg" />
-                          </div>
-                      </div>
-                    )}
-                    {showTyping && (
-                      <div className="flex w-full justify-start">
-                          <div className="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
-                            <p className="text-gray-800 whitespace-pre-wrap text-sm md:text-base">{currentText}</p>
-                          </div>
-                      </div>
-                    )}
-                    {showProductCard && (
-                      <div className="flex w-full justify-start">
-                          <div className="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
-                            <div className="bg-white rounded-lg p-2 md:p-3 mb-2">
-                                <div className="flex justify-center mb-3">
-                                    <div className="w-24 h-24 md:w-32 md:h-32">
-                                        <Image src="/images/royal-caviar-serum.png" alt={staticTranslations.royalCaviar} width={128} height={128} className="object-contain w-full h-full" />
-                                    </div>
-                                </div>
-                                <h4 className="font-medium text-xs md:text-sm text-center">{staticTranslations.royalCaviar}</h4>
-                                <div className="mt-2 flex justify-between items-center">
-                                    <span className="font-bold text-sm">€300</span>
-                                    <button className="bg-[#cfaa5c] text-black text-xs px-3 py-1 rounded-md">{staticTranslations.viewDetails}</button>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                    )}
-                  </>
+                    </div>
+                  </div>
                 )}
               </div>
 
-              <div className="relative">
-                <input type="text" placeholder={staticTranslations.askAbout} className="bg-gray-100 rounded-lg py-3 px-4 w-full pr-24 focus:outline-none focus:ring-2 focus:ring-[#cfaa5c] text-base" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                  <button className="text-gray-500 hover:text-[#cfaa5c] p-2" onClick={handleAttachClick}><Paperclip className="h-5 w-5" /></button>
-                  {showAttachMenu && (
-                      <div className="absolute bottom-full right-0 mb-2 bg-white shadow-lg rounded-lg p-2 w-48 animate-fadeIn z-50">
-                        <button className="flex items-center gap-2 w-full text-left p-2 hover:bg-gray-100 rounded-md" onClick={handlePhotoUpload}>
-                          <ImageIcon className="h-4 w-4 text-[#cfaa5c]" /><span className="text-sm">{staticTranslations.uploadSkinPhoto}</span>
-                        </button>
-                        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-                      </div>
-                  )}
-                  <button className="text-xs bg-[#cfaa5c] text-black px-3 py-1 rounded-md flex items-center gap-1" onClick={restartConversation}><Send className="h-3 w-3" />{staticTranslations.send}</button>
+              <div className="p-4 bg-white border-t border-gray-100 flex items-center gap-3">
+                <div className="flex-1 bg-gray-100 rounded-full px-4 py-3 flex items-center">
+                    <input type="text" placeholder={staticTranslations.askAbout} className="flex-1 bg-transparent text-sm focus:outline-none text-gray-800" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
                 </div>
-              </div>
-              <div className="mt-4 flex flex-col items-center">
-                <button className="bg-[#cfaa5c] text-black px-4 py-2 rounded-full hover:bg-[#b89548] transition-colors duration-300 flex items-center gap-2" onClick={handlePhotoUpload}>
-                  <Upload className="h-4 w-4" />{staticTranslations.uploadPhoto}
+                <button className="p-3 rounded-full bg-[#cfaa5c] text-black" onClick={() => startConversation()}>
+                  <Send className="w-5 h-5" />
                 </button>
-                <p className="mt-2 text-xs text-center text-gray-500 italic">{staticTranslations.simulate}</p>
               </div>
             </div>
           </div>
