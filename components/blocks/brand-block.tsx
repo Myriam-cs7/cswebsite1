@@ -6,13 +6,11 @@ import Image from "next/image"
 export default function BrandBlock({ id, content }) {
   const { config } = useSiteConfig()
 
-  // Vérifier que content existe
   const safeContent = content || {}
 
-  // Utiliser des valeurs par défaut lors de la destructuration
   const {
     title = "cAIre Solutions",
-    subtitle = "Why choose cAIre?",
+    // J'ai retiré le subtitle d'ici pour le gérer manuellement dans le code
     description = "Combining French luxury expertise with cutting-edge technology for personalized skincare consultations",
     image = "/images/beauty-cs.png",
     backgroundColor = "bg-black",
@@ -20,14 +18,12 @@ export default function BrandBlock({ id, content }) {
     customClass = "",
   } = safeContent
 
-  // Appliquer les styles personnalisés
   const sectionStyle = {
     backgroundColor: backgroundColor.startsWith("#") ? backgroundColor : undefined,
     color: textColor.startsWith("#") ? textColor : undefined,
   }
 
-  // Déterminer les classes CSS
-  const sectionClasses = `py-20 ${
+  const sectionClasses = `py-20 md:py-32 ${
     backgroundColor.startsWith("bg-") ? backgroundColor : ""
   } ${textColor.startsWith("text-") ? textColor : ""} ${customClass}`
 
@@ -35,22 +31,37 @@ export default function BrandBlock({ id, content }) {
     <section id={id} className={sectionClasses} style={sectionStyle}>
       <div className="container mx-auto px-4">
         
-        {/* MODIFICATION ICI : J'ai passé le gap de md:gap-2 à md:gap-16 pour écarter l'image du texte */}
-        <div className="flex flex-col md:flex-row items-center justify-between md:gap-16">
+        {/* --- NOUVEAU : TITRE DE SECTION CENTRÉ --- */}
+        <div className="text-center mb-20 md:mb-32">
+           <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-[#cfaa5c] text-xs font-bold tracking-[0.2em] uppercase mb-6 backdrop-blur-md">
+              Value Proposition
+           </span>
+           <h2 className="text-4xl md:text-6xl font-serif text-white">
+             Why choose cAIre?
+           </h2>
+        </div>
+
+        {/* CONTENU PRINCIPAL */}
+        {/* J'ai augmenté le gap à md:gap-24 pour bien séparer le texte de l'image */}
+        <div className="flex flex-col md:flex-row items-center justify-between md:gap-24">
           
           {/* COLONNE TEXTE */}
-          <div className="md:w-5/12 mb-10 md:mb-0 md:pr-0">
-            <div className="mb-6 md:ml-4">
-              <h1 className="text-6xl md:text-7xl font-playfair font-bold mb-2">
+          <div className="md:w-5/12 mb-16 md:mb-0 md:pr-0">
+            <div className="mb-8 md:ml-4">
+              {/* Logo cAIre */}
+              <h1 className="text-6xl md:text-7xl font-playfair font-bold mb-4">
                 <span className="text-[#cfaa5c]">c</span>
                 <span className="text-white">AI</span>
                 <span className="text-[#cfaa5c]">re</span>
               </h1>
-              <h2 className="text-2xl md:text-3xl font-montserrat font-light text-white">{subtitle}</h2>
+              {/* Sous-titre mis à jour pour introduire le sujet */}
+              <h3 className="text-2xl md:text-3xl font-montserrat font-light text-white">
+                Technology & Acquisition
+              </h3>
             </div>
 
             <div className="max-w-lg md:ml-4">
-              <div className="bg-[#1A1A1A]/50 p-6 rounded-lg border-l-4 border-[#cfaa5c] max-w-xl backdrop-blur-sm">
+              <div className="bg-[#1A1A1A]/50 p-6 rounded-2xl border-l-4 border-[#cfaa5c] max-w-xl backdrop-blur-sm shadow-2xl">
                 
                 <p className="text-white/90 leading-relaxed text-lg">
                   cAIre finally brings together two essential growth levers: <span className="text-white font-medium">technology and acquisition.</span>
@@ -77,21 +88,22 @@ export default function BrandBlock({ id, content }) {
           </div>
 
           {/* COLONNE IMAGE */}
-          <div className="md:w-7/12 flex justify-center md:justify-start relative">
-            <div className="relative w-full max-w-xl">
+          <div className="md:w-7/12 flex justify-center md:justify-end relative">
+            <div className="relative w-full max-w-2xl">
               <Image
                 src={image || "/placeholder.svg"}
                 alt="Beauty Skincare"
                 width={800}
                 height={800}
-                // MODIFICATION ICI : Ajout de "rounded-[2rem]" pour l'effet Apple (coins très arrondis)
-                className="object-contain rounded-[2rem]"
+                // Image avec coins très arrondis (Apple style)
+                className="object-contain rounded-[2rem] shadow-2xl border border-white/5"
                 priority
                 quality={90}
                 sizes="(max-width: 768px) 100vw, 800px"
               />
-              <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-[#cfaa5c]/20 -z-10"></div>
-              <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-[#cfaa5c]/10 -z-10"></div>
+              {/* Éléments décoratifs en arrière-plan */}
+              <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full bg-[#cfaa5c]/10 blur-3xl -z-10"></div>
+              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-purple-500/10 blur-3xl -z-10"></div>
             </div>
           </div>
 
