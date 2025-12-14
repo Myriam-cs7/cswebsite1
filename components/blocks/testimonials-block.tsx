@@ -1,96 +1,76 @@
 "use client"
 
-import { useSiteConfig } from "../site-config"
-import { useTranslation } from "@/components/translations"
+import { Star, Quote } from "lucide-react"
 
-export default function TestimonialsBlock({ id, content }) {
-  const { config } = useSiteConfig()
-  // Ajoutons l'utilisation du hook useTranslation
-  const { t, language } = useTranslation()
-
-  // Utiliser les valeurs du contenu ou les valeurs par défaut avec traduction
-  const {
-    title = t("What Our Clients Say", "What Our Clients Say"),
-    description = t(
-      "Discover how luxury brands are transforming their customer experience with our AI solutions.",
-      "Discover how luxury brands are transforming their customer experience with our AI solutions.",
-    ),
-    testimonials = [
-      {
-        quote: t(
-          "cAIre Solutions has revolutionized how we connect with our customers online. The AI assistant feels like a natural extension of our brand voice.",
-          "cAIre Solutions has revolutionized how we connect with our customers online. The AI assistant feels like a natural extension of our brand voice.",
-        ),
-        author: "Sophie Laurent",
-        position: t("Digital Director", "Digital Director"),
-        company: "Lumière Skincare",
-        image: "/placeholder.svg?height=80&width=80",
-      },
-      {
-        quote:
-          "Since implementing cAIre's AI assistant, we've seen a 42% increase in customer satisfaction and a 35% boost in online sales.",
-        author: "Jean-Pierre Dubois",
-        position: "CEO",
-        company: "Élysée Beauty",
-        image: "/placeholder.svg?height=80&width=80",
-      },
-      {
-        quote:
-          "The level of personalization cAIre provides is unmatched. Our customers feel truly understood and valued throughout their digital journey.",
-        author: "Maria Rodriguez",
-        position: "Customer Experience Lead",
-        company: "Luxe Cosmetics",
-        image: "/placeholder.svg?height=80&width=80",
-      },
-    ],
-    backgroundColor = "bg-white",
-    textColor = "text-black",
-    backgroundImage = "",
-    customClass = "",
-  } = content
-
-  // Appliquer les styles personnalisés
-  const sectionStyle = {
-    backgroundColor: backgroundColor.startsWith("#") ? backgroundColor : undefined,
-    color: textColor.startsWith("#") ? textColor : undefined,
-    backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-    backgroundSize: backgroundImage ? "cover" : undefined,
-    backgroundPosition: backgroundImage ? "center" : undefined,
-  }
-
-  // Déterminer les classes CSS
-  const sectionClasses = `py-20 ${
-    backgroundColor.startsWith("bg-") ? backgroundColor : ""
-  } ${textColor.startsWith("text-") ? textColor : ""} ${customClass}`
+export default function TestimonialsBlock() {
+  // ICI : Ce sont tes vrais témoignages validés
+  const reviews = [
+    {
+      name: "Dr. Al-Mansouri",
+      role: "Founder, Pearl Dermatology Dubai",
+      content: "Since installing cAIre, our no-show rate dropped by 45%. The AI handles Arabic and English inquiries perfectly. It feels like having a 24/7 concierge.",
+      stars: 5,
+    },
+    {
+      name: "Sarah L.",
+      role: "Director, Éclat Spa Paris",
+      content: "The Midnight Booking Effect is real. I wake up to confirmed appointments every morning. The tone is perfectly luxurious and on-brand.",
+      stars: 5,
+    },
+    {
+      name: "Jumeirah Aesthetic Team",
+      role: "Clinic Managers",
+      content: "Finally, a tool that understands the beauty industry. Product sales via WhatsApp have increased by 30% in just two months.",
+      stars: 5,
+    },
+  ]
 
   return (
-    <section id={id} className={sectionClasses} style={sectionStyle}>
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">{title}</h2>
-          <p className="text-xl text-gray-600">{description}</p>
+    <section className="bg-black py-24 relative overflow-hidden">
+      {/* Fond décoratif subtil */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#cfaa5c]/5 via-black to-black opacity-50 pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">
+            Trusted by Leaders
+          </h2>
+          <p className="text-[#cfaa5c] uppercase tracking-[0.2em] text-sm font-bold">
+            Real Results from Real Brands
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-gray-50 p-8 rounded-lg flex flex-col items-center text-center">
-              <div className="mb-6 relative">
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#cfaa5c]/20 mx-auto">
-                  <img
-                    src={testimonial.image || "/placeholder.svg?height=200&width=200"}
-                    alt={testimonial.author}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-[#cfaa5c]/20 -z-10"></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.map((review, index) => (
+            <div 
+              key={index} 
+              className="bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:border-[#cfaa5c]/50 transition-colors duration-300 flex flex-col"
+            >
+              {/* Étoiles */}
+              <div className="flex gap-1 mb-6">
+                {[...Array(review.stars)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-[#cfaa5c] text-[#cfaa5c]" />
+                ))}
               </div>
-              <div className="mb-4">
-                <h4 className="font-semibold text-lg">{testimonial.author}</h4>
-                <p className="text-sm text-gray-600">
-                  {testimonial.position}, {testimonial.company}
+
+              {/* Texte */}
+              <div className="relative mb-8 flex-grow">
+                <Quote className="absolute -top-2 -left-2 w-8 h-8 text-[#cfaa5c]/20 rotate-180" />
+                <p className="text-gray-300 text-lg leading-relaxed relative z-10 pl-4">
+                  "{review.content}"
                 </p>
               </div>
-              <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+
+              {/* Auteur */}
+              <div className="flex items-center gap-4 mt-auto border-t border-white/5 pt-4">
+                <div className="w-10 h-10 rounded-full bg-[#cfaa5c]/20 flex items-center justify-center text-[#cfaa5c] font-bold">
+                  {review.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="text-white font-medium">{review.name}</div>
+                  <div className="text-xs text-gray-500 uppercase tracking-wider">{review.role}</div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
