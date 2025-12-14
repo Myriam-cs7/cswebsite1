@@ -1,51 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
-import AdminPanel from "@/components/admin/admin-panel"
-import BackToTop from "@/components/back-to-top"
-import { Menu, X } from "lucide-react"
-import { useSiteConfig } from "@/components/site-config"
-import StructuredDataEnhanced from "@/components/structured-data-enhanced"
-import Image from "next/image"
+import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import { Menu, X } from "lucide-react"
 
-// --- IMPORTS DES COMPOSANTS ---
-import { SiteFooter } from "@/components/site-footer"
+// --- IMPORTS DES BLOCS DE CONTENU ---
+// On garde uniquement l'essentiel pour l'affichage
+import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
+import { SiteFooter } from "@/components/site-footer"
+import BackToTop from "@/components/back-to-top"
+import AdminPanel from "@/components/admin/admin-panel"
 
 export default function Home() {
-  // On garde config UNIQUEMENT pour le robot correcteur (useEffect), pas pour l'affichage
-  const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  // --- LE ROBOT CORRECTEUR (Reste actif pour corriger les textes si besoin) ---
-  useEffect(() => {
-    // Si la config n'est pas chargée, on ne fait rien (pas de crash)
-    if (!config || !config.sections) return;
-
-    const heroSection = config.sections.find((s) => s.id === "hero")
-    
-    if (heroSection && heroSection.content) {
-       const newTitle = "Your new unfair advantage in beauty & wellness";
-       const currentTitle = heroSection.content.title || "";
-       
-       if (!currentTitle.includes("unfair advantage")) {
-           updateSection("hero", {
-             title: newTitle,
-             heading: newTitle,   
-             headline: newTitle,  
-             subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-             buttonText: "See WhatsApp Automation",
-             secondaryButtonText: "Explore Solutions",
-             primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", 
-             secondaryButtonLink: "https://calendly.com/cairesolutions/30min", 
-             calendlyUrl: "https://calendly.com/cairesolutions/30min", 
-             showChatbot: true 
-           })
-       }
-    }
-  }, [config, updateSection])
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
@@ -57,21 +26,22 @@ export default function Home() {
     }
   }
 
-  // --- MENU 100% STATIQUE (INDESTRUCTIBLE) ---
-  // On ne demande plus rien au robot. On écrit les liens nous-mêmes.
+  // --- MENU 100% MANUEL (Aucun risque d'erreur) ---
   const MENU_LINKS = [
     { name: "Home", id: "hero" },
     { name: "About", id: "about-us" },
     { name: "Features", id: "features" },
-    { name: "Case Studies", id: "benefits" }, // Ton bloc benefits-block-new
+    { name: "Case Studies", id: "benefits" }, 
     { name: "Pricing", id: "pricing" }
   ];
 
   return (
     <main className="min-h-screen bg-[#121212]">
-      {/* Header */}
+      {/* --- HEADER --- */}
       <header className="bg-[#1A1A1A] text-white py-6 sticky top-0 z-30 shadow-md">
         <div className="container mx-auto px-4 flex justify-between items-center">
+          
+          {/* LOGO */}
           <div className="flex items-center gap-4 pl-5">
             <Link href="/" className="flex items-center">
               <Image
@@ -86,11 +56,12 @@ export default function Home() {
             </Link>
           </div>
 
+          {/* BOUTON MOBILE */}
           <button className="md:hidden text-white p-3" onClick={toggleMobileMenu}>
             {mobileMenuOpen ? <X className="text-[#cfaa5c]" /> : <Menu className="text-[#cfaa5c]" />}
           </button>
 
-          {/* NAVIGATION DESKTOP STATIQUE */}
+          {/* NAVIGATION DESKTOP */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
              {MENU_LINKS.map((item) => (
                 <a 
@@ -106,7 +77,7 @@ export default function Home() {
           </nav>
         </div>
         
-        {/* NAVIGATION MOBILE STATIQUE */}
+        {/* NAVIGATION MOBILE */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
@@ -126,18 +97,22 @@ export default function Home() {
         )}
       </header>
 
-      {/* 1. CONTENU PRINCIPAL */}
+      {/* --- CONTENU --- */}
+      
+      {/* 1. Le corps de page (Hero, Brand, etc.) */}
       <BlockRendererOptimized />
 
-      {/* 2. TÉMOIGNAGES */}
+      {/* 2. Les Témoignages */}
       <TestimonialsBlock />
 
-      {/* 3. FOOTER */}
+      {/* 3. Le Footer */}
       <SiteFooter />
 
+      {/* Outils Utilitaires */}
       <BackToTop />
       <AdminPanel />
-      <StructuredDataEnhanced />
+      
+      {/* J'ai supprimé StructuredDataEnhanced car il causait des erreurs aussi */}
     </main>
   )
 }
