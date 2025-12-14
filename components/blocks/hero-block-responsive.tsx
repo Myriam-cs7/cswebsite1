@@ -1,13 +1,13 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Paperclip, Send, ImageIcon, Upload } from "lucide-react"
+// J'ai remplacé l'import Button par des boutons HTML natifs pour éviter les erreurs de build
+import { Paperclip, Send, ImageIcon, Upload, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { useIsMobile, useIsTablet, useIsDesktop } from "@/hooks/use-media-query"
 import { useTranslation } from "@/utils/dummy-translations"
 
-export default function HeroBlockResponsive({ id, content }) {
+export default function HeroBlockResponsive({ id, content }: { id?: string, content?: any }) {
   const safeContent = content || {}
 
   const {
@@ -26,7 +26,7 @@ export default function HeroBlockResponsive({ id, content }) {
   } = safeContent
 
   const { language, t } = useTranslation()
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [messageIndex, setMessageIndex] = useState(0)
   const [showTyping, setShowTyping] = useState(false)
@@ -35,11 +35,11 @@ export default function HeroBlockResponsive({ id, content }) {
   const [showProductCard, setShowProductCard] = useState(false)
   const [showUserPhoto, setShowUserPhoto] = useState(false)
   const [userInput, setUserInput] = useState("")
-  const [userPhoto, setUserPhoto] = useState(null)
+  const [userPhoto, setUserPhoto] = useState<string | null>(null)
   const [showAttachMenu, setShowAttachMenu] = useState(false)
   
-  const chatContainerRef = useRef(null)
-  const fileInputRef = useRef(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const hasLoadedRef = useRef(false)
   const languageRef = useRef(language)
 
@@ -51,8 +51,8 @@ export default function HeroBlockResponsive({ id, content }) {
     titlePart1: "Your new unfair advantage in",
     titlePart2: "beauty & wellness",
     subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-    tryFree: "Free Trial",
-    watchDemo: "Book a Private Demo",
+    tryFree: "Start Free Trial", // Remis le texte original
+    watchDemo: "Get a Demo", // Remis le texte original
     online: "Online",
     askAbout: "Ask about skincare...",
     uploadPhoto: "Upload a Photo",
@@ -67,7 +67,7 @@ export default function HeroBlockResponsive({ id, content }) {
 
   const handleAttachClick = () => setShowAttachMenu(!showAttachMenu)
   const handlePhotoUpload = () => { fileInputRef.current?.click(); setShowAttachMenu(false) }
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: any) => {
     const file = e.target.files[0]
     if (file) setUserPhoto(URL.createObjectURL(file))
   }
@@ -97,7 +97,7 @@ export default function HeroBlockResponsive({ id, content }) {
     setMessageIndex(0); setCurrentText(""); setIsComplete(false); setShowProductCard(false); setShowUserPhoto(false); processNextMessage(0);
   }
 
-  const processNextMessage = (index) => {
+  const processNextMessage = (index: number) => {
     if (index >= messages.length) { setIsComplete(true); return; }
     const message = messages[index]
 
@@ -168,17 +168,18 @@ export default function HeroBlockResponsive({ id, content }) {
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
             {/* BOUTON 1 : YouForm (Lien direct) */}
-            <a href="https://app.youform.com/forms/gxc7dqht" target="_blank" rel="noopener noreferrer">
-                <Button className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full min-h-[44px] min-w-[44px]">
+            <a href={primaryButtonLink} target="_blank" rel="noopener noreferrer">
+                <button className="bg-[#cfaa5c] hover:bg-[#b89548] transition-colors duration-300 text-black text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full min-h-[44px] min-w-[44px] font-semibold">
                 {staticTranslations.tryFree}
-                </Button>
+                </button>
             </a>
 
             {/* BOUTON 2 : Calendly (Lien direct) */}
-            <a href="https://calendly.com/cairesolutions/30min" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" className="border-white text-white text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full flex items-center gap-2 hover:bg-white/10 transition-colors duration-300 min-h-[44px] min-w-[44px]">
+            <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
+                <button className="border border-white/20 bg-transparent text-white text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full flex items-center justify-center gap-2 hover:bg-white/10 transition-colors duration-300 min-h-[44px] min-w-[44px]">
                 {staticTranslations.watchDemo}
-                </Button>
+                <ArrowRight className="w-4 h-4" />
+                </button>
             </a>
           </div>
         </div>
@@ -187,11 +188,11 @@ export default function HeroBlockResponsive({ id, content }) {
         {showChatbot && (
           <div className="w-full md:w-1/2">
             <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-gray-200">
-              {/* Contenu Chatbot - Reste inchangé */}
+              {/* Contenu Chatbot */}
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="rounded-full overflow-hidden w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-black">
-                    <Image src="/images/logo.svg" alt="cAIre Solutions Logo" width={72} height={72} className="object-contain" priority />
+                    <Image src="/images/logo.svg" alt="Glowbot" width={72} height={72} className="object-contain" />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-black text-base md:text-lg">Glowbot</span>
@@ -210,33 +211,43 @@ export default function HeroBlockResponsive({ id, content }) {
                 ) : (
                   <>
                     {messages.slice(0, messageIndex).map((message, index) => (
-                      <div key={index} className={`${message.type === "assistant" ? "bg-gray-100 rounded-lg p-2 md:p-3 max-w-[80%]" : "bg-[#cfaa5c] text-black rounded-lg p-2 md:p-3 max-w-[80%] ml-auto"}`}>
-                        <p className={`${message.type === "assistant" ? "text-gray-800" : "text-black"} text-sm md:text-base`}>{message.content}</p>
+                      <div key={index} className={`flex w-full ${message.type === "assistant" ? "justify-start" : "justify-end"}`}>
+                        <div className={`${message.type === "assistant" ? "bg-gray-100 text-gray-800 rounded-tl-none" : "bg-[#cfaa5c] text-black rounded-tr-none"} rounded-2xl p-3 max-w-[85%] text-sm md:text-base`}>
+                            {message.content}
+                        </div>
                       </div>
                     ))}
                     {showUserPhoto && (
-                      <div className="bg-[#cfaa5c] text-black rounded-lg p-2 md:p-3 max-w-[80%] ml-auto">
-                        <p className="text-black mb-2 text-sm md:text-base">{staticTranslations.photoSkin}</p>
-                        <Image src="/images/skin-sample.png" alt="User skin" width={200} height={200} className="w-full h-auto" />
+                      <div className="flex w-full justify-end">
+                          <div className="bg-[#cfaa5c] text-black rounded-2xl rounded-tr-none p-2 md:p-3 max-w-[80%]">
+                            <p className="text-black mb-2 text-sm md:text-base">{staticTranslations.photoSkin}</p>
+                            <Image src="/images/skin-sample.png" alt="User skin" width={200} height={200} className="w-full h-auto rounded-lg" />
+                          </div>
                       </div>
                     )}
                     {showTyping && (
-                      <div className="bg-gray-100 rounded-lg p-2 md:p-3 max-w-[80%]">
-                        <p className="text-gray-800 whitespace-pre-wrap text-sm md:text-base">{currentText}</p>
+                      <div className="flex w-full justify-start">
+                          <div className="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+                            <p className="text-gray-800 whitespace-pre-wrap text-sm md:text-base">{currentText}</p>
+                          </div>
                       </div>
                     )}
                     {showProductCard && (
-                      <div className="bg-gray-100 rounded-lg p-2 md:p-3 max-w-[80%]">
-                        <div className="bg-white rounded-lg p-2 md:p-3 mb-2">
-                            <div className="flex justify-center mb-3">
-                                <div className="w-24 h-24 md:w-32 md:h-32"><Image src="/images/royal-caviar-serum.png" alt={staticTranslations.royalCaviar} width={128} height={128} className="object-contain w-full h-full" /></div>
+                      <div className="flex w-full justify-start">
+                          <div className="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+                            <div className="bg-white rounded-lg p-2 md:p-3 mb-2">
+                                <div className="flex justify-center mb-3">
+                                    <div className="w-24 h-24 md:w-32 md:h-32">
+                                        <Image src="/images/royal-caviar-serum.png" alt={staticTranslations.royalCaviar} width={128} height={128} className="object-contain w-full h-full" />
+                                    </div>
+                                </div>
+                                <h4 className="font-medium text-xs md:text-sm text-center">{staticTranslations.royalCaviar}</h4>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <span className="font-bold text-sm">€300</span>
+                                    <button className="bg-[#cfaa5c] text-black text-xs px-3 py-1 rounded-md">{staticTranslations.viewDetails}</button>
+                                </div>
                             </div>
-                            <h4 className="font-medium text-xs md:text-sm text-center">{staticTranslations.royalCaviar}</h4>
-                            <div className="mt-2 flex justify-between items-center">
-                                <span className="font-bold text-sm">€300</span>
-                                <button className="bg-[#cfaa5c] text-black text-xs px-3 py-1 rounded-md">{staticTranslations.viewDetails}</button>
-                            </div>
-                        </div>
+                          </div>
                       </div>
                     )}
                   </>
@@ -248,7 +259,7 @@ export default function HeroBlockResponsive({ id, content }) {
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
                   <button className="text-gray-500 hover:text-[#cfaa5c] p-2" onClick={handleAttachClick}><Paperclip className="h-5 w-5" /></button>
                   {showAttachMenu && (
-                      <div className="absolute bottom-full right-0 mb-2 bg-white shadow-lg rounded-lg p-2 w-48 animate-fadeIn">
+                      <div className="absolute bottom-full right-0 mb-2 bg-white shadow-lg rounded-lg p-2 w-48 animate-fadeIn z-50">
                         <button className="flex items-center gap-2 w-full text-left p-2 hover:bg-gray-100 rounded-md" onClick={handlePhotoUpload}>
                           <ImageIcon className="h-4 w-4 text-[#cfaa5c]" /><span className="text-sm">{staticTranslations.uploadSkinPhoto}</span>
                         </button>
