@@ -10,60 +10,44 @@ import StructuredDataEnhanced from "@/components/structured-data-enhanced"
 import Image from "next/image"
 import Link from "next/link"
 
-// --- IMPORTS AJOUTÉS POUR RÉPARER LES SECTIONS MANQUANTES ---
-// Assure-toi que ces fichiers existent. Sinon, dis-le moi.
-import { Testimonials } from "@/components/testimonials" 
-import { SiteFooter } from "@/components/site-footer" 
+// --- CORRECTION DES IMPORTS ---
+// 1. On importe le Footer que tu viens de créer
+import { SiteFooter } from "@/components/site-footer"
+
+// 2. On importe le fichier de témoignages avec son VRAI nom (vu sur tes captures)
+// Note: J'essaie le chemin le plus probable. 
+import TestimonialsBlock from "@/components/blocks/testimonials-block" 
 
 export default function Home() {
   const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // --- LE ROBOT CORRECTEUR V2 (Blindé) ---
+  // --- LE ROBOT CORRECTEUR ---
   useEffect(() => {
     const heroSection = config.sections.find((s) => s.id === "hero")
-    
-    // On force la mise à jour si le titre n'est pas le bon
     if (heroSection) {
-       // Le nouveau titre que l'on veut partout
        const newTitle = "Your new unfair advantage in beauty & wellness";
-       
-       // On vérifie si la mise à jour est nécessaire pour éviter une boucle infinie
        const currentTitle = heroSection.content.title || "";
-       const currentHeading = heroSection.content.heading || ""; 
        
-       if (!currentTitle.includes("unfair advantage") || !currentHeading.includes("unfair advantage")) {
-           console.log("🚀 Mise à jour forcée du Hero (Titres + Liens)...")
-           
+       if (!currentTitle.includes("unfair advantage")) {
            updateSection("hero", {
-             // 1. ON FORCE LE TITRE DANS TOUTES LES VARIABLES POSSIBLES
              title: newTitle,
              heading: newTitle,   
              headline: newTitle,  
-             
-             // 2. LE SOUS-TITRE
              subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
-             
-             // 3. LES BOUTONS (TEXTES)
              buttonText: "See WhatsApp Automation",
              secondaryButtonText: "Explore Solutions",
-             
-             // 4. LES LIENS (RÉPARATION)
              primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", 
              secondaryButtonLink: "https://calendly.com/cairesolutions/30min", 
              calendlyUrl: "https://calendly.com/cairesolutions/30min", 
-             
-             // 5. ON GARDE LE CHATBOT
              showChatbot: true 
            })
        }
     }
   }, [config, updateSection])
-  // ----------------------------------------
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
-  // Gestion du scroll fluide
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -109,7 +93,6 @@ export default function Home() {
           </nav>
         </div>
         
-        {/* Menu Mobile */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
@@ -127,13 +110,13 @@ export default function Home() {
         )}
       </header>
 
-      {/* 1. CONTENU PRINCIPAL (Géré par la config) */}
+      {/* 1. CONTENU PRINCIPAL */}
       <BlockRendererOptimized />
 
-      {/* 2. TÉMOIGNAGES (Ajouté manuellement pour forcer l'affichage) */}
-      <Testimonials />
+      {/* 2. TÉMOIGNAGES (Lien corrigé) */}
+      <TestimonialsBlock />
 
-      {/* 3. FOOTER (Ajouté manuellement) */}
+      {/* 3. FOOTER (Lien corrigé) */}
       <SiteFooter />
 
       <BackToTop />
