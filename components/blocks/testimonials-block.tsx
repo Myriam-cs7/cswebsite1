@@ -3,37 +3,38 @@
 import { Star, Quote } from "lucide-react"
 
 export default function TestimonialsBlock() {
-  // ICI : Ce sont tes vrais témoignages validés
+  
+  // VOS VRAIS CLIENTS (Récupérés de votre capture d'écran)
   const reviews = [
     {
-      name: "Dr. Al-Mansouri",
-      role: "Founder, Pearl Dermatology Dubai",
-      content: "Since installing cAIre, our no-show rate dropped by 45%. The AI handles Arabic and English inquiries perfectly. It feels like having a 24/7 concierge.",
+      name: "Phynacare",
+      role: "Partner Brand",
+      content: "Phynacare saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
       stars: 5,
     },
     {
-      name: "Sarah L.",
-      role: "Director, Éclat Spa Paris",
-      content: "The Midnight Booking Effect is real. I wake up to confirmed appointments every morning. The tone is perfectly luxurious and on-brand.",
+      name: "Doze",
+      role: "Luxury Wellness",
+      content: "Customer loyalty has never been stronger—our clients feel the difference.",
       stars: 5,
     },
     {
-      name: "Jumeirah Aesthetic Team",
-      role: "Clinic Managers",
-      content: "Finally, a tool that understands the beauty industry. Product sales via WhatsApp have increased by 30% in just two months.",
+      name: "Institut Esthederm",
+      role: "Premium Skincare",
+      content: "Our AI reflects elegance and innovation—sales up, satisfaction up.",
       stars: 5,
     },
   ]
 
   return (
     <section className="bg-black py-24 relative overflow-hidden">
-      {/* Fond décoratif subtil */}
+      {/* Fond décoratif */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#cfaa5c]/5 via-black to-black opacity-50 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">
-            Trusted by Leaders
+            Testimonials
           </h2>
           <p className="text-[#cfaa5c] uppercase tracking-[0.2em] text-sm font-bold">
             Real Results from Real Brands
