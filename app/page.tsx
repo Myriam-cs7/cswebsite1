@@ -5,14 +5,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
-// --- IMPORTS DES BLOCS DE CONTENU ---
-import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
+// --- 1. IMPORTS MANUELS DES BLOCS (On ne passe plus par le Renderer cassé) ---
+// On importe directement les fichiers qu'on a créés ensemble ou qui sont standards
+import { Hero } from "@/components/hero" 
+import BrandBlock from "@/components/blocks/brand-block"
+import BenefitsBlockNew from "@/components/blocks/benefits-block-new"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
 import { SiteFooter } from "@/components/site-footer"
-import BackToTop from "@/components/back-to-top"
 
-// J'ai retiré StructuredDataEnhanced et AdminPanel pour stopper les erreurs de Build
-// J'ai retiré le useEffect (Robot) pour éviter tout conflit
+// Outils
+import BackToTop from "@/components/back-to-top"
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -27,13 +29,12 @@ export default function Home() {
     }
   }
 
-  // --- MENU 100% MANUEL (Indestructible) ---
+  // Menu Statique
   const MENU_LINKS = [
     { name: "Home", id: "hero" },
-    { name: "About", id: "about-us" },
-    { name: "Features", id: "features" },
-    { name: "Case Studies", id: "benefits" }, 
-    { name: "Pricing", id: "pricing" }
+    { name: "About", id: "about-us" }, // Pointe vers BrandBlock
+    { name: "Case Studies", id: "case-studies" }, // Pointe vers Benefits
+    { name: "Testimonials", id: "testimonials" }
   ];
 
   return (
@@ -42,7 +43,6 @@ export default function Home() {
       <header className="bg-[#1A1A1A] text-white py-6 sticky top-0 z-30 shadow-md">
         <div className="container mx-auto px-4 flex justify-between items-center">
           
-          {/* LOGO */}
           <div className="flex items-center gap-4 pl-5">
             <Link href="/" className="flex items-center">
               <Image
@@ -57,12 +57,10 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* BOUTON MOBILE */}
           <button className="md:hidden text-white p-3" onClick={toggleMobileMenu}>
             {mobileMenuOpen ? <X className="text-[#cfaa5c]" /> : <Menu className="text-[#cfaa5c]" />}
           </button>
 
-          {/* NAVIGATION DESKTOP */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
              {MENU_LINKS.map((item) => (
                 <a 
@@ -74,11 +72,9 @@ export default function Home() {
                   {item.name}
                 </a>
              ))}
-             <Link href="/blog" className="text-white hover:text-[#cfaa5c] transition-colors">Blog</Link>
           </nav>
         </div>
         
-        {/* NAVIGATION MOBILE */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
@@ -92,24 +88,33 @@ export default function Home() {
                     {item.name}
                   </a>
                 ))}
-                <Link href="/blog" className="text-white hover:text-[#cfaa5c] text-lg block py-2">Blog</Link>
               </div>
             </div>
         )}
       </header>
 
-      {/* --- CONTENU --- */}
-      
-      {/* 1. Le corps de page */}
-      <BlockRendererOptimized />
+      {/* --- CONSTRUCTION MANUELLE DE LA PAGE --- */}
+      {/* On empile les blocs les uns après les autres. C'est incassable. */}
 
-      {/* 2. Les Témoignages */}
-      <TestimonialsBlock />
+      {/* 1. HERO (Standard) */}
+      <div id="hero">
+        <Hero />
+      </div>
 
-      {/* 3. Le Footer */}
+      {/* 2. BRAND BLOCK (Why Choose cAIre) */}
+      <BrandBlock id="about-us" />
+
+      {/* 3. BENEFITS (Case Studies / Burj Khalifa) */}
+      <BenefitsBlockNew id="case-studies" />
+
+      {/* 4. TÉMOIGNAGES */}
+      <div id="testimonials">
+        <TestimonialsBlock />
+      </div>
+
+      {/* 5. FOOTER */}
       <SiteFooter />
 
-      {/* Outils Utilitaires simples */}
       <BackToTop />
       
     </main>
