@@ -1,4 +1,5 @@
 "use client"
+
 import { useEffect, useState } from "react"
 import { BlockRendererOptimized } from "@/components/block-renderer-optimized"
 import AdminPanel from "@/components/admin/admin-panel"
@@ -8,6 +9,11 @@ import { useSiteConfig } from "@/components/site-config"
 import StructuredDataEnhanced from "@/components/structured-data-enhanced"
 import Image from "next/image"
 import Link from "next/link"
+
+// --- IMPORTS AJOUTÉS POUR RÉPARER LES SECTIONS MANQUANTES ---
+// Assure-toi que ces fichiers existent. Sinon, dis-le moi.
+import { Testimonials } from "@/components/testimonials" 
+import { SiteFooter } from "@/components/site-footer" 
 
 export default function Home() {
   const { config, updateSection } = useSiteConfig()
@@ -23,9 +29,8 @@ export default function Home() {
        const newTitle = "Your new unfair advantage in beauty & wellness";
        
        // On vérifie si la mise à jour est nécessaire pour éviter une boucle infinie
-       // On regarde si le titre actuel contient "unfair advantage"
        const currentTitle = heroSection.content.title || "";
-       const currentHeading = heroSection.content.heading || ""; // Variable potentielle
+       const currentHeading = heroSection.content.heading || ""; 
        
        if (!currentTitle.includes("unfair advantage") || !currentHeading.includes("unfair advantage")) {
            console.log("🚀 Mise à jour forcée du Hero (Titres + Liens)...")
@@ -33,8 +38,8 @@ export default function Home() {
            updateSection("hero", {
              // 1. ON FORCE LE TITRE DANS TOUTES LES VARIABLES POSSIBLES
              title: newTitle,
-             heading: newTitle,   // Certains composants utilisent 'heading'
-             headline: newTitle,  // D'autres utilisent 'headline'
+             heading: newTitle,   
+             headline: newTitle,  
              
              // 2. LE SOUS-TITRE
              subtitle: "Your smartest way to increase bookings, loyalty, and product sales without extra staff.",
@@ -44,9 +49,9 @@ export default function Home() {
              secondaryButtonText: "Explore Solutions",
              
              // 4. LES LIENS (RÉPARATION)
-             primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", // Lien YouForm
-             secondaryButtonLink: "https://calendly.com/cairesolutions/30min", // Lien Calendly
-             calendlyUrl: "https://calendly.com/cairesolutions/30min", // Sécurité supplémentaire
+             primaryButtonLink: "https://app.youform.com/forms/gxc7dqht", 
+             secondaryButtonLink: "https://calendly.com/cairesolutions/30min", 
+             calendlyUrl: "https://calendly.com/cairesolutions/30min", 
              
              // 5. ON GARDE LE CHATBOT
              showChatbot: true 
@@ -122,8 +127,14 @@ export default function Home() {
         )}
       </header>
 
-      {/* Le contenu du site géré dynamiquement */}
+      {/* 1. CONTENU PRINCIPAL (Géré par la config) */}
       <BlockRendererOptimized />
+
+      {/* 2. TÉMOIGNAGES (Ajouté manuellement pour forcer l'affichage) */}
+      <Testimonials />
+
+      {/* 3. FOOTER (Ajouté manuellement) */}
+      <SiteFooter />
 
       <BackToTop />
       <AdminPanel />
