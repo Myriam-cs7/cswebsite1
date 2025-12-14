@@ -15,11 +15,13 @@ import { SiteFooter } from "@/components/site-footer"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
 
 export default function Home() {
+  // On garde config UNIQUEMENT pour le robot correcteur (useEffect), pas pour l'affichage
   const { config, updateSection } = useSiteConfig()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // --- LE ROBOT CORRECTEUR (Reste actif pour le contenu) ---
+  // --- LE ROBOT CORRECTEUR (Reste actif pour corriger les textes si besoin) ---
   useEffect(() => {
+    // Si la config n'est pas chargée, on ne fait rien (pas de crash)
     if (!config || !config.sections) return;
 
     const heroSection = config.sections.find((s) => s.id === "hero")
@@ -55,14 +57,14 @@ export default function Home() {
     }
   }
 
-  // --- MENU STATIQUE (Pour éviter le crash du Build) ---
-  // On définit les liens ici manuellement. C'est 100% sûr.
-  const NAV_ITEMS = [
-    { label: "Home", href: "#hero" },
-    { label: "Features", href: "#features" },
-    { label: "Case Studies", href: "#benefits" }, // Correspond à ta section Benefits
-    { label: "Pricing", href: "#pricing" },
-    { label: "Blog", href: "/blog" }
+  // --- MENU 100% STATIQUE (INDESTRUCTIBLE) ---
+  // On ne demande plus rien au robot. On écrit les liens nous-mêmes.
+  const MENU_LINKS = [
+    { name: "Home", id: "hero" },
+    { name: "About", id: "about-us" },
+    { name: "Features", id: "features" },
+    { name: "Case Studies", id: "benefits" }, // Ton bloc benefits-block-new
+    { name: "Pricing", id: "pricing" }
   ];
 
   return (
@@ -88,45 +90,37 @@ export default function Home() {
             {mobileMenuOpen ? <X className="text-[#cfaa5c]" /> : <Menu className="text-[#cfaa5c]" />}
           </button>
 
-          {/* NAVIGATION DESKTOP (Utilise la liste statique) */}
+          {/* NAVIGATION DESKTOP STATIQUE */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-             {NAV_ITEMS.map((item) => (
-               <Link 
-                 key={item.label} 
-                 href={item.href}
-                 onClick={(e) => {
-                   if (item.href.startsWith("#")) {
-                     e.preventDefault(); 
-                     scrollToSection(item.href.substring(1));
-                   }
-                 }}
-                 className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer"
-               >
-                 {item.label}
-               </Link>
+             {MENU_LINKS.map((item) => (
+                <a 
+                  key={item.name} 
+                  href={`#${item.id}`} 
+                  onClick={(e) => {e.preventDefault(); scrollToSection(item.id)}} 
+                  className="text-white hover:text-[#cfaa5c] transition-colors cursor-pointer"
+                >
+                  {item.name}
+                </a>
              ))}
+             <Link href="/blog" className="text-white hover:text-[#cfaa5c] transition-colors">Blog</Link>
           </nav>
         </div>
         
-        {/* NAVIGATION MOBILE (Utilise la liste statique) */}
+        {/* NAVIGATION MOBILE STATIQUE */}
         {mobileMenuOpen && (
             <div className="md:hidden bg-[#1A1A1A] border-t border-gray-800 py-4 absolute w-full left-0 top-full">
               <div className="flex flex-col space-y-4 px-4">
-                {NAV_ITEMS.map((item) => (
-                   <Link 
-                     key={item.label} 
-                     href={item.href}
-                     onClick={(e) => {
-                       if (item.href.startsWith("#")) {
-                         e.preventDefault(); 
-                         scrollToSection(item.href.substring(1));
-                       }
-                     }}
-                     className="text-white hover:text-[#cfaa5c] text-lg block py-2"
-                   >
-                     {item.label}
-                   </Link>
+                {MENU_LINKS.map((item) => (
+                  <a 
+                    key={item.name} 
+                    href={`#${item.id}`} 
+                    onClick={(e) => {e.preventDefault(); scrollToSection(item.id)}} 
+                    className="text-white hover:text-[#cfaa5c] text-lg block py-2"
+                  >
+                    {item.name}
+                  </a>
                 ))}
+                <Link href="/blog" className="text-white hover:text-[#cfaa5c] text-lg block py-2">Blog</Link>
               </div>
             </div>
         )}
