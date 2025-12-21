@@ -6,22 +6,22 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
   
   const testimonials = [
     {
-      // CLIENT 1 : Docteur Beauty Care (Clinique)
+      // CLIENT 1 : Docteur Beauty Care 
       company: "Docteur Beauty Care",
-      quote: "Docteur Beauty Care saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
+      quote: "Saw sales soar by 20% in just 3 months with cAIre Solutions your brand can shine too.",
       // Assurez-vous que votre image s'appelle bien dr-beauty.png dans public/images/
       logo: "/images/dr-beauty.png", 
     },
     {
-      // CLIENT 2 : Doze (Parfum/Wellness)
+      // CLIENT 2 : Doze Parfums (Parfum/Wellness)
       company: "Doze",
-      quote: "Doze: Customer loyalty has never been stronger—our clients feel the difference.",
+      quote: "Customer loyalty has never been stronger our clients feel the difference.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%E2%80%99e%CC%81cran%202025-04-08%20a%CC%80%2006.27.39.jpg-0qnXJStu9ANIevkVt4RY4YNSlavNw1.jpeg",
     },
     {
       // CLIENT 3 : Institut Esthederm (Skincare)
       company: "Institut Esthederm",
-      quote: "Institut Esthederm: Our AI reflects elegance and innovation—sales up, satisfaction up.",
+      quote: "Our AI reflects elegance and innovation sales up, satisfaction up.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/phyphy%20%281%29-MEiBERtQFOzjiozG9yzUxSGjFLYYtA.webp",
     },
   ]
