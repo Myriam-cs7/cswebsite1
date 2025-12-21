@@ -4,9 +4,6 @@ import Image from "next/image"
 
 export default function BenefitsBlockNew({ id }: { id?: string }) {
   
-  // Configuration des styles d'image pour un contrôle précis
-  const commonImageStyles = "h-full w-auto rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105";
-
   const cases = [
     {
       id: 1,
@@ -17,8 +14,8 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       statLabel: "Night Bookings",
       image: "/images/ai-concierge.jpg",
       color: "from-purple-500/10 to-blue-500/10",
-      // LE STYLE GAGNANT : object-contain pour tout voir + l'arrondi
-      imageClass: `object-contain ${commonImageStyles}`
+      // Image VERTICALE : On priorise la HAUTEUR (h-full) pour qu'elle soit grande
+      imageClass: "h-full w-auto object-contain rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105"
     },
     {
       id: 2,
@@ -29,8 +26,10 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       statLabel: "Languages Spoken",
       image: "/images/img1.png", 
       color: "from-emerald-500/10 to-teal-500/10",
-      // "FAIS-MOI PAREIL" : On applique exactement le même style que la 1ère
-      imageClass: `object-contain ${commonImageStyles}`
+      // CORRECTION ICI POUR LE BURJ KHALIFA (Image HORIZONTALE) : 
+      // On priorise la LARGEUR (w-full) et hauteur auto (h-auto) pour qu'elle rentre en entier sans être coupée.
+      // J'ai ajouté 'max-h-[500px]' pour éviter qu'elle ne soit trop haute si l'écran est géant.
+      imageClass: "w-full h-auto max-h-[500px] object-contain rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105"
     },
     {
       id: 3,
@@ -41,8 +40,8 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
       color: "from-orange-500/10 to-red-500/10",
-      // Style harmonisé pour la 3ème aussi
-      imageClass: `object-contain ${commonImageStyles}`
+      // Image VERTICALE : On priorise la HAUTEUR (h-full)
+      imageClass: "h-full w-auto object-contain rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105"
     }
   ]
 
@@ -69,20 +68,20 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
               {/* --- ZONE IMAGE --- */}
-              {/* Hauteur fixe de 500px pour l'harmonie */}
+              {/* Le conteneur s'adapte maintenant flexiblement grâce à flex */}
               <div className="w-full lg:w-3/5 h-[500px] relative group flex items-center justify-center">
                  
                  {/* Lueur d'arrière-plan */}
                  <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700 -z-10`}></div>
                  
-                 {/* L'IMAGE AVEC STYLE SPÉCIFIQUE */}
+                 {/* L'IMAGE AVEC SON STYLE SPÉCIFIQUE */}
                  <Image
                    src={item.image}
                    alt={item.title}
-                   // On utilise width/height pour activer le rognage sur l'image elle-même
+                   // On met une grande taille de base pour la qualité
                    width={1200}
                    height={1200}
-                   // Application de la classe spécifique définie plus haut
+                   // La classe décide si on stretch en hauteur ou en largeur
                    className={item.imageClass}
                  />
               </div>
