@@ -13,7 +13,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "60% of relaxation seekers browse services after 8 PM. Glowbot captures these bookings instantly on WhatsApp.",
       stat: "+40%",
       statLabel: "Night Bookings",
-      image: "/images/ai-concierge.jpg", // Votre fichier .jpg
+      image: "/images/ai-concierge.jpg", 
       color: "from-purple-900/20 to-blue-900/20"
     },
     {
@@ -23,7 +23,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "Dubai attracts the world. Glowbot manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      image: "/images/img1.png", // L'image du Burj Khalifa
+      image: "/images/img1.png", 
       color: "from-emerald-900/20 to-teal-900/20"
     },
     {
@@ -60,27 +60,24 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* --- BLOC IMAGE --- */}
-              <div className="w-full lg:w-3/5 relative group">
-                 {/* Lueur d'arrière-plan */}
-                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-700`}></div>
+              {/* --- BLOC IMAGE ÉPURÉ --- */}
+              {/* On définit une hauteur fixe (h-[500px]) pour l'espace global de l'image */}
+              <div className="w-full lg:w-3/5 relative group h-[500px] flex items-center justify-center">
                  
-                 {/* LE CADRE (Container) 
-                    rounded-[2.5rem] = Gros arrondi extérieur
-                 */}
-                 <div className="relative w-full h-[500px] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl flex items-center justify-center p-6">
-                    
-                    {/* L'IMAGE ELLE-MÊME 
-                       rounded-[2rem] = J'ai ajouté ça pour que l'image elle-même soit arrondie
-                    */}
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-contain p-2 rounded-[2rem] transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 60vw"
-                    />
-                 </div>
+                 {/* Lueur d'arrière-plan subtile */}
+                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-10 group-hover:opacity-25 transition-opacity duration-700 -z-10`}></div>
+                 
+                 {/* L'IMAGE EN DIRECT (Plus de conteneur inutile) */}
+                 <Image
+                   src={item.image}
+                   alt={item.title}
+                   fill
+                   // object-contain : On voit toute l'image
+                   // rounded-[2.5rem] : L'arrondi est sur l'image elle-même
+                   // drop-shadow-2xl : Une ombre douce pour détacher l'image du fond noir
+                   className="object-contain rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl"
+                   sizes="(max-width: 768px) 100vw, 60vw"
+                 />
               </div>
 
               {/* TEXTE */}
