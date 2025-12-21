@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
-// --- CORRECTION : LE CHEMIN DOIT INCLURE "blocks" ---
+// --- ATTENTION : LE CHEMIN POINTE MAINTENANT VERS LE DOSSIER "blocks" ---
 import HeroBlockResponsive from "@/components/blocks/hero-block-responsive"
 import BrandBlock from "@/components/blocks/brand-block"
 import BenefitsBlockNew from "@/components/blocks/benefits-block-new"
@@ -76,7 +76,7 @@ export default function Home() {
         />
       </div>
 
-      {/* 2. BRAND BLOCK (About Us) */}
+      {/* 2. ABOUT US */}
       <BrandBlock id="about-us" />
 
       {/* 3. CASE STUDIES */}
