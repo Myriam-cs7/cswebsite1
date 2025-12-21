@@ -13,10 +13,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "60% of relaxation seekers browse services after 8 PM. Glowbot captures these bookings instantly on WhatsApp.",
       stat: "+40%",
       statLabel: "Night Bookings",
-      // ICI : J'ai mis l'image du téléphone (Glowbot)
+      // IMAGE 1 : Le téléphone (Midnight Booking)
       image: "/images/ai-concierge.png", 
-      // J'utilise 'object-contain' pour voir le téléphone entier, mais sans padding pour qu'il soit gros
-      position: "object-contain" 
+      color: "from-purple-900/20 to-blue-900/20"
     },
     {
       id: 2,
@@ -25,10 +24,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "Dubai attracts the world. Glowbot manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      // ICI : J'ai mis l'image du Spa (img1)
+      // IMAGE 2 : Le Building / Burj Khalifa (Global Medical Hub)
       image: "/images/img1.png", 
-      // 'object-cover' pour que l'image remplisse tout le cadre
-      position: "object-cover" 
+      color: "from-emerald-900/20 to-teal-900/20"
     },
     {
       id: 3,
@@ -37,8 +35,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "Glowbot proactively re-engages clients for product refills and follow-up treatments.",
       stat: "x2.5",
       statLabel: "Retention Rate",
+      // IMAGE 3 : Les téléphones produits
       image: "/images/img3.png", 
-      position: "object-contain"
+      color: "from-orange-900/20 to-red-900/20"
     }
   ]
 
@@ -64,19 +63,21 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* IMAGE LARGE STYLE APPLE */}
+              {/* --- PARTIE IMAGE STYLE APPLE --- */}
               <div className="w-full lg:w-3/5 relative group">
                  {/* Lueur d'arrière-plan */}
-                 <div className="absolute inset-0 bg-[#cfaa5c]/5 blur-3xl -z-10 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
+                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-700`}></div>
                  
-                 {/* Conteneur Arrondi Apple */}
-                 <div className="relative w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl">
+                 {/* CONTENEUR CARTE APPLE */}
+                 {/* rounded-[2.5rem] = Arrondi très fort */}
+                 {/* h-[500px] = Hauteur fixe pour l'harmonie */}
+                 <div className="relative w-full h-[500px] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl flex items-center justify-center p-8">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      // C'est ici que je gère la taille : si c'est 'contain', je m'assure qu'elle prend de la place (scale)
-                      className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${item.position}`}
+                      // object-contain = On voit TOUTE l'image (Burj Khalifa entier), rien n'est coupé
+                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 60vw"
                     />
                  </div>
