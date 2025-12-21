@@ -4,6 +4,9 @@ import Image from "next/image"
 
 export default function BenefitsBlockNew({ id }: { id?: string }) {
   
+  // Configuration des styles d'image pour un contrôle précis
+  const commonImageStyles = "h-full w-auto rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105";
+
   const cases = [
     {
       id: 1,
@@ -13,8 +16,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "+40%",
       statLabel: "Night Bookings",
       image: "/images/ai-concierge.jpg",
-      // Couleur de fond subtile pour habiller si l'image ne remplit pas tout
-      color: "from-purple-500/10 to-blue-500/10"
+      color: "from-purple-500/10 to-blue-500/10",
+      // LE STYLE GAGNANT : object-contain pour tout voir + l'arrondi
+      imageClass: `object-contain ${commonImageStyles}`
     },
     {
       id: 2,
@@ -24,7 +28,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "30+",
       statLabel: "Languages Spoken",
       image: "/images/img1.png", 
-      color: "from-emerald-500/10 to-teal-500/10"
+      color: "from-emerald-500/10 to-teal-500/10",
+      // "FAIS-MOI PAREIL" : On applique exactement le même style que la 1ère
+      imageClass: `object-contain ${commonImageStyles}`
     },
     {
       id: 3,
@@ -34,7 +40,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "x2.5",
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
-      color: "from-orange-500/10 to-red-500/10"
+      color: "from-orange-500/10 to-red-500/10",
+      // Style harmonisé pour la 3ème aussi
+      imageClass: `object-contain ${commonImageStyles}`
     }
   ]
 
@@ -61,25 +69,21 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
               {/* --- ZONE IMAGE --- */}
-              {/* h-[500px] fixe la hauteur de la zone disponible */}
+              {/* Hauteur fixe de 500px pour l'harmonie */}
               <div className="w-full lg:w-3/5 h-[500px] relative group flex items-center justify-center">
                  
                  {/* Lueur d'arrière-plan */}
                  <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700 -z-10`}></div>
                  
-                 {/* L'IMAGE EN MODE "AUTO" 
-                    J'ai retiré 'fill' pour utiliser width/height + 'h-full w-auto'.
-                    Cela force la boîte de l'image à coller exactement à la photo.
-                    Donc le 'rounded-[2.5rem]' rogne vraiment la photo.
-                 */}
+                 {/* L'IMAGE AVEC STYLE SPÉCIFIQUE */}
                  <Image
                    src={item.image}
                    alt={item.title}
-                   // On met une taille arbitraire élevée pour la qualité, 
-                   // mais le CSS (h-full w-auto) contrôlera l'affichage réel.
+                   // On utilise width/height pour activer le rognage sur l'image elle-même
                    width={1200}
                    height={1200}
-                   className="h-full w-auto object-contain rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                   // Application de la classe spécifique définie plus haut
+                   className={item.imageClass}
                  />
               </div>
 
