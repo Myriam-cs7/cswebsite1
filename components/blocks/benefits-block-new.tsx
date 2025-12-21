@@ -14,7 +14,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       statLabel: "Night Bookings",
       image: "/images/ai-concierge.jpg", 
       color: "from-purple-500/10 to-blue-500/10",
-      // CORRECTION : On utilise 'object-contain' pour voir toute l'image sans zoom
+      // On utilise 'object-contain' pour voir toute l'image (pas de zoom)
       objectFit: "object-contain" 
     },
     {
@@ -26,7 +26,6 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       statLabel: "Languages Spoken",
       image: "/images/img1.png", 
       color: "from-emerald-500/10 to-teal-500/10",
-      // On garde 'object-cover' pour les autres images
       objectFit: "object-cover" 
     },
     {
@@ -65,19 +64,20 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
               {/* --- ZONE IMAGE --- */}
-              <div className="w-full lg:w-3/5 h-[500px] relative group">
+              <div className="w-full lg:w-3/5 h-[500px] relative group flex items-center justify-center">
                  
                  {/* Lueur d'arrière-plan */}
                  <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700 -z-10`}></div>
                  
-                 {/* LE MASQUE D'ÉCRÊTAGE ARRONDIE */}
-                 <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden shadow-xl bg-black/20 backdrop-blur-sm border border-white/10">
+                 {/* L'IMAGE ELLE-MÊME ARRONDIE */}
+                 {/* Plus de conteneur masque. On applique le style sur l'image direct. */}
+                 <div className="relative w-full h-full">
                    <Image
                      src={item.image}
                      alt={item.title}
                      fill
-                     // CORRECTION : On utilise la propriété dynamique objectFit
-                     className={`${item.objectFit} object-center transition-transform duration-700 group-hover:scale-105 p-4`}
+                     // C'est ici que la magie opère : rounded-[2.5rem] est appliqué à l'image JPG elle-même
+                     className={`${item.objectFit} rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105`}
                      sizes="(max-width: 768px) 100vw, 60vw"
                    />
                  </div>
