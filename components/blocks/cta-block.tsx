@@ -28,7 +28,7 @@ export default function CtaBlock() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-[#cfaa5c] text-black px-10 py-4 rounded-full text-lg font-bold hover:bg-[#b89548] transition-all hover:scale-105 shadow-lg shadow-[#cfaa5c]/20"
             >
-              Book Expert Consultation
+              Book Free Expert Consultation
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>
