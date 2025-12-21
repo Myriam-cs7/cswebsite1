@@ -9,18 +9,18 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
       // --- MODIFICATION ICI ---
       company: "Docteur Beauty Care",
       // J'ai aussi adapté le nom dans la citation pour que ça soit cohérent
-      quote: "Docteur Beauty Care saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
+      quote: "Docteur Beauty Care saw sales soar by 20% in just 3 months with cAIre Solutions your brand can shine too.",
       // Ici, on pointe vers l'image que vous avez mise dans public/images/
       logo: "/images/dr-beauty.png", 
     },
     {
       company: "Doze",
-      quote: "Doze: Customer loyalty has never been stronger—our clients feel the difference.",
+      quote: "Doze: Customer loyalty has never been stronger our clients feel the difference.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%E2%80%99e%CC%81cran%202025-04-08%20a%CC%80%2006.27.39.jpg-0qnXJStu9ANIevkVt4RY4YNSlavNw1.jpeg",
     },
     {
       company: "Institut Esthederm",
-      quote: "Institut Esthederm: Our AI reflects elegance and innovation—sales up, satisfaction up.",
+      quote: "Institut Esthederm: Our AI reflects elegance and innovation sales up, satisfaction up.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/phyphy%20%281%29-MEiBERtQFOzjiozG9yzUxSGjFLYYtA.webp",
     },
   ]
