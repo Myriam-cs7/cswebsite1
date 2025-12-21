@@ -13,8 +13,8 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "60% of relaxation seekers browse services after 8 PM. Glowbot captures these bookings instantly on WhatsApp.",
       stat: "+40%",
       statLabel: "Night Bookings",
-      // IMAGE 1 : Le téléphone (Midnight Booking)
-      image: "/images/ai-concierge.png", 
+      // CORRECTION ICI : .jpg au lieu de .png
+      image: "/images/ai-concierge.jpg", 
       color: "from-purple-900/20 to-blue-900/20"
     },
     {
@@ -24,7 +24,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "Dubai attracts the world. Glowbot manages international inquiries 24/7 in 30+ languages.",
       stat: "30+",
       statLabel: "Languages Spoken",
-      // IMAGE 2 : Le Building / Burj Khalifa (Global Medical Hub)
+      // On garde celle-ci en png si vous ne l'avez pas changée, sinon mettez .jpg aussi
       image: "/images/img1.png", 
       color: "from-emerald-900/20 to-teal-900/20"
     },
@@ -35,7 +35,6 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "Glowbot proactively re-engages clients for product refills and follow-up treatments.",
       stat: "x2.5",
       statLabel: "Retention Rate",
-      // IMAGE 3 : Les téléphones produits
       image: "/images/img3.png", 
       color: "from-orange-900/20 to-red-900/20"
     }
@@ -65,18 +64,13 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
               
               {/* --- PARTIE IMAGE STYLE APPLE --- */}
               <div className="w-full lg:w-3/5 relative group">
-                 {/* Lueur d'arrière-plan */}
                  <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-700`}></div>
                  
-                 {/* CONTENEUR CARTE APPLE */}
-                 {/* rounded-[2.5rem] = Arrondi très fort */}
-                 {/* h-[500px] = Hauteur fixe pour l'harmonie */}
                  <div className="relative w-full h-[500px] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl flex items-center justify-center p-8">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      // object-contain = On voit TOUTE l'image (Burj Khalifa entier), rien n'est coupé
                       className="object-contain p-4 transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 60vw"
                     />
