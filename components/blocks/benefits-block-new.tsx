@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { CheckCircle2, Trophy, Sparkles } from "lucide-react"
 
 export default function BenefitsBlockNew({ id }: { id?: string }) {
   
@@ -14,7 +13,8 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "+40%",
       statLabel: "Night Bookings",
       image: "/images/ai-concierge.jpg", 
-      color: "from-purple-900/20 to-blue-900/20"
+      // J'ai ajusté les couleurs pour que ce soit plus doux
+      color: "from-purple-500/10 to-blue-500/10"
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "30+",
       statLabel: "Languages Spoken",
       image: "/images/img1.png", 
-      color: "from-emerald-900/20 to-teal-900/20"
+      color: "from-emerald-500/10 to-teal-500/10"
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "x2.5",
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
-      color: "from-orange-900/20 to-red-900/20"
+      color: "from-orange-500/10 to-red-500/10"
     }
   ]
 
@@ -60,24 +60,29 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
           return (
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
-              {/* --- BLOC IMAGE ÉPURÉ --- */}
-              {/* On définit une hauteur fixe (h-[500px]) pour l'espace global de l'image */}
-              <div className="w-full lg:w-3/5 relative group h-[500px] flex items-center justify-center">
+              {/* --- ZONE IMAGE --- */}
+              {/* On garde une hauteur fixe pour l'harmonie */}
+              <div className="w-full lg:w-3/5 h-[500px] relative group">
                  
-                 {/* Lueur d'arrière-plan subtile */}
-                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-10 group-hover:opacity-25 transition-opacity duration-700 -z-10`}></div>
+                 {/* Lueur d'arrière-plan très douce */}
+                 <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700 -z-10`}></div>
                  
-                 {/* L'IMAGE EN DIRECT (Plus de conteneur inutile) */}
-                 <Image
-                   src={item.image}
-                   alt={item.title}
-                   fill
-                   // object-contain : On voit toute l'image
-                   // rounded-[2.5rem] : L'arrondi est sur l'image elle-même
-                   // drop-shadow-2xl : Une ombre douce pour détacher l'image du fond noir
-                   className="object-contain rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl"
-                   sizes="(max-width: 768px) 100vw, 60vw"
-                 />
+                 {/* LE MASQUE D'ÉCRÊTAGE (C'est la clé !) */}
+                 {/* 1. relative h-full w-full : prend toute la place */}
+                 {/* 2. rounded-[2.5rem] : définit la forme très arrondie */}
+                 {/* 3. overflow-hidden : COUPE tout ce qui dépasse (les coins pointus de l'image) */}
+                 {/* 4. shadow-xl : petite ombre pour détacher du fond sans cadre */}
+                 <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden shadow-xl">
+                   <Image
+                     src={item.image}
+                     alt={item.title}
+                     fill
+                     // object-cover : L'image remplit TOUT le masque arrondi.
+                     // object-center : On centre l'image pour voir le plus important.
+                     className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                     sizes="(max-width: 768px) 100vw, 60vw"
+                   />
+                 </div>
               </div>
 
               {/* TEXTE */}
