@@ -8,7 +8,7 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
     {
       // CLIENT 1 : Docteur Beauty Care 
       company: "Docteur Beauty Care",
-      quote: "Saw sales soar by 20% in just 3 months with cAIre Solutions your brand can shine too.",
+      quote: "I saw sales soar by 17% in just 6 months with cAIre Solutions your brand can shine too.",
       // Assurez-vous que votre image s'appelle bien dr-beauty.png dans public/images/
       logo: "/images/dr-beauty.png", 
     },
