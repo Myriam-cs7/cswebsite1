@@ -3,25 +3,25 @@
 import { useState, useEffect, useRef } from "react"
 import { Paperclip, Send, ImageIcon, Upload, ArrowRight } from "lucide-react"
 import Image from "next/image"
-// Assurez-vous que ces fichiers existent dans hooks/ et utils/ comme confirmé précédemment
+// On pointe vers vos hooks existants que vous avez déjà
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 import { useTranslation } from "@/utils/dummy-translations"
 
 export default function HeroBlockResponsive({ id, content }: { id?: string, content?: any }) {
   const safeContent = content || {}
-  
-  // VALEURS PAR DÉFAUT (Pour éviter que ça plante si vide)
+
+  // Vos réglages par défaut
   const {
     title = "",
     subtitle = "",
     buttonText = "Start Free Trial",
     secondaryButtonText = "Get a Demo",
     showChatbot = true,
-    backgroundColor = "bg-black", 
+    backgroundColor = "bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A]",
     textColor = "text-white",
     customClass = "",
-    primaryButtonLink = "#",
-    calendlyUrl = "#",
+    primaryButtonLink = "https://app.youform.com/forms/gxc7dqht",
+    calendlyUrl = "https://calendly.com/cairesolutions/30min",
   } = safeContent
 
   const { language } = useTranslation()
@@ -38,12 +38,12 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const hasLoadedRef = useRef(false)
-  const languageRef = useRef(language)
+  const languageRef = useRef(language) // Fix pour éviter l'erreur de type
 
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
 
-  // Traductions statiques
+  // Vos textes originaux
   const staticTranslations = {
     titlePart1: "Your new unfair advantage in",
     titlePart2: "beauty & wellness",
@@ -65,9 +65,9 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
   const handleAttachClick = () => setShowAttachMenu(!showAttachMenu)
   const handlePhotoUpload = () => { fileInputRef.current?.click(); setShowAttachMenu(false) }
   
-  // Initialisation du Chatbot
+  // Initialisation du Chatbot (Votre logique originale)
   useEffect(() => {
-    if (hasLoadedRef.current) return
+    if (hasLoadedRef.current) return // On retire la dépendance à languageRef pour simplifier
     
     const baseMessages = [
       { type: "assistant", content: "Hello, I'm Glowbot, your personal luxury skincare assistant. How can I help you today?", typingSpeed: 30, delay: 500 },
@@ -124,7 +124,6 @@ export default function HeroBlockResponsive({ id, content }: { id?: string, cont
     }
   }
 
-  // Styles Responsive
   const titleClasses = isMobile ? "text-3xl leading-tight" : isTablet ? "text-4xl leading-tight" : "text-5xl leading-tight"
   const subtitleClasses = isMobile ? "text-lg" : isTablet ? "text-xl" : "text-2xl"
 
