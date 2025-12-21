@@ -12,10 +12,9 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       description: "60% of relaxation seekers browse services after 8 PM. Glowbot captures these bookings instantly on WhatsApp.",
       stat: "+40%",
       statLabel: "Night Bookings",
-      image: "/images/ai-concierge.jpg", 
-      color: "from-purple-500/10 to-blue-500/10",
-      // On utilise 'object-contain' pour voir toute l'image (pas de zoom)
-      objectFit: "object-contain" 
+      image: "/images/ai-concierge.jpg",
+      // Couleur de fond subtile pour habiller si l'image ne remplit pas tout
+      color: "from-purple-500/10 to-blue-500/10"
     },
     {
       id: 2,
@@ -25,8 +24,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "30+",
       statLabel: "Languages Spoken",
       image: "/images/img1.png", 
-      color: "from-emerald-500/10 to-teal-500/10",
-      objectFit: "object-cover" 
+      color: "from-emerald-500/10 to-teal-500/10"
     },
     {
       id: 3,
@@ -36,8 +34,7 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
       stat: "x2.5",
       statLabel: "Retention Rate",
       image: "/images/img3.png", 
-      color: "from-orange-500/10 to-red-500/10",
-      objectFit: "object-cover"
+      color: "from-orange-500/10 to-red-500/10"
     }
   ]
 
@@ -64,23 +61,26 @@ export default function BenefitsBlockNew({ id }: { id?: string }) {
             <div key={item.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
               
               {/* --- ZONE IMAGE --- */}
+              {/* h-[500px] fixe la hauteur de la zone disponible */}
               <div className="w-full lg:w-3/5 h-[500px] relative group flex items-center justify-center">
                  
                  {/* Lueur d'arrière-plan */}
                  <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700 -z-10`}></div>
                  
-                 {/* L'IMAGE ELLE-MÊME ARRONDIE */}
-                 {/* Plus de conteneur masque. On applique le style sur l'image direct. */}
-                 <div className="relative w-full h-full">
-                   <Image
-                     src={item.image}
-                     alt={item.title}
-                     fill
-                     // C'est ici que la magie opère : rounded-[2.5rem] est appliqué à l'image JPG elle-même
-                     className={`${item.objectFit} rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105`}
-                     sizes="(max-width: 768px) 100vw, 60vw"
-                   />
-                 </div>
+                 {/* L'IMAGE EN MODE "AUTO" 
+                    J'ai retiré 'fill' pour utiliser width/height + 'h-full w-auto'.
+                    Cela force la boîte de l'image à coller exactement à la photo.
+                    Donc le 'rounded-[2.5rem]' rogne vraiment la photo.
+                 */}
+                 <Image
+                   src={item.image}
+                   alt={item.title}
+                   // On met une taille arbitraire élevée pour la qualité, 
+                   // mais le CSS (h-full w-auto) contrôlera l'affichage réel.
+                   width={1200}
+                   height={1200}
+                   className="h-full w-auto object-contain rounded-[2.5rem] shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                 />
               </div>
 
               {/* TEXTE */}
