@@ -6,21 +6,22 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
   
   const testimonials = [
     {
-      // --- MODIFICATION ICI ---
+      // CLIENT 1 : Docteur Beauty Care (Clinique)
       company: "Docteur Beauty Care",
-      // J'ai aussi adapté le nom dans la citation pour que ça soit cohérent
-      quote: "Docteur Beauty Care saw sales soar by 20% in just 3 months with cAIre Solutions your brand can shine too.",
-      // Ici, on pointe vers l'image que vous avez mise dans public/images/
+      quote: "Docteur Beauty Care saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
+      // Assurez-vous que votre image s'appelle bien dr-beauty.png dans public/images/
       logo: "/images/dr-beauty.png", 
     },
     {
+      // CLIENT 2 : Doze (Parfum/Wellness)
       company: "Doze",
-      quote: "Doze: Customer loyalty has never been stronger our clients feel the difference.",
+      quote: "Doze: Customer loyalty has never been stronger—our clients feel the difference.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%E2%80%99e%CC%81cran%202025-04-08%20a%CC%80%2006.27.39.jpg-0qnXJStu9ANIevkVt4RY4YNSlavNw1.jpeg",
     },
     {
+      // CLIENT 3 : Institut Esthederm (Skincare)
       company: "Institut Esthederm",
-      quote: "Institut Esthederm: Our AI reflects elegance and innovation sales up, satisfaction up.",
+      quote: "Institut Esthederm: Our AI reflects elegance and innovation—sales up, satisfaction up.",
       logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/phyphy%20%281%29-MEiBERtQFOzjiozG9yzUxSGjFLYYtA.webp",
     },
   ]
@@ -32,8 +33,10 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-white">
             What our partners are saying: your success starts here.
           </h2>
+          
+          {/* CORRECTION DU SOUS-TITRE ICI */}
           <p className="font-sans text-lg text-gray-400">
-            Real results from real skincare brands.
+            Real results from real <span className="text-[#cfaa5c]">beauty & wellness brands</span>.
           </p>
         </div>
 
@@ -48,7 +51,7 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
                 {/* LOGIQUE D'AFFICHAGE DU LOGO */}
                 
                 {testimonial.company === "Docteur Beauty Care" ? (
-                  // Style Rond pour Docteur Beauty Care (comme Phynacare avant)
+                  // Style Rond pour Docteur Beauty Care
                   <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center border-2 border-[#cfaa5c] bg-white">
                     <img
                       src={testimonial.logo}
@@ -83,7 +86,7 @@ export default function TestimonialsBlock({ id }: { id?: string }) {
                 {testimonial.company}
               </h3>
               
-              {/* Etoiles ajoutées pour correspondre au design global */}
+              {/* Etoiles */}
               <div className="flex justify-center gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#cfaa5c] text-[#cfaa5c]" />
