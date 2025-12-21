@@ -1,77 +1,83 @@
 "use client"
 
-import { Star, Quote } from "lucide-react"
+// J'ai retiré l'import de site-config qui faisait planter le site
+// On utilise directement les données que vous avez fournies
 
-export default function TestimonialsBlock() {
+export default function TestimonialsBlock({ id }: { id?: string }) {
   
-  // VOS VRAIS CLIENTS (Récupérés de votre capture d'écran)
-  const reviews = [
+  // VOS DONNÉES RESTAURÉES (Logos + Textes exacts)
+  const testimonials = [
     {
-      name: "Phynacare",
-      role: "Partner Brand",
-      content: "Phynacare saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
-      stars: 5,
+      company: "Phynacare",
+      quote: "Phynacare saw sales soar by 20% in just 3 months with cAIre Solutions—your brand can shine too.",
+      // J'ai gardé vos URLs d'images spécifiques
+      logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/phyphy-tC8N2yeReov7uyxMqT7c9WUiOaJ6N0.webp",
     },
     {
-      name: "Doze",
-      role: "Luxury Wellness",
-      content: "Customer loyalty has never been stronger—our clients feel the difference.",
-      stars: 5,
+      company: "Doze",
+      quote: "Doze: Customer loyalty has never been stronger—our clients feel the difference.",
+      logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%E2%80%99e%CC%81cran%202025-04-08%20a%CC%80%2006.27.39.jpg-0qnXJStu9ANIevkVt4RY4YNSlavNw1.jpeg",
     },
     {
-      name: "Institut Esthederm",
-      role: "Premium Skincare",
-      content: "Our AI reflects elegance and innovation—sales up, satisfaction up.",
-      stars: 5,
+      company: "Institut Esthederm",
+      quote: "Institut Esthederm: Our AI reflects elegance and innovation—sales up, satisfaction up.",
+      logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/phyphy%20%281%29-MEiBERtQFOzjiozG9yzUxSGjFLYYtA.webp",
     },
   ]
 
   return (
-    <section className="bg-black py-24 relative overflow-hidden">
-      {/* Fond décoratif */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#cfaa5c]/5 via-black to-black opacity-50 pointer-events-none"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">
-            Testimonials
+    <section id={id} className="py-20 bg-black text-white">
+      <div className="container mx-auto px-6">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-white">
+            What our partners are saying: your success starts here.
           </h2>
-          <p className="text-[#cfaa5c] uppercase tracking-[0.2em] text-sm font-bold">
-            Real Results from Real Brands
+          <p className="font-sans text-lg text-gray-400">
+            Real results from real skincare brands.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <div 
-              key={index} 
-              className="bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:border-[#cfaa5c]/50 transition-colors duration-300 flex flex-col"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={index}
+              className="bg-[#1A1A1A] p-8 rounded-lg shadow-lg text-white hover:scale-105 hover:shadow-xl transition-transform duration-300 border border-white/10"
             >
-              {/* Étoiles */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(review.stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#cfaa5c] text-[#cfaa5c]" />
-                ))}
+              <div className="flex justify-center mb-6">
+                {testimonial.company === "Phynacare" ? (
+                  <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center border-2 border-[#cfaa5c] bg-white">
+                    <img
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : testimonial.company === "Doze" ? (
+                  <div className="w-32 h-24 rounded-lg overflow-hidden flex items-center justify-center border-2 border-[#cfaa5c] bg-black p-2">
+                    <img
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                ) : testimonial.company === "Institut Esthederm" ? (
+                  <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center border-2 border-[#cfaa5c] bg-white p-2">
+                    <img
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="h-12 w-32 bg-gray-700 flex items-center justify-center rounded">Logo</div>
+                )}
               </div>
-
-              {/* Texte */}
-              <div className="relative mb-8 flex-grow">
-                <Quote className="absolute -top-2 -left-2 w-8 h-8 text-[#cfaa5c]/20 rotate-180" />
-                <p className="text-gray-300 text-lg leading-relaxed relative z-10 pl-4">
-                  "{review.content}"
-                </p>
-              </div>
-
-              {/* Auteur */}
-              <div className="flex items-center gap-4 mt-auto border-t border-white/5 pt-4">
-                <div className="w-10 h-10 rounded-full bg-[#cfaa5c]/20 flex items-center justify-center text-[#cfaa5c] font-bold">
-                  {review.name.charAt(0)}
-                </div>
-                <div>
-                  <div className="text-white font-medium">{review.name}</div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">{review.role}</div>
-                </div>
-              </div>
+              <h3 className="font-serif text-xl font-bold mb-4 text-[#cfaa5c] text-center">
+                {testimonial.company}
+              </h3>
+              <p className="font-sans text-gray-300 italic text-center leading-relaxed">
+                "{testimonial.quote}"
+              </p>
             </div>
           ))}
         </div>
