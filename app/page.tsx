@@ -5,13 +5,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
-// --- IMPORTS DES BLOCS ---
+// --- IMPORTS ---
 import HeroBlockResponsive from "@/components/blocks/hero-block-responsive"
 import BrandBlock from "@/components/blocks/brand-block"
 import BenefitsBlockNew from "@/components/blocks/benefits-block-new"
-// C'EST ICI QU'ON IMPORTE LE NOUVEAU BLOC MARKETING
 import MarketingBlock from "@/components/blocks/marketing-block"
 import TestimonialsBlock from "@/components/blocks/testimonials-block"
+// 1. IMPORT DU NOUVEAU BLOC CTA
+import CtaBlock from "@/components/blocks/cta-block" 
+
 import { SiteFooter } from "@/components/site-footer"
 import BackToTop from "@/components/back-to-top"
 
@@ -64,7 +66,7 @@ export default function Home() {
         )}
       </header>
 
-      {/* 1. HERO - GLOWBOT ANIMÉ */}
+      {/* 1. HERO */}
       <div id="hero">
         <HeroBlockResponsive 
            id="hero"
@@ -84,13 +86,17 @@ export default function Home() {
       {/* 3. CASE STUDIES */}
       <BenefitsBlockNew id="case-studies" />
 
-      {/* 4. LE NOUVEAU BLOC S'AFFICHE ICI */}
+      {/* 4. MARKETING INTELLIGENCE */}
       <MarketingBlock />
 
       {/* 5. TESTIMONIALS */}
       <div id="testimonials"><TestimonialsBlock /></div>
 
-      {/* 6. FOOTER */}
+      {/* 6. EXPERT CONSULTING (CTA) */}
+      {/* C'est ici qu'on l'affiche, juste avant le footer */}
+      <CtaBlock />
+
+      {/* 7. FOOTER */}
       <SiteFooter />
       <BackToTop />
     </main>
